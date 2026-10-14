@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>세종 도시 상황판</title>
-<meta name="description" content="세종연구원이 만든 세종시 도시 상황판 네 가지(생활권 재구조화·상가공실·물환경·교통안전)를 한곳에서 봅니다.">
+<title>세종 이슈 대시보드</title>
+<meta name="description" content="세종연구원이 공공데이터로 세종의 현안을 살피는 상황판 네 가지(생활권 재구조화·상가공실·물환경·교통안전)를 한곳에서 봅니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@800&display=swap">
 <style>
 :root{--ground:#F2F4F1;--panel:#fff;--ink:#15232A;--ink2:#4B5B62;--ink3:#7C8A8F;--line:#D6DDD9;--line2:#E6EBE8;--accent:#1D5C7C;--chipbg:#E1ECF1;
@@ -93,9 +93,9 @@ body.viewing #home{display:none}
 <main id="home">
   <header class="top">
     <div>
-      <div class="eb">세종연구원 · 세종시 도시 상황판</div>
-      <h1>세종 도시 상황판</h1>
-      <p class="lede">세종연구원이 공공데이터로 만든 상황판 네 가지를 한곳에 모았습니다. 카드를 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 상황판을 오갈 수 있습니다.</p>
+      <div class="eb">세종연구원 · 데이터로 보는 세종</div>
+      <h1>세종 이슈 대시보드</h1>
+      <p class="lede">세종연구원이 공공데이터로 세종의 현안을 살피는 상황판 네 가지를 한곳에 모았습니다. 카드를 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 상황판을 오갈 수 있습니다.</p>
     </div>
     <div class="logo"><img src="assets/sri_signature.png" alt="세종연구원 SEJONG RESEARCH INSTITUTE"></div>
   </header>
@@ -157,7 +157,7 @@ $("#tabs").innerHTML = D.map(d => `<button class="tab" type="button" role="tab" 
 const frames = {};
 function show(id){
   const d = D.find(x => x.id === id);
-  if (!d) { document.body.classList.remove("viewing"); document.title = "세종 도시 상황판"; return; }
+  if (!d) { document.body.classList.remove("viewing"); document.title = "세종 이슈 대시보드"; return; }
   if (!frames[id]) {
     const f = document.createElement("iframe");
     f.src = d.path; f.title = d.title; f.setAttribute("allow", "fullscreen");
@@ -167,7 +167,7 @@ function show(id){
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.tab === id));
   $("#ext").href = d.path;
   document.body.classList.add("viewing");
-  document.title = d.title + " · 세종 도시 상황판";
+  document.title = d.title + " · 세종 이슈 대시보드";
 }
 const route = () => show(location.hash.replace(/^#\/?/, ""));
 const go = id => { location.hash = id ? "#/" + id : ""; };
