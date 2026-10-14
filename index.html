@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세종 도시 상황판</title>
+<meta name="description" content="세종연구원이 만든 세종시 도시 상황판 네 가지(생활권 재구조화·상가공실·물환경·교통안전)를 한곳에서 봅니다.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@800&display=swap">
+<style>
+:root{--ground:#F2F4F1;--panel:#fff;--ink:#15232A;--ink2:#4B5B62;--ink3:#7C8A8F;--line:#D6DDD9;--line2:#E6EBE8;--accent:#1D5C7C;--chipbg:#E1ECF1;
+  --lock:#8A5A12;--lockbg:#FBF0DC;--open:#2E6B45;--openbg:#E2F1E7;--bar:rgba(255,255,255,.94)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ground:#0E1619;--panel:#152125;--ink:#E3ECEA;--ink2:#A4B4B4;--ink3:#72858A;--line:#2B3B40;--line2:#22312F;
+  --accent:#74B8D6;--chipbg:#1C3440;--lock:#E9B865;--lockbg:#3A2E18;--open:#7FCB98;--openbg:#16352A;--bar:rgba(21,33,37,.94);color-scheme:dark}}
+:root[data-theme="dark"]{--ground:#0E1619;--panel:#152125;--ink:#E3ECEA;--ink2:#A4B4B4;--ink3:#72858A;--line:#2B3B40;--line2:#22312F;
+  --accent:#74B8D6;--chipbg:#1C3440;--lock:#E9B865;--lockbg:#3A2E18;--open:#7FCB98;--openbg:#16352A;--bar:rgba(21,33,37,.94);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;line-height:1.5;word-break:keep-all}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+
+/* 모아보기 */
+#home{max-width:1180px;margin:0 auto;padding:28px 20px 36px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.eb{font-size:12px;letter-spacing:.08em;color:var(--ink3);font-weight:600}
+h1{font-family:"Nanum Myeongjo",serif;font-size:32px;margin:4px 0 6px;line-height:1.2}
+.lede{color:var(--ink2);font-size:14.5px;max-width:62ch;margin:0}
+.logo{background:#fff;border-radius:8px;padding:6px 10px;border:1px solid var(--line)}
+.logo img{display:block;height:40px;width:auto}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;
+  transition:border-color .15s,box-shadow .15s,transform .15s}
+.card:hover{border-color:var(--ink3);box-shadow:0 6px 22px rgba(0,0,0,.08);transform:translateY(-2px)}
+.thumb{position:relative;display:block;aspect-ratio:16/9;background:var(--line2);overflow:hidden;cursor:pointer;border:0;padding:0;width:100%}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.thumb .go{position:absolute;right:10px;bottom:10px;background:rgba(21,35,42,.86);color:#fff;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;
+  opacity:0;transition:opacity .15s}
+.card:hover .thumb .go{opacity:1}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--chipbg);color:var(--accent)}
+.chip.lock{background:var(--lockbg);color:var(--lock)}
+.chip.open{background:var(--openbg);color:var(--open)}
+.card h2{font-size:19px;margin:0;line-height:1.3}
+.card p{margin:0;color:var(--ink2);font-size:13.5px}
+.card .who{font-size:11.5px;color:var(--ink3);margin-top:auto}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:7px;padding:7px 12px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.btn:hover{border-color:var(--ink3)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.btn.pri:hover{filter:brightness(1.08)}
+.foot{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  font-size:12px;color:var(--ink3)}
+.visitors{display:flex;align-items:center;gap:8px}
+.visitors img{display:block;height:20px}
+
+/* 한 화면에서 보기 */
+#view{display:none;position:fixed;inset:0;flex-direction:column;background:var(--ground)}
+body.viewing #view{display:flex}
+body.viewing #home{display:none}
+.bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bar);border-bottom:1px solid var(--line);backdrop-filter:blur(6px);flex:none}
+.bar .home{border:0;background:none;color:var(--ink2);font-weight:600;font-size:13px;padding:6px 8px;border-radius:6px;white-space:nowrap}
+.bar .home:hover{background:var(--line2)}
+.tabs{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:1px solid transparent;background:none;color:var(--ink2);font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:7px;white-space:nowrap}
+.tab:hover{background:var(--line2)}
+.tab[aria-selected="true"]{background:var(--panel);border-color:var(--line);color:var(--ink)}
+.tab .lk{font-size:11px;margin-left:3px;opacity:.7}
+.bar .ext{white-space:nowrap}
+.frames{position:relative;flex:1}
+.frames iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ground);display:none}
+.frames iframe.on{display:block}
+
+/* 미리보기 */
+#pvm{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+#pvm.on{display:flex}
+#pvm .in{width:min(960px,100%);background:var(--panel);border-radius:10px;overflow:hidden}
+#pvm .hd{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:13px;font-weight:600}
+#pvm .hd button{border:0;background:none;color:var(--ink2);font-size:20px;line-height:1;padding:2px 8px}
+#pvm video{display:block;width:100%;background:#000}
+
+@media (max-width:760px){
+  #home{padding:20px 16px 28px}
+  h1{font-size:26px}
+  .grid{grid-template-columns:1fr}
+  .logo img{height:32px}
+  .bar .ext span{display:none}
+}
+</style>
+</head>
+<body>
+<main id="home">
+  <header class="top">
+    <div>
+      <div class="eb">세종연구원 · 세종시 도시 상황판</div>
+      <h1>세종 도시 상황판</h1>
+      <p class="lede">세종연구원이 공공데이터로 만든 상황판 네 가지를 한곳에 모았습니다. 카드를 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 상황판을 오갈 수 있습니다.</p>
+    </div>
+    <div class="logo"><img src="assets/sri_signature.png" alt="세종연구원 SEJONG RESEARCH INSTITUTE"></div>
+  </header>
+  <section class="grid" id="grid" aria-label="상황판 목록"></section>
+  <footer class="foot">
+    <span>제작: 세종연구원 · 문의 송양호(<a href="mailto:ysong@sri.re.kr">ysong@sri.re.kr</a>)</span>
+    <div class="visitors"><img class="hitsbadge" src="https://hits.sh/ysong86.github.io/sejong_portal.svg?view=today-total&amp;style=flat-square&amp;label=%EC%A1%B0%ED%9A%8C%EC%88%98&amp;color=1d5c7c&amp;labelColor=64748b" alt="조회수 오늘/전체" height="20" decoding="async"><span>오늘 / 전체</span></div>
+  </footer>
+</main>
+
+<div id="view">
+  <nav class="bar" aria-label="상황판 전환">
+    <button class="home" type="button" id="back">← 모아보기</button>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <a class="btn ext" id="ext" href="#" target="_blank" rel="noopener">↗<span> 새 창으로</span></a>
+  </nav>
+  <div class="frames" id="frames"></div>
+</div>
+
+<div id="pvm" role="dialog" aria-modal="true" aria-label="상황판 미리보기"><div class="in">
+  <div class="hd"><span id="pvt">미리보기</span><button type="button" id="pvx" aria-label="닫기">×</button></div>
+  <video id="pvv" controls playsinline preload="none"></video></div></div>
+
+<script>
+(() => {
+"use strict";
+const D = [
+  {id: "zone", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신",
+   desc: "행복도시 6개 생활권이 맡은 기능을 실제로 하고 있는지, 생활권 사이·광역권과 어떻게 이어지는지 공공데이터 25개 지표와 행정동 지도로 점검합니다.",
+   who: "세종연구원 연구모임", preview: true},
+  {id: "vacant", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
+   desc: "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.",
+   who: "세종연구원 연구모임", preview: true},
+  {id: "water", path: "water_sejong/", title: "세종시 물환경 상황판", lock: false, cycle: "10분마다 갱신",
+   desc: "금강·미호강 수위와 강수, 하천 수질, 지하수, 기상을 실시간으로 모으고 관측 지점을 지도로 보여 줍니다.",
+   who: "세종연구원 송양호 책임연구위원"},
+  {id: "traffic", path: "traffic_sejong/", title: "세종시 교통안전 상황판", lock: false, cycle: "10분마다 갱신",
+   desc: "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.",
+   who: "세종연구원 도시안전연구센터"},
+];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+$("#grid").innerHTML = D.map(d => `<article class="card">
+  <button class="thumb" type="button" data-open="${d.id}" aria-label="${esc(d.title)} 열기"><img src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy"><span class="go">이 화면에서 열기 →</span></button>
+  <div class="body">
+    <div class="chips"><span class="chip ${d.lock ? "lock" : "open"}">${d.lock ? "비밀번호" : "공개"}</span><span class="chip">${esc(d.cycle)}</span></div>
+    <h2>${esc(d.title)}</h2>
+    <p>${esc(d.desc)}</p>
+    <div class="acts"><button class="btn pri" type="button" data-open="${d.id}">열기</button>
+      ${d.preview ? `<button class="btn" type="button" data-pv="${d.id}">▶ 30초 미리보기</button>` : ""}
+      <a class="btn" href="${d.path}" target="_blank" rel="noopener">새 창 ↗</a></div>
+    <div class="who">제작: ${esc(d.who)}</div>
+  </div></article>`).join("");
+
+$("#tabs").innerHTML = D.map(d => `<button class="tab" type="button" role="tab" data-tab="${d.id}" aria-selected="false">${esc(d.title.replace("세종시 ", "").replace("세종 행복도시 ", "").replace("세종 ", ""))}${d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : ""}</button>`).join("");
+
+/* 한 화면에서 보기 — 상황판마다 iframe 을 한 번만 만들고 숨겨 둔다(탭을 오가도 로그인·스크롤이 그대로) */
+const frames = {};
+function show(id){
+  const d = D.find(x => x.id === id);
+  if (!d) { document.body.classList.remove("viewing"); document.title = "세종 도시 상황판"; return; }
+  if (!frames[id]) {
+    const f = document.createElement("iframe");
+    f.src = d.path; f.title = d.title; f.setAttribute("allow", "fullscreen");
+    $("#frames").appendChild(f); frames[id] = f;
+  }
+  Object.entries(frames).forEach(([k, f]) => f.classList.toggle("on", k === id));
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.tab === id));
+  $("#ext").href = d.path;
+  document.body.classList.add("viewing");
+  document.title = d.title + " · 세종 도시 상황판";
+}
+const route = () => show(location.hash.replace(/^#\/?/, ""));
+const go = id => { location.hash = id ? "#/" + id : ""; };
+document.addEventListener("click", e => {
+  const o = e.target.closest("[data-open]"); if (o) { go(o.dataset.open); return; }
+  const t = e.target.closest("[data-tab]"); if (t) { go(t.dataset.tab); return; }
+  const p = e.target.closest("[data-pv]"); if (p) openPv(p.dataset.pv);
+});
+$("#back").onclick = () => go("");
+window.addEventListener("hashchange", route);
+route();
+
+/* 30초 미리보기(수치 흐림 영상 — 각 상황판 문에 있는 것과 같다) */
+const pvm = $("#pvm"), pvv = $("#pvv");
+function openPv(id){
+  const d = D.find(x => x.id === id);
+  $("#pvt").textContent = d.title + " · 미리보기(수치는 흐리게 처리)";
+  pvv.src = d.path + "preview.mp4"; pvm.classList.add("on"); pvv.play().catch(() => {});
+}
+const closePv = () => { pvm.classList.remove("on"); pvv.pause(); };
+$("#pvx").onclick = closePv;
+pvm.addEventListener("click", e => { if (e.target === pvm) closePv(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closePv(); });
+
+/* 조회수 배지 — 집계 서버가 막히면 깨진 그림 대신 접는다 */
+const hb = $(".hitsbadge"); hb.addEventListener("error", () => { hb.parentElement.style.display = "none"; });
+})();
+</script>
+</body>
+</html>
