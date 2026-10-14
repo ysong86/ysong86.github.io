@@ -247,7 +247,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closePv(); }
 /* 다음 이슈 제안 — ENDPOINT(구글 Apps Script 웹 앱, tools/apps_script.gs)가 있으면 그리로 바로 제출(시트에 쌓이고 알림 메일),
    없으면 메일 쓰기 창(mailto). 어느 쪽이든 '내용 복사'는 남겨 둔다. */
 const TO = "ysong@sri.re.kr";
-const ENDPOINT = "";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbyhPyZNJNTxbUprnSNe8REiUBUC1U1NuXrY3n2OxWjx_hzMbfcNMoPOTM9oTeHisrgK/exec";
 if (ENDPOINT) {
   $("#q-send").textContent = "제출";
   $("#q-note").textContent = "제출한 내용은 다음 상황판을 고르고 회신하는 데에만 쓰며, 제작자(송양호)의 구글 시트에 보관합니다. 이름·메일은 적지 않아도 됩니다.";
