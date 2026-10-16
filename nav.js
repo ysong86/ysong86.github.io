@@ -1,0 +1,54 @@
+/* 세종 이슈 대시보드 — 상황판 공통 위쪽 탭 줄.
+   각 상황판(로그인 문 포함)이 <script src="https://ysong86.github.io/nav.js" data-site="water"></script> 로 불러온다.
+   - 대문(ysong86.github.io) 안 iframe 으로 열렸으면 대문에 이미 탭 줄이 있으므로 아무것도 하지 않는다.
+   - 상황판 목록을 바꿀 때는 이 파일과 대문 index.html 만 고치면 된다(NAS·상황판 재배포 불필요). */
+(function () {
+  "use strict";
+  var me = document.currentScript;
+  try { if (window.top !== window.self) return; } catch (e) { return; }
+  var SITE = (me && me.getAttribute("data-site")) || "";
+  var HOME = "https://ysong86.github.io/";
+  var D = [
+    {id: "zone", title: "생활권 재구조화 상황판", lock: true},
+    {id: "vacant", title: "상가공실 상황판", lock: true},
+    {id: "water", title: "물환경 상황판"},
+    {id: "traffic", title: "교통안전 상황판"}
+  ];
+  var css =
+    ".sjnav{all:initial;display:flex;align-items:center;gap:6px;padding:7px 12px;box-sizing:border-box;width:100%;" +
+    "font-family:'IBM Plex Sans KR','Malgun Gothic',system-ui,sans-serif;font-size:13px;line-height:1.3;" +
+    "background:var(--sjnav-bg);border-bottom:1px solid var(--sjnav-line);color:var(--sjnav-ink);position:relative;z-index:50}" +
+    ".sjnav *{box-sizing:border-box;font-family:inherit}" +
+    ".sjnav a{color:inherit;text-decoration:none;white-space:nowrap;border-radius:7px;padding:6px 11px;font-weight:600;border:1px solid transparent}" +
+    ".sjnav a:hover{background:var(--sjnav-hover)}" +
+    ".sjnav .sjh{color:var(--sjnav-ink2);font-weight:600}" +
+    ".sjnav .sjt{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}" +
+    ".sjnav .sjt::-webkit-scrollbar{display:none}" +
+    ".sjnav .sjt a{color:var(--sjnav-ink2)}" +
+    ".sjnav .sjt a.on{background:var(--sjnav-on);border-color:var(--sjnav-line);color:var(--sjnav-ink)}" +
+    ".sjnav .lk{font-size:11px;margin-left:3px;opacity:.75}" +
+    ":root{--sjnav-bg:#ffffffef;--sjnav-line:#D6DDD9;--sjnav-ink:#15232A;--sjnav-ink2:#4B5B62;--sjnav-hover:#EEF1EF;--sjnav-on:#fff}" +
+    "@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--sjnav-bg:#152125ef;--sjnav-line:#2B3B40;--sjnav-ink:#E3ECEA;--sjnav-ink2:#A4B4B4;--sjnav-hover:#1F2D31;--sjnav-on:#0E1619}}" +
+    ":root[data-theme=dark]{--sjnav-bg:#152125ef;--sjnav-line:#2B3B40;--sjnav-ink:#E3ECEA;--sjnav-ink2:#A4B4B4;--sjnav-hover:#1F2D31;--sjnav-on:#0E1619}" +
+    "@media (max-width:640px){.sjnav{padding:6px 8px}.sjnav a{padding:5px 8px;font-size:12.5px}}";
+  function mount() {
+    if (document.querySelector(".sjnav")) return;
+    var st = document.createElement("style");
+    st.textContent = css;
+    document.head.appendChild(st);
+    var nav = document.createElement("nav");
+    nav.className = "sjnav";
+    nav.setAttribute("aria-label", "세종 이슈 대시보드 상황판 전환");
+    var h = '<a class="sjh" href="' + HOME + '">← 세종 이슈 대시보드</a><div class="sjt">';
+    D.forEach(function (d) {
+      // 다른 상황판은 대문의 한 화면 보기(#/id)로 연다 — 탭을 오가도 로그인이 유지된다
+      h += '<a href="' + HOME + '#/' + d.id + '"' + (d.id === SITE ? ' class="on" aria-current="page"' : "") + ">" +
+           d.title + (d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : "") + "</a>";
+    });
+    nav.innerHTML = h + "</div>";
+    document.body.insertBefore(nav, document.body.firstChild);
+  }
+  if (document.body) mount(); else document.addEventListener("DOMContentLoaded", mount);
+  // 로그인 문이 풀리면서 문서를 통째로 다시 쓰면 탭 줄이 사라진다 → 다시 단다
+  document.addEventListener("DOMContentLoaded", mount);
+})();
