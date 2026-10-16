@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>세종 이슈 대시보드</title>
-<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 상황판 네 가지(생활권 재구조화·상가공실·물환경·교통안전)를 모았습니다.">
+<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 상황판 다섯 가지(생활권 재구조화·상가공실·화재안전·물환경·교통안전)를 모았습니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@800&display=swap">
 <style>
 :root{--ground:#F2F4F1;--panel:#fff;--ink:#15232A;--ink2:#4B5B62;--ink3:#7C8A8F;--line:#D6DDD9;--line2:#E6EBE8;--accent:#1D5C7C;--chipbg:#E1ECF1;
@@ -130,7 +130,7 @@ body.viewing #home{display:none}
   <section class="grid" id="grid" aria-label="상황판 목록"></section>
   <section class="next" aria-labelledby="next-h">
     <div>
-      <div class="eb">다섯 번째 상황판</div>
+      <div class="eb">여섯 번째 상황판</div>
       <h2 id="next-h">다음 이슈를 준비하고 있습니다<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></h2>
       <p>데이터로 들여다보고 싶은 세종의 현안이 있나요? 주제와 함께 쓸 만한 자료를 알려 주시면 다음 상황판을 고르는 데 반영합니다. 상황판 제작 협업 문의도 환영합니다.</p>
       <div class="ideas" id="ideas" aria-label="주제 예시(누르면 채워집니다)">
@@ -185,6 +185,9 @@ const D = [
   {id: "vacant", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
    desc: "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.",
    who: "세종연구원 연구모임", preview: true},
+  {id: "fire", path: "fire_sejong/", title: "세종 화재안전 상황판", lock: true, cycle: "ITS 실측 속도 반영",
+   desc: "119안전센터에서 건물까지 소방차가 실제 도로 속도로 몇 분 만에 닿는지와 건물 화재위험(연구진 추정)을 겹쳐, 위험은 높은데 늦게 닿는 곳을 찾습니다.",
+   who: "세종연구원 연구모임", preview: true, pvLen: "40초"},
   {id: "water", path: "water_sejong/", title: "세종시 물환경 상황판", lock: false, cycle: "10분마다 갱신",
    desc: "금강·미호강 수위와 강수, 하천 수질, 지하수, 기상을 실시간으로 모으고 관측 지점을 지도로 보여 줍니다.",
    who: "세종연구원 송양호"},
@@ -202,7 +205,7 @@ $("#grid").innerHTML = D.map(d => `<article class="card">
     <h2>${esc(d.title)}</h2>
     <p>${esc(d.desc)}</p>
     <div class="acts"><button class="btn pri" type="button" data-open="${d.id}">열기</button>
-      ${d.preview ? `<button class="btn" type="button" data-pv="${d.id}">▶ 30초 미리보기</button>` : ""}
+      ${d.preview ? `<button class="btn" type="button" data-pv="${d.id}">▶ ${d.pvLen || "30초"} 미리보기</button>` : ""}
       <a class="btn" href="${d.path}" target="_blank" rel="noopener">새 창 ↗</a></div>
     <div class="who">제작: ${esc(d.who)}</div>
   </div></article>`).join("");
@@ -236,7 +239,7 @@ $("#back").onclick = () => go("");
 window.addEventListener("hashchange", route);
 route();
 
-/* 30초 미리보기(수치 흐림 영상 — 각 상황판 문에 있는 것과 같다) */
+/* 미리보기(수치 흐림 영상 — 각 상황판 문에 있는 것과 같다) */
 const pvm = $("#pvm"), pvv = $("#pvv");
 function openPv(id){
   const d = D.find(x => x.id === id);

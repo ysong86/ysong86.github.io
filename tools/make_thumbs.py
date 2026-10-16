@@ -21,7 +21,8 @@ OUT = os.path.join(HERE, "assets", "thumbs")
 TMP = os.path.join(HERE, "tmp")
 BASE = "https://ysong86.github.io/"
 SHOTS = {"water": "water_sejong/", "traffic": "traffic_sejong/"}
-FRAMES = {"zone": ("zone_sejong/preview.mp4", 9.0), "vacant": ("vacant_sejong/preview.mp4", 18.8)}
+FRAMES = {"zone": ("zone_sejong/preview.mp4", 9.0), "vacant": ("vacant_sejong/preview.mp4", 18.8),
+          "fire": ("fire_sejong/preview.mp4", 22.5)}
 W = 960
 
 
