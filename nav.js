@@ -48,6 +48,18 @@
     });
     nav.innerHTML = h + "</div>";
     document.body.insertBefore(nav, document.body.firstChild);
+    // 로그인 문처럼 body 가 flex(가운데 정렬)인 페이지에서는 탭 줄이 가로 배치의 한 칸이 되어
+    // 가운데에 뜨고 상자를 옆으로 민다 → 맨 위에 고정하고 그 높이만큼 본문을 내린다.
+    var bd = getComputedStyle(document.body).display;
+    if (bd.indexOf("flex") >= 0 || bd.indexOf("grid") >= 0) {
+      nav.style.position = "fixed";
+      nav.style.top = "0";
+      nav.style.left = "0";
+      nav.style.right = "0";
+      var pad = function () { document.body.style.paddingTop = nav.offsetHeight + "px"; document.body.style.boxSizing = "border-box"; };
+      pad();
+      addEventListener("resize", pad);
+    }
   }
   if (document.body) mount(); else document.addEventListener("DOMContentLoaded", mount);
   // 로그인 문이 풀리면서 문서를 통째로 다시 쓰면 탭 줄이 사라진다 → 다시 단다
