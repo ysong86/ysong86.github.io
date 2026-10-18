@@ -2,6 +2,38 @@
    각 상황판(로그인 문 포함)이 <script src="https://ysong86.github.io/nav.js" data-site="water"></script> 로 불러온다.
    - 대문(ysong86.github.io) 안 iframe 으로 열렸으면 대문에 이미 탭 줄이 있으므로 아무것도 하지 않는다.
    - 상황판 목록을 바꿀 때는 이 파일과 대문 index.html 만 고치면 된다(NAS·상황판 재배포 불필요). */
+/* 제작 표기의 사람 이름 → 프로필 링크(대문 iframe 안에서도). 하단(footer·.foot·.credit·.contact)의 글자만 바꾼다. */
+(function () {
+  "use strict";
+  var PEOPLE = {"송양호": "https://www.researchgate.net/profile/Yangho-Song"};
+  function link() {
+    var boxes = document.querySelectorAll("footer, .foot, .credit, .contact");
+    Array.prototype.forEach.call(boxes, function (box) {
+      var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null), nodes = [], n;
+      while ((n = w.nextNode())) nodes.push(n);
+      nodes.forEach(function (t) {
+        if (!t.parentNode || t.parentNode.closest("a, script, style")) return;
+        Object.keys(PEOPLE).forEach(function (name) {
+          if (!t.parentNode || t.nodeValue.indexOf(name) < 0) return;
+          var parts = t.nodeValue.split(name), frag = document.createDocumentFragment();
+          parts.forEach(function (p, i) {
+            if (p) frag.appendChild(document.createTextNode(p));
+            if (i < parts.length - 1) {
+              var a = document.createElement("a");
+              a.href = PEOPLE[name]; a.target = "_blank"; a.rel = "noopener"; a.textContent = name;
+              a.title = name + " — ResearchGate"; a.style.color = "inherit";
+              frag.appendChild(a);
+            }
+          });
+          t.parentNode.replaceChild(frag, t); t = {parentNode: null};
+        });
+      });
+    });
+  }
+  if (document.readyState !== "loading") link();
+  document.addEventListener("DOMContentLoaded", link);
+})();
+
 (function () {
   "use strict";
   var me = document.currentScript;
