@@ -5,7 +5,12 @@
 /* 제작 표기의 사람 이름 → 프로필 링크(대문 iframe 안에서도). 하단(footer·.foot·.credit·.contact)의 글자만 바꾼다. */
 (function () {
   "use strict";
-  var PEOPLE = {"송양호": "https://www.researchgate.net/profile/Yangho-Song"};
+  // 이름: [주소, 링크에 뜨는 설명]
+  var PEOPLE = {
+    "송양호": ["https://www.researchgate.net/profile/Yangho-Song", "ResearchGate"],
+    "안용준": ["https://www.facebook.com/ayj826", "Facebook"]
+  };
+  var RE = new RegExp("(" + Object.keys(PEOPLE).join("|") + ")", "g");
   function link() {
     var boxes = document.querySelectorAll("footer, .foot, .credit, .contact");
     Array.prototype.forEach.call(boxes, function (box) {
@@ -13,20 +18,20 @@
       while ((n = w.nextNode())) nodes.push(n);
       nodes.forEach(function (t) {
         if (!t.parentNode || t.parentNode.closest("a, script, style")) return;
-        Object.keys(PEOPLE).forEach(function (name) {
-          if (!t.parentNode || t.nodeValue.indexOf(name) < 0) return;
-          var parts = t.nodeValue.split(name), frag = document.createDocumentFragment();
-          parts.forEach(function (p, i) {
-            if (p) frag.appendChild(document.createTextNode(p));
-            if (i < parts.length - 1) {
-              var a = document.createElement("a");
-              a.href = PEOPLE[name]; a.target = "_blank"; a.rel = "noopener"; a.textContent = name;
-              a.title = name + " — ResearchGate"; a.style.color = "inherit";
-              frag.appendChild(a);
-            }
-          });
-          t.parentNode.replaceChild(frag, t); t = {parentNode: null};
+        RE.lastIndex = 0;
+        if (!RE.test(t.nodeValue)) return;
+        // 한 줄에 이름이 여럿이어도(예: 안용준 센터장 · 송양호 …) 한 번에 나눠 감싼다
+        var frag = document.createDocumentFragment();
+        t.nodeValue.split(RE).forEach(function (p) {
+          if (!p) return;
+          if (PEOPLE[p]) {
+            var a = document.createElement("a");
+            a.href = PEOPLE[p][0]; a.target = "_blank"; a.rel = "noopener"; a.textContent = p;
+            a.title = p + " — " + PEOPLE[p][1]; a.style.color = "inherit";
+            frag.appendChild(a);
+          } else frag.appendChild(document.createTextNode(p));
         });
+        t.parentNode.replaceChild(frag, t);
       });
     });
   }
