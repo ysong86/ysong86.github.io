@@ -3,8 +3,8 @@
 
   python tools/make_thumbs.py
 
-- 공개 상황판(읍면 생활인프라·물환경·교통안전): 실제 화면을 캡처한다. 공개 전이면 --only town --url <로컬 주소>. 조회수 집계(hits.sh) 요청은 막는다.
-- 비밀번호 상황판(생활권·상가공실): 로그인 문 뒤라 캡처하지 않고, 수치를 흐리게 처리한 30초 미리보기 영상에서 한 장면을 뽑는다.
+- 공개 상황판(물환경·교통안전): 실제 화면을 캡처한다. 공개 전이면 --only 이름 --url <로컬 주소>. 조회수 집계(hits.sh) 요청은 막는다.
+- 비밀번호 상황판(생활권·읍면 생활인프라·상가공실·화재안전): 로그인 문 뒤라 캡처하지 않고, 수치를 흐리게 처리한 30초 미리보기 영상에서 한 장면을 뽑는다.
 """
 from __future__ import annotations
 
@@ -20,9 +20,10 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(HERE, "assets", "thumbs")
 TMP = os.path.join(HERE, "tmp")
 BASE = "https://ysong86.github.io/"
-SHOTS = {"town": "town_sejong/", "water": "water_sejong/", "traffic": "traffic_sejong/"}
+SHOTS = {"water": "water_sejong/", "traffic": "traffic_sejong/"}
 FRAMES = {"zone": ("zone_sejong/preview.mp4", 9.0), "vacant": ("vacant_sejong/preview.mp4", 18.8),
-          "fire": ("fire_sejong/preview.mp4", 22.5)}
+          "fire": ("fire_sejong/preview.mp4", 22.5),
+          "town": ("town_sejong/preview.mp4", 12.0)}
 W = 960
 
 
