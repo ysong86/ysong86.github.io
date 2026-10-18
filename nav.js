@@ -47,6 +47,7 @@
   var HOME = "https://ysong86.github.io/";
   var D = [
     {id: "zone", title: "생활권 재구조화 상황판", lock: true},
+    {id: "town", title: "읍면 생활인프라 상황판"},
     {id: "vacant", title: "상가공실 상황판", lock: true},
     {id: "fire", title: "화재안전 상황판", lock: true},
     {id: "water", title: "물환경 상황판"},
