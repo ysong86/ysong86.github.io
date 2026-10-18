@@ -33,13 +33,16 @@ button{font:inherit;cursor:pointer;color:inherit}
 .mast .logo img{display:block;height:30px;width:auto}
 
 /* 첫 화면 문구 */
-.hero{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;padding:44px 0 32px;border-bottom:1px solid var(--rule)}
-.hero h1{grid-column:1 / -1;margin:0;font-weight:700;font-size:clamp(34px,5.2vw,78px);line-height:1;letter-spacing:-.045em;white-space:nowrap}
+.hero{padding:44px 0 32px;border-bottom:1px solid var(--rule)}
+.hero-in{display:inline-block;max-width:100%}
+.hero h1{margin:0 0 22px;font-weight:700;font-size:clamp(34px,5.2vw,78px);line-height:1;letter-spacing:-.045em;white-space:nowrap}
 .hero h1 em{font-style:normal;color:var(--accent)}
-.hero .say{grid-column:6 / span 7;align-self:end;display:flex;flex-direction:column;gap:14px}
+.hero .say{width:0;min-width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 40px;align-items:end}
+.hero .say .lede{grid-column:1}
+.hero .say .note{grid-column:1}
 .hero .say p{margin:0;font-size:15px;color:var(--ink2);line-height:1.65}
 .hero .say .note{font-size:13px;color:var(--ink3);border-left:2px solid var(--accent);padding-left:10px}
-.hero .say .count{display:flex;gap:22px;font-size:12px;color:var(--ink3);letter-spacing:.08em;padding-top:6px;border-top:1px solid var(--rule)}
+.hero .say .count{grid-column:2;grid-row:1 / span 2;display:flex;gap:22px;font-size:12px;color:var(--ink3);letter-spacing:.08em;padding-left:24px;border-left:1px solid var(--rule)}
 .hero .say .count b{display:block;font-size:26px;color:var(--ink);font-weight:500;letter-spacing:-.02em;font-family:"IBM Plex Mono",monospace}
 
 /* 프로젝트 목록 + 미리보기 */
@@ -143,8 +146,10 @@ body.viewing #home{display:none}
 @media (max-width:980px){
   #home{padding:0 20px 36px}
   .hero{grid-template-columns:1fr;padding:36px 0 28px;gap:18px}
-  .hero h1,.hero .say{grid-column:1}
+  .hero-in{display:block}
   .hero h1{white-space:normal}
+  .hero .say{width:auto;grid-template-columns:1fr}
+  .hero .say .count{grid-column:1;grid-row:auto;border-left:0;padding-left:0;padding-top:8px;border-top:1px solid var(--rule)}
   .index{grid-template-columns:1fr}
   .index .lh{display:none}
   .list{grid-column:1}
@@ -170,14 +175,14 @@ body.viewing #home{display:none}
     <a class="logo" href="#" aria-label="세종연구원"><img src="assets/sri_signature.png" alt="세종연구원 SEJONG RESEARCH INSTITUTE"></a>
   </header>
 
-  <section class="hero">
+  <section class="hero"><div class="hero-in">
     <h1>질문으로 시작하는 <em>세종 읽기</em>.</h1>
     <div class="say">
       <p class="lede">세종의 현안을 데이터로 살펴보려고 자발적으로 만든 상황판들입니다. 기관의 공식 서비스는 아니고, 공공데이터와 참여 연구자들이 쌓아 온 연구 자료로 조금씩 다듬어 가고 있습니다. 목록을 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 상황판을 오갈 수 있습니다.</p>
       <p class="note lede-note">연구원의 공식 업무가 아닌, 참여 연구자들의 호기심과 재미에서 시작한 작업입니다. 결과물은 참고용으로 봐 주세요.</p>
       <div class="count" id="count"></div>
     </div>
-  </section>
+  </div></section>
 
   <section class="index" aria-label="상황판 목록">
     <div class="lh mono" aria-hidden="true"><span>NO.</span><span>DASHBOARD</span><span>FIELD</span><span>ACCESS</span><span></span></div>
