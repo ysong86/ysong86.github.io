@@ -29,8 +29,11 @@ button{font:inherit;cursor:pointer;color:inherit}
 .mast .brand b{font-weight:700;letter-spacing:.02em}
 .mast .brand span{color:var(--ink3);letter-spacing:.18em;font-size:11px}
 .mast .meta{font-size:11.5px;color:var(--ink3);letter-spacing:.12em}
-.mast .logo{background:#fff;padding:4px 8px;display:block}
-.mast .logo img{display:block;height:30px;width:auto}
+.mast .logo{display:block}
+/* 어두운 화면에서는 남색 글자가 묻혀 흰 판을 깐다(로고 색은 바꾸지 않는다) */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mast .logo{background:#fff;padding:4px 8px}}
+:root[data-theme="dark"] .mast .logo{background:#fff;padding:4px 8px}
+.mast .logo img{display:block;height:36px;width:auto}
 
 /* 첫 화면 문구 */
 .hero{padding:44px 0 32px;border-bottom:1px solid var(--rule)}
@@ -172,7 +175,7 @@ body.viewing #home{display:none}
   <header class="mast">
     <div class="brand"><b>세종 이슈 대시보드</b><span class="mono">SEJONG ISSUE DASHBOARD</span></div>
     <div class="meta mono" id="meta"></div>
-    <a class="logo" href="#" aria-label="세종연구원"><img src="assets/sri_signature.png" alt="세종연구원 SEJONG RESEARCH INSTITUTE"></a>
+    <a class="logo" href="#" aria-label="세종연구원"><img src="assets/sri_signature_t.png" alt="세종연구원 SEJONG RESEARCH INSTITUTE"></a>
   </header>
 
   <section class="hero"><div class="hero-in">
