@@ -311,7 +311,8 @@ function show(id){
   if (!d) { document.body.classList.remove("viewing"); document.title = "세종 이슈 대시보드"; return; }
   if (!frames[id]) {
     const f = document.createElement("iframe");
-    f.src = d.path; f.title = d.title; f.setAttribute("allow", "fullscreen");
+    // 10분 단위 꼬리표 — 상황판을 다시 배포했는데 iframe 이 브라우저 캐시의 예전 판을 보여 주는 일을 막는다
+    f.src = d.path + "?t=" + Math.floor(Date.now() / 600000); f.title = d.title; f.setAttribute("allow", "fullscreen");
     $("#frames").appendChild(f); frames[id] = f;
   }
   Object.entries(frames).forEach(([k, f]) => f.classList.toggle("on", k === id));
