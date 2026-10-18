@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>세종 이슈 대시보드</title>
-<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 상황판 여섯 가지(생활권 재구조화·읍면 생활인프라·상가공실·화재안전·물환경·교통안전)를 모았습니다.">
+<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 상황판 다섯 가지(생활권 재구조화·상가공실·화재안전·물환경·교통안전)를 모았습니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* 건축사무소 포트폴리오처럼 — 흑백·큰 글자·얇은 선·번호 목록, 색은 한 가지만 아껴 쓴다 */
@@ -251,9 +251,6 @@ body.viewing #home{display:none}
 const D = [
   {id: "zone", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신",
    desc: "행복도시 6개 생활권이 맡은 기능을 실제로 하고 있는지, 생활권 사이·광역권과 어떻게 이어지는지 공공데이터 25개 지표와 행정동 지도로 점검합니다.",
-   who: "세종연구원 연구모임", preview: true},
-  {id: "town", cat: "도농균형 · 생활SOC", q: "읍면에서도 일상이 가까운가", path: "town_sejong/", title: "세종 읍면 생활인프라 격차 상황판", lock: true, cycle: "분기 갱신",
-   desc: "1읍 9면 주민이 병원·어린이집·도서관·버스까지 얼마나 걸리는지 동 지역과 나란히 놓고, 읍면 생활인프라 공약이 어디까지 왔는지 지도로 점검합니다.",
    who: "세종연구원 연구모임", preview: true},
   {id: "vacant", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
    desc: "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.",
