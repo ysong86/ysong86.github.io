@@ -8,7 +8,8 @@
   // 이름: [주소, 링크에 뜨는 설명]
   var PEOPLE = {
     "송양호": ["https://www.researchgate.net/profile/Yangho-Song", "ResearchGate"],
-    "안용준": ["https://www.facebook.com/ayj826", "Facebook"]
+    "안용준": ["https://www.facebook.com/ayj826", "Facebook"],
+    "이재민": ["https://www.facebook.com/profile.php?id=100001785791011", "Facebook"]
   };
   var RE = new RegExp("(" + Object.keys(PEOPLE).join("|") + ")", "g");
   function link() {
