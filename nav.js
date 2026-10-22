@@ -49,6 +49,7 @@
     {id: "zone", title: "생활권 재구조화 상황판", lock: true},
     {id: "vacant", title: "상가공실 상황판", lock: true},
     {id: "fire", title: "화재안전 상황판", lock: true},
+    {id: "heritage", title: "국가유산 상황판"},
     {id: "water", title: "물환경 상황판"},
     {id: "traffic", title: "교통안전 상황판"}
   ];
