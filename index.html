@@ -59,6 +59,8 @@ button{font:inherit;cursor:pointer;color:inherit}
 .row .tt{display:flex;flex-direction:column;gap:3px;min-width:0}
 .row .tt b{font-size:clamp(19px,1.9vw,26px);font-weight:600;letter-spacing:-.025em;line-height:1.2}
 .row .tt span{font-size:13.5px;color:var(--ink2)}
+.row .tt b .em{display:inline-block;width:1.45em;margin-right:.2em;font-size:.86em;color:initial;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
+.row.next-row .tt b .em{opacity:.55}
 .row .cat{font-size:12.5px;color:var(--ink2);line-height:1.45}
 .row .cat small{display:block;font-size:11.5px;color:var(--ink3)}
 .row .acc{font-size:11.5px;letter-spacing:.06em}
@@ -249,22 +251,22 @@ body.viewing #home{display:none}
 (() => {
 "use strict";
 const D = [
-  {id: "zone", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신",
+  {id: "zone", em: "🏘️", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신",
    desc: "행복도시 6개 생활권이 맡은 기능을 실제로 하고 있는지, 생활권 사이·광역권과 어떻게 이어지는지 공공데이터 25개 지표와 행정동 지도로 점검합니다.",
    who: "세종연구원 연구모임", preview: true},
-  {id: "vacant", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
+  {id: "vacant", em: "🏬", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
    desc: "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.",
    who: "세종연구원 연구모임", preview: true},
-  {id: "fire", cat: "재난 · 화재", q: "소방차는 제때 닿는가", path: "fire_sejong/", title: "세종 화재안전 상황판", lock: true, cycle: "ITS 실측 속도 반영",
+  {id: "fire", em: "🚒", cat: "재난 · 화재", q: "소방차는 제때 닿는가", path: "fire_sejong/", title: "세종 화재안전 상황판", lock: true, cycle: "ITS 실측 속도 반영",
    desc: "119안전센터에서 건물까지 소방차가 실제 도로 속도로 몇 분 만에 닿는지와 건물 화재위험(연구진 추정)을 겹쳐, 위험은 높은데 늦게 닿는 곳을 찾습니다.",
    who: "세종연구원 도시안전연구센터", preview: true, pvLen: "40초"},
-  {id: "heritage", cat: "문화 · 국가유산", q: "세종의 시간은 어디에 남아 있나", path: "heritage_sejong/", title: "세종 국가유산 상황판", lock: false, cycle: "지정 현황 2026.1.1",
+  {id: "heritage", em: "🏯", cat: "문화 · 국가유산", q: "세종의 시간은 어디에 남아 있나", path: "heritage_sejong/", title: "세종 국가유산 상황판", lock: false, cycle: "지정 현황 2026.1.1",
    desc: "시가 지정·등록한 국가유산 137건을 이모지 지도로 찾고, 시대의 지층·이야기 코스·세시 달력·개발과 유산·누구나 누리는 유산(향유권·물리적 접근)·3D 보기로 읽습니다.",
    who: "세종연구원 세종지역학센터"},
-  {id: "water", cat: "물 · 환경", q: "강과 물은 지금 어떤가", path: "water_sejong/", title: "세종시 물환경 상황판", lock: false, cycle: "10분마다 갱신",
+  {id: "water", em: "💧", cat: "물 · 환경", q: "강과 물은 지금 어떤가", path: "water_sejong/", title: "세종시 물환경 상황판", lock: false, cycle: "10분마다 갱신",
    desc: "금강·미호강 수위와 강수, 하천 수질, 지하수, 기상을 실시간으로 모으고 관측 지점을 지도로 보여 줍니다.",
    who: "세종연구원 송양호"},
-  {id: "traffic", cat: "교통 · 안전", q: "도로는 지금 안전한가", path: "traffic_sejong/", title: "세종시 교통안전 상황판", lock: false, cycle: "10분마다 갱신",
+  {id: "traffic", em: "🚦", cat: "교통 · 안전", q: "도로는 지금 안전한가", path: "traffic_sejong/", title: "세종시 교통안전 상황판", lock: false, cycle: "10분마다 갱신",
    desc: "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.",
    who: "세종연구원 도시안전연구센터"},
 ];
@@ -279,13 +281,13 @@ $("#count").innerHTML = `<span><b>${cnt(D.length)}</b>상황판</span><span><b>$
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
 $("#list").innerHTML = D.map((d, i) => `<li><a class="row" href="#/${d.id}" data-id="${d.id}">
     <span class="no mono">${num(i)}</span>
-    <span class="tt"><b>${esc(d.title.replace(/^세종(시)? (행복도시 )?/, ""))}</b><span data-meta="${esc(d.cat)} · ${d.lock ? "비밀번호" : "공개"}">${esc(d.q)}</span></span>
+    <span class="tt"><b><span class="em" aria-hidden="true">${d.em || ""}</span>${esc(d.title.replace(/^세종(시)? (행복도시 )?/, ""))}</b><span data-meta="${esc(d.cat)} · ${d.lock ? "비밀번호" : "공개"}">${esc(d.q)}</span></span>
     <span class="cat">${esc(d.cat)}<small>${esc(d.cycle)}</small></span>
     <span class="acc mono ${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>
     <span class="ar" aria-hidden="true">→</span>
     <img class="mthumb" src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy"></a></li>`).join("") +
   `<li><a class="row next-row" href="#next" data-next="1"><span class="no mono">${num(D.length)}</span>
-    <span class="tt"><b>다음 이슈 — 준비 중</b><span data-meta="제안 받기">보고 싶은 세종의 현안을 알려 주세요</span></span>
+    <span class="tt"><b><span class="em" aria-hidden="true">💡</span>다음 이슈 — 준비 중</b><span data-meta="제안 받기">보고 싶은 세종의 현안을 알려 주세요</span></span>
     <span class="cat">제안 받기<small>누구나</small></span><span class="acc mono">CALL</span><span class="ar" aria-hidden="true">↓</span></a></li>`;
 // 미리보기 그림은 미리 다 깔아 두고 겹쳐서 바꾼다(빠르게 넘어가게)
 $("#shot").innerHTML = D.map(d => `<img src="assets/thumbs/${d.id}.jpg" alt="${esc(d.title)} 화면" data-id="${d.id}">`).join("");
