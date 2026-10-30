@@ -61,6 +61,11 @@ button{font:inherit;cursor:pointer;color:inherit}
 .row .tt span{font-size:13.5px;color:var(--ink2)}
 .row .tt b .em{display:inline-block;width:1.45em;margin-right:.2em;font-size:.86em;color:initial;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
 .row.next-row .tt b .em{opacity:.55}
+.row .tt b .collab{display:inline-flex;align-items:center;gap:5px;margin-left:10px;padding:2px 9px 2px 8px;border:1px solid var(--accent,#8b9cf7);border-radius:99px;font-style:normal;font-size:11px;font-weight:500;letter-spacing:0;color:var(--accent,#8b9cf7);vertical-align:.35em;white-space:nowrap}
+.row .tt b .collab::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:collab 1.8s ease-in-out infinite}
+@keyframes collab{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.row .tt b .collab::before{animation:none}}
+@media (max-width:640px){.row .tt b .collab{display:flex;width:max-content;margin:4px 0 0;vertical-align:0}}
 .row .cat{font-size:12.5px;color:var(--ink2);line-height:1.45}
 .row .cat small{display:block;font-size:11.5px;color:var(--ink3)}
 .row .acc{font-size:11.5px;letter-spacing:.06em}
@@ -254,7 +259,7 @@ const D = [
   {id: "lab", em: "🏙️", cat: "도시 · 3D 실험실", q: "도시를 움직여 보면 무엇이 달라지나", path: "lab_sejong/", title: "세종 디지털트윈 실험실", lock: false, cycle: "3D 시뮬레이션",
    desc: "행복도시 9,284동과 실제 지형을 3D 모형에 올려, 날짜·시각별 그림자와 일조시간, 금강 수위 시나리오, 눈높이 조망, 출퇴근 정체(ITS 구간 속도), 밤 풍경을 직접 시험해 봅니다.",
    who: "세종연구원 송양호", preview: true, pvLen: "50초"},
-  {id: "zone", em: "🏘️", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신",
+  {id: "zone", em: "🏘️", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신", collab: "외부기관 요청 · 공동작업 진행 중",
    desc: "행복도시 6개 생활권이 맡은 기능을 실제로 하고 있는지, 생활권 사이·광역권과 어떻게 이어지는지 공공데이터 25개 지표와 행정동 지도로 점검합니다.",
    who: "세종연구원 연구모임", preview: true},
   {id: "vacant", em: "🏬", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
@@ -284,7 +289,7 @@ $("#count").innerHTML = `<span><b>${cnt(D.length)}</b>상황판</span><span><b>$
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
 $("#list").innerHTML = D.map((d, i) => `<li><a class="row" href="#/${d.id}" data-id="${d.id}">
     <span class="no mono">${num(i)}</span>
-    <span class="tt"><b><span class="em" aria-hidden="true">${d.em || ""}</span>${esc(d.title.replace(/^세종(시)? (행복도시 )?/, ""))}</b><span data-meta="${esc(d.cat)} · ${d.lock ? "비밀번호" : "공개"}">${esc(d.q)}</span></span>
+    <span class="tt"><b><span class="em" aria-hidden="true">${d.em || ""}</span>${esc(d.title.replace(/^세종(시)? (행복도시 )?/, ""))}${d.collab ? `<i class="collab">${esc(d.collab)}</i>` : ""}</b><span data-meta="${esc(d.cat)} · ${d.lock ? "비밀번호" : "공개"}">${esc(d.q)}</span></span>
     <span class="cat">${esc(d.cat)}<small>${esc(d.cycle)}</small></span>
     <span class="acc mono ${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>
     <span class="ar" aria-hidden="true">→</span>
