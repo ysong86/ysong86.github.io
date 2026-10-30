@@ -1,7 +1,7 @@
-/* 세종 이슈 대시보드 — 상황판 공통 위쪽 탭 줄.
-   각 상황판(로그인 문 포함)이 <script src="https://ysong86.github.io/nav.js" data-site="water"></script> 로 불러온다.
+/* 세종 읽기 — 읽기 공통 위쪽 탭 줄.
+   각 읽기(로그인 문 포함)이 <script src="https://ysong86.github.io/nav.js" data-site="water"></script> 로 불러온다.
    - 대문(ysong86.github.io) 안 iframe 으로 열렸으면 대문에 이미 탭 줄이 있으므로 아무것도 하지 않는다.
-   - 상황판 목록을 바꿀 때는 이 파일과 대문 index.html 만 고치면 된다(NAS·상황판 재배포 불필요). */
+   - 읽기 목록을 바꿀 때는 이 파일과 대문 index.html 만 고치면 된다(NAS·읽기 재배포 불필요). */
 /* 제작 표기의 사람 이름 → 프로필 링크(대문 iframe 안에서도). 하단(footer·.foot·.credit·.contact)의 글자만 바꾼다. */
 (function () {
   "use strict";
@@ -48,13 +48,13 @@
   var HOME = "https://ysong86.github.io/";
   var D = [
     {id: "lab", title: "디지털트윈 실험실"},
-    {id: "zone", title: "생활권 재구조화 상황판", lock: true},
-    {id: "balance", title: "읍면 균형성장 상황판", lock: true},
-    {id: "vacant", title: "상가공실 상황판", lock: true},
-    {id: "fire", title: "화재안전 상황판", lock: true},
-    {id: "heritage", title: "국가유산 상황판"},
-    {id: "water", title: "물환경 상황판"},
-    {id: "traffic", title: "교통안전 상황판"}
+    {id: "zone", title: "생활권 읽기", lock: true},
+    {id: "balance", title: "읍면 균형성장 읽기", lock: true},
+    {id: "vacant", title: "상가공실 읽기", lock: true},
+    {id: "fire", title: "화재안전 읽기", lock: true},
+    {id: "heritage", title: "국가유산 읽기"},
+    {id: "water", title: "물환경 읽기"},
+    {id: "traffic", title: "교통안전 읽기"}
   ];
   var css =
     ".sjnav{all:initial;display:flex;align-items:center;gap:6px;padding:7px 12px;box-sizing:border-box;width:100%;" +
@@ -80,10 +80,10 @@
     document.head.appendChild(st);
     var nav = document.createElement("nav");
     nav.className = "sjnav";
-    nav.setAttribute("aria-label", "세종 이슈 대시보드 상황판 전환");
-    var h = '<a class="sjh" href="' + HOME + '">← 세종 이슈 대시보드</a><div class="sjt">';
+    nav.setAttribute("aria-label", "세종 읽기 전환");
+    var h = '<a class="sjh" href="' + HOME + '">← 세종 읽기</a><div class="sjt">';
     D.forEach(function (d) {
-      // 다른 상황판은 대문의 한 화면 보기(#/id)로 연다 — 탭을 오가도 로그인이 유지된다
+      // 다른 읽기는 대문의 한 화면 보기(#/id)로 연다 — 탭을 오가도 로그인이 유지된다
       h += '<a href="' + HOME + '#/' + d.id + '"' + (d.id === SITE ? ' class="on" aria-current="page"' : "") + ">" +
            d.title + (d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : "") + "</a>";
     });

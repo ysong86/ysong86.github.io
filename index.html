@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>세종 이슈 대시보드</title>
-<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 상황판 다섯 가지(생활권 재구조화·상가공실·화재안전·물환경·교통안전)를 모았습니다.">
+<title>세종 읽기</title>
+<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 '세종 읽기'(생활권·읍면 균형성장·상가공실·화재안전·국가유산·물환경·교통안전)를 모았습니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* 건축사무소 포트폴리오처럼 — 흑백·큰 글자·얇은 선·번호 목록, 색은 한 가지만 아껴 쓴다 */
@@ -180,7 +180,7 @@ body.viewing #home{display:none}
 <body>
 <main id="home">
   <header class="mast">
-    <div class="brand"><b>세종 이슈 대시보드</b><span class="mono">SEJONG ISSUE DASHBOARD</span></div>
+    <div class="brand"><b>세종 읽기</b><span class="mono">READING SEJONG</span></div>
     <div class="meta mono" id="meta"></div>
     <a class="logo" href="#" aria-label="세종연구원"><img src="assets/sri_signature_t.png" alt="세종연구원 SEJONG RESEARCH INSTITUTE"></a>
   </header>
@@ -188,14 +188,14 @@ body.viewing #home{display:none}
   <section class="hero"><div class="hero-in">
     <h1>질문으로 시작하는 <em>세종 읽기</em>.</h1>
     <div class="say">
-      <p class="lede">세종연구원 연구자들의 작은 연구모임에서 던진 질문들을, 공공데이터와 쌓아 온 연구 자료로 하나씩 풀어 가는 상황판들입니다. 함께 던진 질문에서 출발해 조금씩 답을 찾아가는 중입니다. 목록을 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 상황판을 오갈 수 있습니다.</p>
+      <p class="lede">세종연구원 연구자들의 작은 연구모임에서 던진 질문들을, 공공데이터와 쌓아 온 연구 자료로 하나씩 풀어 가는 세종 읽기입니다. 함께 던진 질문에서 출발해 조금씩 답을 찾아가는 중입니다. 목록을 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 다른 읽기를 오갈 수 있습니다.</p>
       <p class="note lede-note">연구원의 공식 업무가 아닌, 참여 연구자들의 호기심과 재미에서 시작한 작업입니다. 결과물은 참고용으로 봐 주세요.</p>
       <div class="count" id="count"></div>
     </div>
   </div></section>
 
-  <section class="index" aria-label="상황판 목록">
-    <div class="lh mono" aria-hidden="true"><span>NO.</span><span>DASHBOARD</span><span>FIELD</span><span>ACCESS</span><span></span></div>
+  <section class="index" aria-label="읽기 목록">
+    <div class="lh mono" aria-hidden="true"><span>NO.</span><span>READING</span><span>FIELD</span><span>ACCESS</span><span></span></div>
     <ol class="list" id="list"></ol>
     <figure class="fig" id="fig" aria-live="polite">
       <div class="shot" id="shot"></div>
@@ -208,7 +208,7 @@ body.viewing #home{display:none}
     <div class="lead">
       <div class="eb mono" id="next-no">06 — NEXT</div>
       <h2 id="next-h">다음 이슈를 준비하고 있습니다<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></h2>
-      <p>데이터로 들여다보고 싶은 세종의 현안이 있나요? 주제와 함께 쓸 만한 자료를 알려 주시면 다음 상황판을 고르는 데 반영합니다. 상황판 제작 협업 문의도 환영합니다.</p>
+      <p>데이터로 들여다보고 싶은 세종의 현안이 있나요? 주제와 함께 쓸 만한 자료를 알려 주시면 다음 읽기를 고르는 데 반영합니다. 읽기 제작 협업 문의도 환영합니다.</p>
       <div class="ideas" id="ideas" aria-label="주제 예시(누르면 채워집니다)">
         <button class="idea" type="button">인구 이동·정주</button>
         <button class="idea" type="button">주차</button><button class="idea" type="button">대기질·폭염</button>
@@ -240,7 +240,7 @@ body.viewing #home{display:none}
 </main>
 
 <div id="view">
-  <nav class="bar" aria-label="상황판 전환">
+  <nav class="bar" aria-label="읽기 전환">
     <button class="home" type="button" id="back">← 모아보기</button>
     <div class="tabs" role="tablist" id="tabs"></div>
     <a class="btn ext" id="ext" href="#" target="_blank" rel="noopener">↗<span> 새 창으로</span></a>
@@ -248,7 +248,7 @@ body.viewing #home{display:none}
   <div class="frames" id="frames"></div>
 </div>
 
-<div id="pvm" role="dialog" aria-modal="true" aria-label="상황판 미리보기"><div class="in">
+<div id="pvm" role="dialog" aria-modal="true" aria-label="미리보기"><div class="in">
   <div class="hd"><span id="pvt">미리보기</span><button type="button" id="pvx" aria-label="닫기">×</button></div>
   <video id="pvv" controls playsinline preload="none"></video></div></div>
 
@@ -259,25 +259,25 @@ const D = [
   {id: "lab", em: "🏙️", cat: "도시 · 3D 실험실", q: "도시를 움직여 보면 무엇이 달라지나", path: "lab_sejong/", title: "세종 디지털트윈 실험실", lock: false, cycle: "3D 시뮬레이션",
    desc: "행복도시 9,284동과 실제 지형을 3D 모형에 올려, 날짜·시각별 그림자와 일조시간, 금강 수위 시나리오, 눈높이 조망, 출퇴근 정체(ITS 구간 속도), 밤 풍경을 직접 시험해 봅니다.",
    who: "세종연구원 송양호", preview: true, pvLen: "50초"},
-  {id: "zone", em: "🏘️", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 재구조화 상황판", lock: true, cycle: "수시 갱신", collab: "관계기관 요청 · 공동작업 진행 중",
+  {id: "zone", em: "🏘️", cat: "도시계획 · 생활권", q: "생활권은 계획대로 작동하고 있나", path: "zone_sejong/", title: "세종 생활권 읽기", lock: true, cycle: "수시 갱신", collab: "관계기관 요청 · 공동작업 진행 중",
    desc: "행복도시 6개 생활권이 맡은 기능을 실제로 하고 있는지, 생활권 사이·광역권과 어떻게 이어지는지 공공데이터 25개 지표와 행정동 지도로 점검합니다.",
    who: "세종연구원 연구모임", preview: true},
-  {id: "balance", em: "🌾", cat: "균형성장 · 읍면", q: "읍면과 신도심의 격차는 좁혀지고 있나", path: "balance_sejong/", title: "세종 읍면 균형성장 상황판", lock: true, cycle: "수시 갱신", collab: "관계기관 요청 · 공동작업 진행 중",
+  {id: "balance", em: "🌾", cat: "균형성장 · 읍면", q: "읍면과 신도심의 격차는 좁혀지고 있나", path: "balance_sejong/", title: "세종 읍면 균형성장 읽기", lock: true, cycle: "수시 갱신", collab: "관계기관 요청 · 공동작업 진행 중",
    desc: "1읍 9면과 신도심의 인구·일자리·생활·건물을 나란히 놓고, 조치원·북부권과 햇빛소득 가능성을 살피며, 시정 약속이 지표로 나타나는지 지켜봅니다.",
    who: "세종연구원 연구모임", preview: true},
-  {id: "vacant", em: "🏬", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 상황판", lock: true, cycle: "전수조사 2023·2025",
+  {id: "vacant", em: "🏬", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 읽기", lock: true, cycle: "전수조사 2023·2025",
    desc: "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.",
    who: "세종연구원 연구모임", preview: true},
-  {id: "fire", em: "🚒", cat: "재난 · 화재", q: "소방차는 제때 닿는가", path: "fire_sejong/", title: "세종 화재안전 상황판", lock: true, cycle: "ITS 실측 속도 반영",
+  {id: "fire", em: "🚒", cat: "재난 · 화재", q: "소방차는 제때 닿는가", path: "fire_sejong/", title: "세종 화재안전 읽기", lock: true, cycle: "ITS 실측 속도 반영",
    desc: "119안전센터에서 건물까지 소방차가 실제 도로 속도로 몇 분 만에 닿는지와 건물 화재위험(연구진 추정)을 겹쳐, 위험은 높은데 늦게 닿는 곳을 찾습니다.",
    who: "세종연구원 도시안전연구센터", preview: true, pvLen: "40초"},
-  {id: "heritage", em: "📜", cat: "문화 · 국가유산", q: "세종의 시간은 어디에 남아 있나", path: "heritage_sejong/", title: "세종 국가유산 상황판", lock: false, cycle: "지정 현황 2026.1.1",
+  {id: "heritage", em: "📜", cat: "문화 · 국가유산", q: "세종의 시간은 어디에 남아 있나", path: "heritage_sejong/", title: "세종 국가유산 읽기", lock: false, cycle: "지정 현황 2026.1.1",
    desc: "시가 지정·등록한 국가유산 137건을 이모지 지도로 찾고, 시대의 지층·이야기 코스·세시 달력·개발과 유산·누구나 누리는 유산(향유권·물리적 접근)으로 읽습니다.",
    who: "세종연구원 세종지역학센터"},
-  {id: "water", em: "💧", cat: "물 · 환경", q: "강과 물은 지금 어떤가", path: "water_sejong/", title: "세종시 물환경 상황판", lock: false, cycle: "10분마다 갱신",
+  {id: "water", em: "💧", cat: "물 · 환경", q: "강과 물은 지금 어떤가", path: "water_sejong/", title: "세종시 물환경 읽기", lock: false, cycle: "10분마다 갱신",
    desc: "금강·미호강 수위와 강수, 하천 수질, 지하수, 기상을 실시간으로 모으고 관측 지점을 지도로 보여 줍니다.",
    who: "세종연구원 송양호"},
-  {id: "traffic", em: "🚦", cat: "교통 · 안전", q: "도로는 지금 안전한가", path: "traffic_sejong/", title: "세종시 교통안전 상황판", lock: false, cycle: "10분마다 갱신",
+  {id: "traffic", em: "🚦", cat: "교통 · 안전", q: "도로는 지금 안전한가", path: "traffic_sejong/", title: "세종시 교통안전 읽기", lock: false, cycle: "10분마다 갱신",
    desc: "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.",
    who: "세종연구원 도시안전연구센터"},
 ];
@@ -287,8 +287,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const num = i => String(i + 1).padStart(2, "0");
 const nLock = D.filter(d => d.lock).length;
 const cnt = n => String(n).padStart(2, "0");
-$("#meta").textContent = `INDEX — ${cnt(D.length)} DASHBOARDS`;
-$("#count").innerHTML = `<span><b>${cnt(D.length)}</b>상황판</span><span><b>${cnt(D.length - nLock)}</b>공개</span><span><b>${cnt(nLock)}</b>비밀번호</span>`;
+$("#meta").textContent = `INDEX — ${cnt(D.length)} READINGS`;
+$("#count").innerHTML = `<span><b>${cnt(D.length)}</b>읽기</span><span><b>${cnt(D.length - nLock)}</b>공개</span><span><b>${cnt(nLock)}</b>비밀번호</span>`;
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
 $("#list").innerHTML = D.map((d, i) => `<li><a class="row" href="#/${d.id}" data-id="${d.id}">
     <span class="no mono">${num(i)}</span>
@@ -320,14 +320,14 @@ pick(D[0].id);
 
 $("#tabs").innerHTML = D.map(d => `<button class="tab" type="button" role="tab" data-tab="${d.id}" aria-selected="false">${esc(d.title.replace("세종시 ", "").replace("세종 행복도시 ", "").replace("세종 ", ""))}${d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : ""}</button>`).join("");
 
-/* 한 화면에서 보기 — 상황판마다 iframe 을 한 번만 만들고 숨겨 둔다(탭을 오가도 로그인·스크롤이 그대로) */
+/* 한 화면에서 보기 — 읽기마다 iframe 을 한 번만 만들고 숨겨 둔다(탭을 오가도 로그인·스크롤이 그대로) */
 const frames = {};
 function show(id){
   const d = D.find(x => x.id === id);
-  if (!d) { document.body.classList.remove("viewing"); document.title = "세종 이슈 대시보드"; return; }
+  if (!d) { document.body.classList.remove("viewing"); document.title = "세종 읽기"; return; }
   if (!frames[id]) {
     const f = document.createElement("iframe");
-    // 10분 단위 꼬리표 — 상황판을 다시 배포했는데 iframe 이 브라우저 캐시의 예전 판을 보여 주는 일을 막는다
+    // 10분 단위 꼬리표 — 읽기를 다시 배포했는데 iframe 이 브라우저 캐시의 예전 판을 보여 주는 일을 막는다
     f.src = d.path + "?t=" + Math.floor(Date.now() / 600000); f.title = d.title; f.setAttribute("allow", "fullscreen");
     $("#frames").appendChild(f); frames[id] = f;
   }
@@ -335,7 +335,7 @@ function show(id){
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.tab === id));
   $("#ext").href = d.path;
   document.body.classList.add("viewing");
-  document.title = d.title + " · 세종 이슈 대시보드";
+  document.title = d.title + " · 세종 읽기";
 }
 const route = () => { const h = location.hash.replace(/^#\/?/, ""); if (h === "next") return; show(h); };
 const go = id => { location.hash = id ? "#/" + id : ""; };
@@ -348,7 +348,7 @@ $("#back").onclick = () => go("");
 window.addEventListener("hashchange", route);
 route();
 
-/* 미리보기(수치 흐림 영상 — 각 상황판 문에 있는 것과 같다) */
+/* 미리보기(수치 흐림 영상 — 각 읽기 문에 있는 것과 같다) */
 const pvm = $("#pvm"), pvv = $("#pvv");
 function openPv(id){
   const d = D.find(x => x.id === id);
@@ -366,7 +366,7 @@ const TO = "ysong@sri.re.kr";
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbyhPyZNJNTxbUprnSNe8REiUBUC1U1NuXrY3n2OxWjx_hzMbfcNMoPOTM9oTeHisrgK/exec";
 if (ENDPOINT) {
   $("#q-send").textContent = "제출";
-  $("#q-note").textContent = "제출한 내용은 다음 상황판을 고르고 회신하는 데에만 쓰며, 제작자(송양호)의 구글 시트에 보관합니다. 이름·메일은 적지 않아도 됩니다.";
+  $("#q-note").textContent = "제출한 내용은 다음 읽기를 고르고 회신하는 데에만 쓰며, 제작자(송양호)의 구글 시트에 보관합니다. 이름·메일은 적지 않아도 됩니다.";
 }
 const topic = $("#q-topic"), qmsg = $("#q-msg");
 document.querySelectorAll("#ideas .idea").forEach(b => b.onclick = () => {
@@ -375,8 +375,8 @@ document.querySelectorAll("#ideas .idea").forEach(b => b.onclick = () => {
 });
 function letter(){
   const t = topic.value.trim(), body = $("#q-body").value.trim(), who = $("#q-who").value.trim(), mail = $("#q-mail").value.trim();
-  return {subject: `[세종 이슈 대시보드] 다음 이슈 제안: ${t}`,
-          text: `보고 싶은 이슈: ${t}\n\n데이터·지표 / 궁금한 점:\n${body || "(없음)"}\n\n소속·이름: ${who || "(없음)"}\n회신 메일: ${mail || "(없음)"}\n\n— 세종 이슈 대시보드(ysong86.github.io)에서 보냄`};
+  return {subject: `[세종 읽기] 다음 이슈 제안: ${t}`,
+          text: `보고 싶은 이슈: ${t}\n\n데이터·지표 / 궁금한 점:\n${body || "(없음)"}\n\n소속·이름: ${who || "(없음)"}\n회신 메일: ${mail || "(없음)"}\n\n— 세종 읽기(ysong86.github.io)에서 보냄`};
 }
 function check(){
   if (!topic.value.trim()) { qmsg.style.color = "var(--lock)"; qmsg.textContent = "보고 싶은 이슈를 적어 주세요."; topic.focus(); return false; }
