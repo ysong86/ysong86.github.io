@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>세종 읽기</title>
-<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 '세종 읽기'(생활권·읍면 균형성장·상가공실·화재안전·국가유산·물환경·교통안전)를 모았습니다.">
+<meta name="description" content="세종연구원 연구자들이 세종의 현안을 데이터로 살펴보려고 자발적으로 만든 '세종 읽기'(생활권·읍면 균형성장·상가공실·지역안전·국가유산·물환경·교통안전)를 모았습니다.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* 건축사무소 포트폴리오처럼 — 흑백·큰 글자·얇은 선·번호 목록, 색은 한 가지만 아껴 쓴다 */
@@ -268,8 +268,8 @@ const D = [
   {id: "vacant", em: "🏬", cat: "상권 · 경제", q: "행복도시 상가는 왜 비어 있나", path: "vacant_sejong/", title: "세종 행복도시 상가공실 읽기", lock: true, cycle: "전수조사 2023·2025",
    desc: "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.",
    who: "세종연구원 연구모임", preview: true},
-  {id: "fire", em: "🚒", cat: "재난 · 화재", q: "소방차는 제때 닿는가", path: "fire_sejong/", title: "세종 화재안전 읽기", lock: true, cycle: "ITS 실측 속도 반영",
-   desc: "119안전센터에서 건물까지 소방차가 실제 도로 속도로 몇 분 만에 닿는지와 건물 화재위험(연구진 추정)을 겹쳐, 위험은 높은데 늦게 닿는 곳을 찾습니다.",
+  {id: "fire", em: "🚒", cat: "재난 · 지역안전", q: "소방차는 제때 닿는가, 겨울 골목은 안전한가", path: "fire_sejong/", title: "세종 지역안전 읽기", lock: true, cycle: "화재안전 · 겨울 결빙",
+   desc: "지역안전지수 분야별로 읽습니다. 화재안전 탭은 소방차 도달시간과 건물 화재위험을, 겨울 결빙 탭은 동지 그늘·경사·걷는 사람으로 골목 낙상 위험과 제설함 후보를 봅니다(연구진 추정).",
    who: "세종연구원 도시안전연구센터", preview: true, pvLen: "40초"},
   {id: "heritage", em: "📜", cat: "문화 · 국가유산", q: "세종의 시간은 어디에 남아 있나", path: "heritage_sejong/", title: "세종 국가유산 읽기", lock: false, cycle: "지정 현황 2026.1.1",
    desc: "시가 지정·등록한 국가유산 137건을 이모지 지도로 찾고, 시대의 지층·이야기 코스·세시 달력·개발과 유산·누구나 누리는 유산(향유권·물리적 접근)으로 읽습니다.",

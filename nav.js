@@ -51,7 +51,7 @@
     {id: "zone", title: "생활권 읽기", lock: true},
     {id: "balance", title: "읍면 균형성장 읽기", lock: true},
     {id: "vacant", title: "상가공실 읽기", lock: true},
-    {id: "fire", title: "화재안전 읽기", lock: true},
+    {id: "fire", title: "지역안전 읽기", lock: true},
     {id: "heritage", title: "국가유산 읽기"},
     {id: "water", title: "물환경 읽기"},
     {id: "traffic", title: "교통안전 읽기"}

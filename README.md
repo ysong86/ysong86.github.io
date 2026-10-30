@@ -6,7 +6,7 @@ https://ysong86.github.io/ — 세종연구원 연구자들이 세종의 현안�
 |---|---|---|
 | 세종 생활권 재구조화 상황판 | /zone_sejong/ | 비밀번호 |
 | 세종 행복도시 상가공실 상황판 | /vacant_sejong/ | 비밀번호 |
-| 세종 화재안전 상황판 | /fire_sejong/ | 비밀번호 |
+| 세종 지역안전 읽기(화재안전·겨울 결빙 탭) | /fire_sejong/ | 비밀번호 |
 | 세종시 물환경 상황판 | /water_sejong/ | 공개 |
 | 세종시 교통안전 상황판 | /traffic_sejong/ | 공개 |
 
