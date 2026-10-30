@@ -23,7 +23,7 @@ BASE = "https://ysong86.github.io/"
 SHOTS = {"water": "water_sejong/", "traffic": "traffic_sejong/", "heritage": "heritage_sejong/"}
 FRAMES = {"zone": ("zone_sejong/preview.mp4", 9.0), "vacant": ("vacant_sejong/preview.mp4", 18.8),
           "fire": ("fire_sejong/preview.mp4", 22.5),
-          "town": ("town_sejong/preview.mp4", 12.0)}
+          "town": ("town_sejong/preview.mp4", 12.0), "balance": ("balance_sejong/preview.mp4", 7.0)}
 W = 960
 
 

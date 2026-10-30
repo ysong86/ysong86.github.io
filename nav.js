@@ -49,6 +49,7 @@
   var D = [
     {id: "lab", title: "디지털트윈 실험실"},
     {id: "zone", title: "생활권 재구조화 상황판", lock: true},
+    {id: "balance", title: "읍면 균형성장 상황판", lock: true},
     {id: "vacant", title: "상가공실 상황판", lock: true},
     {id: "fire", title: "화재안전 상황판", lock: true},
     {id: "heritage", title: "국가유산 상황판"},
