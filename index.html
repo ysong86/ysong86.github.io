@@ -97,8 +97,13 @@ button{font:inherit;cursor:pointer;color:inherit}
 
 .fly{display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;margin-top:40px;padding:22px 0;border-top:1px dashed var(--ink3);border-bottom:1px dashed var(--ink3);text-decoration:none}
 .fly .t{font-size:clamp(17px,1.9vw,22px);font-weight:500;letter-spacing:-.02em;line-height:1.4}
-.fly .go{font-size:14px;font-weight:600;color:var(--accent);white-space:nowrap}
-.fly:hover .go{text-decoration:underline}
+.fly .go{display:inline-block;background:var(--accent);color:var(--inv);padding:11px 20px;font-size:15px;font-weight:600;white-space:nowrap;animation:beat 1.5s ease-in-out infinite}
+.fly:hover .go,.fly:focus-visible .go{animation-play-state:paused;transform:scale(1.06)}
+/* 쿵-쿵 하고 쉬는 심장 박동 */
+@keyframes beat{0%,36%,100%{transform:scale(1);box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 50%,transparent)}
+  10%{transform:scale(1.1)}20%{transform:scale(1)}28%{transform:scale(1.07);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 50%,transparent)}
+  70%{box-shadow:0 0 0 16px transparent}}
+@media (prefers-reduced-motion: reduce){.fly .go{animation:none}}
 /* 다음 이슈 제안 */
 .next{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;padding:48px 0 40px;border-top:1px solid var(--ink);margin-top:48px}
 .next .lead{grid-column:1 / span 5}
