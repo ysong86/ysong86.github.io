@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>세종 종이비행기</title>
+<meta name="description" content="만들다 보니 너무 진지해지는데, 됐고 우리 모두 종이비행기나 날리자? 세종 건물 옥상에서 날려 보는 거리 겨루기.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--paper:#F3F2EE;--panel:rgba(251,250,247,.95);--ink:#111110;--ink2:#4A4A47;--ink3:#7E7D78;--rule:#11111026;--accent:#152484;--warn:#8A5A12;--inv:#F3F2EE}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--panel:rgba(22,22,21,.95);--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#8C8B85;--rule:#EDECE82B;--accent:#8EA0F2;--warn:#E9B865;--inv:#0F0F0E;color-scheme:dark}}
+:root[data-theme="dark"]{--panel:rgba(22,22,21,.95);--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#8C8B85;--rule:#EDECE82B;--accent:#8EA0F2;--warn:#E9B865;--inv:#0F0F0E;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#E4E5E3;color:var(--ink);font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;word-break:keep-all;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.mono{font-family:"IBM Plex Mono","IBM Plex Sans KR",ui-monospace,monospace}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:0}
+.hide{display:none!important}
+
+.btn{border:1px solid var(--ink);background:transparent;padding:11px 18px;font-weight:600;font-size:14.5px;border-radius:0}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.pri{color:#0F0F0E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.pri{color:#0F0F0E}}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible,.spot:focus-visible,input:focus-visible,.link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 판 */
+.card{position:fixed;background:var(--panel);border:1px solid var(--ink);backdrop-filter:blur(6px);overflow:auto;-webkit-overflow-scrolling:touch}
+#menu{left:24px;top:24px;bottom:24px;width:min(440px,calc(100% - 48px));padding:24px 24px 18px;display:flex;flex-direction:column;gap:16px}
+#result{right:24px;top:24px;bottom:24px;width:min(400px,calc(100% - 48px));padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px}
+.eb{font-size:11px;letter-spacing:.14em;color:var(--ink3)}
+h1{font-size:clamp(24px,3.2vw,31px);line-height:1.22;letter-spacing:-.03em;font-weight:700;margin:6px 0 0}
+h1 em{font-style:normal;color:var(--accent)}
+.sub{font-size:13.5px;line-height:1.6;color:var(--ink2);margin:0}
+.h2{font-size:12px;font-weight:600;color:var(--ink2);letter-spacing:.02em;margin:0 0 6px}
+.spots{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.spot{display:grid;grid-template-columns:1fr auto;gap:2px 12px;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--rule);padding:9px 8px}
+.spot b{font-size:14.5px;font-weight:600}
+.spot small{grid-column:1;font-size:12px;color:var(--ink3)}
+.spot .m{grid-row:1 / span 2;grid-column:2;align-self:center;font-size:13px;color:var(--ink2)}
+.spot:hover{background:var(--rule)}
+.spot[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spot[aria-pressed="true"] small,.spot[aria-pressed="true"] .m{color:#fff;opacity:.85}
+:root[data-theme="dark"] .spot[aria-pressed="true"],:root[data-theme="dark"] .spot[aria-pressed="true"] small,:root[data-theme="dark"] .spot[aria-pressed="true"] .m{color:#0F0F0E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .spot[aria-pressed="true"],:root:not([data-theme="light"]) .spot[aria-pressed="true"] small,:root:not([data-theme="light"]) .spot[aria-pressed="true"] .m{color:#0F0F0E}}
+
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.type{background:transparent;border:1px solid var(--rule);padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;font-weight:600}
+.type svg{width:44px;height:44px;display:block}
+.type svg path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round}
+.type:hover{border-color:var(--ink)}
+.type[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.type:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tdesc{font-size:12.5px;color:var(--ink2);margin:6px 0 0;min-height:18px}
+/* 순위표 */
+.rank{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule);font-size:13.5px}
+.rank li{display:grid;grid-template-columns:26px 1fr auto;gap:2px 8px;padding:5px 2px;border-bottom:1px solid var(--rule)}
+.rank .no{color:var(--ink3);font-size:12px;align-self:center}
+.rank .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .d{font-variant-numeric:tabular-nums;font-weight:600}
+.rank .w{grid-column:2 / span 2;font-size:11.5px;color:var(--ink3)}
+.rank li.me{background:var(--rule)}
+.rank-note{font-size:12px;color:var(--ink3);margin:6px 0 0}
+.foot{margin-top:auto;padding-top:10px;font-size:11.5px;line-height:1.6;color:var(--ink3)}
+.link{color:inherit}
+
+/* 비행 화면 */
+.hud{position:fixed;left:50%;top:14px;transform:translateX(-50%);display:flex;gap:1px;background:var(--ink);border:1px solid var(--ink);pointer-events:none}
+.hud div{background:var(--panel);padding:6px 14px;min-width:88px;text-align:center}
+.hud b{display:block;font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15}
+.hud span{font-size:10.5px;color:var(--ink3)}
+#mini{position:fixed;right:14px;bottom:14px;width:190px;border:1px solid var(--ink);background:#E3DED2;pointer-events:none;display:block}
+#tip{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--panel);border:1px solid var(--rule);padding:7px 13px;font-size:13px;color:var(--ink2);pointer-events:none;text-align:center;max-width:calc(100% - 28px);white-space:nowrap}
+#aim{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);width:min(380px,calc(100% - 32px));background:var(--panel);border:1px solid var(--ink);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+#aim p{margin:0;font-size:13px;line-height:1.5;color:var(--ink2);text-align:center}
+.gauge{height:12px;border:1px solid var(--ink);position:relative}
+.gauge i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent)}
+#throw{touch-action:none;user-select:none;-webkit-user-select:none;padding:14px;font-size:16px}
+.aimrow{display:flex;gap:8px}
+.aimrow .btn{padding:14px 16px}
+.aimrow #throw{flex:1}
+
+/* 결과 */
+.big{font-size:clamp(44px,6vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.big small{font-size:.42em;font-weight:500;margin-left:4px}
+.where{font-size:15px;line-height:1.55;margin:8px 0 0}
+.meta{font-size:12px;color:var(--ink3);margin:4px 0 0}
+.nick{display:flex;gap:8px}
+.nick input{flex:1;min-width:0;padding:10px 2px;border:0;border-bottom:1px solid var(--ink3);background:transparent;font-size:15px;border-radius:0}
+.nick input:focus{outline:0;border-bottom-color:var(--accent)}
+.msg{font-size:12.5px;min-height:18px;margin:6px 0 0;color:var(--ink3)}
+.msg.bad{color:var(--warn)}
+.msg.good{color:var(--accent)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{flex:1;white-space:nowrap}
+
+#load{position:fixed;inset:0;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:13.5px;color:#4A4A47}
+#load .bar{width:220px;height:2px;background:#11111026}
+#load .bar i{display:block;height:100%;width:0;background:#152484;transition:width .2s}
+
+@media (max-width:760px){
+  #menu{left:0;right:0;top:auto;bottom:0;width:auto;max-height:68%;border-width:1px 0 0;padding:16px 16px 12px;gap:12px}
+  #result{left:0;right:0;top:auto;bottom:0;width:auto;max-height:78%;border-width:1px 0 0;padding:16px 16px 12px}
+  .hud div{padding:4px 9px;min-width:68px}.hud b{font-size:17px}
+  #mini{width:110px;top:70px;right:8px;bottom:auto}
+  #tip{white-space:normal;width:calc(100% - 28px);bottom:14px;font-size:12.5px}
+  #aim{bottom:12px}
+}
+</style>
+</head>
+<body>
+<canvas id="c" tabindex="0" aria-label="세종 3D 비행 화면"></canvas>
+
+<section id="menu" class="card hide" aria-labelledby="ttl">
+  <div>
+    <div class="eb mono">세종 읽기 · 번외편</div>
+    <h1 id="ttl">됐고,<br>우리 모두 <em>종이비행기</em>나 날리자.</h1>
+  </div>
+  <p class="sub">옥상에서 던져서 가장 멀리 보낸 사람이 이깁니다. 건물과 지형은 실제 세종 그대로입니다. 파란 기둥을 지나면 바람을 타고 떠오릅니다.</p>
+  <div>
+    <p class="h2">어느 옥상에서 던질까요</p>
+    <div class="spots" id="spots"></div>
+  </div>
+  <div>
+    <p class="h2">어떤 비행기로 날릴까요</p>
+    <div class="types" id="types"></div>
+    <p class="tdesc" id="tdesc"></p>
+  </div>
+  <button class="btn pri" id="go" type="button">옥상으로 올라가기</button>
+  <div>
+    <p class="h2">가장 멀리 날린 사람들</p>
+    <ol class="rank" id="rank1"></ol>
+    <p class="rank-note" id="rnote1"></p>
+  </div>
+  <div class="foot">기록은 재미용입니다. 비행은 게임에 맞게 과장했습니다.<br>
+    <a class="link" href="https://ysong86.github.io/">← 세종 읽기로 돌아가기</a> · 문의 <a class="link" href="mailto:ysong@sri.re.kr">ysong@sri.re.kr</a></div>
+</section>
+
+<div class="hud hide" id="hud">
+  <div><b id="h-d">0</b><span>날아간 거리 m</span></div>
+  <div><b id="h-a">0</b><span>바닥까지 m</span></div>
+  <div><b id="h-v">0</b><span>속력 km/h</span></div>
+</div>
+<canvas id="mini" class="hide" width="380" height="330" aria-hidden="true"></canvas>
+<div id="tip" class="hide"></div>
+
+<section id="aim" class="hide" aria-label="던지기">
+  <p id="aimtxt"></p>
+  <div class="gauge" aria-hidden="true"><i id="gg"></i></div>
+  <div class="aimrow">
+    <button class="btn" id="aimback" type="button" aria-label="출발지 다시 고르기">←</button>
+    <button class="btn pri" id="throw" type="button">꾹 눌렀다 놓기</button>
+  </div>
+</section>
+
+<section id="result" class="card hide" aria-live="polite">
+  <div>
+    <div class="eb mono" id="r-from"></div>
+    <div class="big" style="margin-top:6px"><span id="r-d">0</span><small>m</small></div>
+    <p class="where" id="r-where"></p>
+    <p class="meta" id="r-meta"></p>
+  </div>
+  <form id="f" novalidate>
+    <p class="h2"><label for="nick">닉네임을 쓰면 순위표에 오릅니다</label></p>
+    <div class="nick">
+      <input id="nick" maxlength="10" autocomplete="off" placeholder="한글·영문·숫자 2~10자">
+      <input type="text" id="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;flex:none">
+      <button class="btn pri" id="send" type="submit">등록</button>
+    </div>
+    <p class="msg" id="msg" role="status"></p>
+  </form>
+  <div class="acts">
+    <button class="btn pri" id="again" type="button">다시 날리기</button>
+    <button class="btn" id="tomenu" type="button">옥상·비행기 바꾸기</button>
+  </div>
+  <div>
+    <p class="h2">가장 멀리 날린 사람들</p>
+    <ol class="rank" id="rank2"></ol>
+    <p class="rank-note" id="rnote2"></p>
+  </div>
+</section>
+
+<div id="load"><span id="ls">세종을 접는 중…</span><div class="bar"><i id="lb"></i></div></div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+  "three-mesh-bvh":"https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js"
+}}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { computeBoundsTree, acceleratedRaycast } from "three-mesh-bvh";
+import { Line2 } from "three/addons/lines/Line2.js";
+import { LineGeometry } from "three/addons/lines/LineGeometry.js";
+import { LineMaterial } from "three/addons/lines/LineMaterial.js";
+THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+THREE.Mesh.prototype.raycast = acceleratedRaycast;
+
+// 순위표 주소: 구글 Apps Script 웹 앱(대문 제안함과 같은 곳, ../sejong_portal/tools/apps_script.gs)
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbyhPyZNJNTxbUprnSNe8REiUBUC1U1NuXrY3n2OxWjx_hzMbfcNMoPOTM9oTeHisrgK/exec";
+
+const $ = s => document.querySelector(s);
+const MOBILE = matchMedia("(max-width:760px)").matches || navigator.maxTouchPoints > 1;
+const RAD = Math.PI / 180, clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+const fmt = n => Math.round(n).toLocaleString("ko-KR");
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const store = { get: k => { try { return localStorage.getItem(k); } catch (_) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) {} } };
+const step = (p, t) => { $("#lb").style.width = p + "%"; $("#ls").textContent = t; return new Promise(r => setTimeout(r, 16)); };
+
+// ───────── 닉네임 검사(Apps Script 의 checkNick 과 같은 목록을 쓴다)
+const BAD = ["씨발","시발","씨빨","시빨","씨팔","시팔","쉬발","쉬팔","씨바","시바","씹","좆","좃","존나","졸라","병신","븅신","빙신","지랄","염병","옘병",
+  "개새","개색","개세","개같","새끼","색기","쌔끼","썅","쌍년","쌍놈","미친놈","미친년","미친새","또라이","등신","창녀","걸레","보지","자지","섹스","강간",
+  "느금","니미","니애미","니엄마","엠창","애미","애비","한남","한녀","김치녀","맘충","일베","메갈","노무","틀딱","짱깨","쪽바리","깜둥","꺼져","닥쳐","뒤져","뒈져","자살","살인","히틀러",
+  "관리자","운영자","fuck","fuk","shit","bitch","asshole","dick","pussy","porn","sex","nigger","nigga","cunt","whore","slut"];
+function checkNick(s) {
+  if (!/^[가-힣a-zA-Z0-9]{2,10}$/.test(s)) return "한글·영문·숫자로 2~10자만 쓸 수 있습니다.";
+  const t = s.toLowerCase().replace(/[0-9]/g, "");        // 씨1발 같은 끼워 넣기를 지운다
+  return BAD.some(w => t.includes(w)) ? "쓸 수 없는 말이 들어 있습니다. 순하게 다시 지어 주세요." : "";
+}
+
+// ───────── 자료
+const M = await (await fetch("plane.json")).json();
+await step(20, "지형과 건물을 받는 중…");
+const BUF = await (await fetch("plane.bin")).arrayBuffer();
+const A = {};
+for (const [k, [off, dt, n]] of Object.entries(M.offs)) {
+  const T = { "<u2": Uint16Array, "<i4": Int32Array, "<f4": Float32Array, "<u4": Uint32Array, "|u1": Uint8Array }[dt];
+  A[k] = new T(BUF, off, n);
+}
+const D = M.dem, NB = M.n, DW = (D.nx - 1) * D.cell, DH = (D.ny - 1) * D.cell;
+const hAt = (x, y) => {
+  const i = (x - D.x0) / D.cell, j = (D.y1 - y) / D.cell;
+  const i0 = clamp(i | 0, 0, D.nx - 2), j0 = clamp(j | 0, 0, D.ny - 2);
+  const fx = clamp(i - i0, 0, 1), fy = clamp(j - j0, 0, 1), h = A.dem, n = D.nx;
+  return (h[j0*n+i0]*(1-fx)*(1-fy) + h[j0*n+i0+1]*fx*(1-fy) + h[(j0+1)*n+i0]*(1-fx)*fy + h[(j0+1)*n+i0+1]*fx*fy) / 10;
+};
+const inMap = (x, y) => x > D.x0 && x < D.x0 + DW && y < D.y1 && y > D.y1 - DH;
+const V = (x, y, z) => new THREE.Vector3(x, z, -y);   // 동·북·위 → three
+
+// ───────── 장면
+const canvas = $("#c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE ? 1.5 : 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+const BG = 0xE4E5E3;
+scene.background = new THREE.Color(BG);
+scene.fog = new THREE.Fog(BG, 5000, 21000);
+const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 1, 40000);
+scene.add(new THREE.HemisphereLight(0xf2f4f8, 0xb5aa94, 1.5));
+const sun = new THREE.DirectionalLight(0xfff3e0, 2.1);
+const SUNV = new THREE.Vector3(-700, 1000, 650);       // 오후 남서쪽 해
+sun.castShadow = true;
+sun.shadow.mapSize.set(MOBILE ? 1024 : 2048, MOBILE ? 1024 : 2048);
+Object.assign(sun.shadow.camera, { left: -800, right: 800, top: 800, bottom: -800, near: 10, far: 4000 });
+sun.shadow.bias = -0.0006;
+sun.shadow.autoUpdate = false;
+scene.add(sun, sun.target);
+let shadowAt = null;
+function aimShadow(p) {
+  if (shadowAt && shadowAt.distanceToSquared(p) < 200 * 200) return;
+  shadowAt = p.clone();
+  sun.target.position.copy(p); sun.position.copy(p).add(SUNV);
+  sun.target.updateMatrixWorld(); sun.shadow.needsUpdate = true;
+}
+
+// 바닥 그림(도로·물·공원)
+await step(35, "지도를 펴는 중…");
+const each = (nm, fn) => { const N = A[nm + "_n"], P = A[nm]; let o = 0; for (let k = 0; k < N.length; k++) { fn(P, o, N[k], k); o += N[k] * 2; } };
+const groundCv = (() => {
+  const cw = MOBILE ? 2048 : 4096, ch = Math.round(cw * DH / DW);
+  const cv = document.createElement("canvas"); cv.width = cw; cv.height = ch;
+  const g = cv.getContext("2d");
+  const px = x => (x - D.x0) / DW * cw, py = y => (D.y1 - y) / DH * ch, s = cw / DW;
+  const path = (P, o, n) => { g.beginPath(); for (let i = 0; i < n; i++) { const x = px(P[o + i*2] / 10), y = py(P[o + i*2 + 1] / 10); i ? g.lineTo(x, y) : g.moveTo(x, y); } };
+  g.fillStyle = "#E3DED2"; g.fillRect(0, 0, cw, ch);
+  g.fillStyle = "#CCD7BE"; each("park", (P, o, n) => { path(P, o, n); g.fill(); });
+  g.fillStyle = "#A8C2D4"; each("water", (P, o, n) => { path(P, o, n); g.fill(); });
+  g.lineCap = g.lineJoin = "round";
+  const RW = [7, 12, 16, 22, 28, 30];
+  for (const pass of [0, 1]) each("road", (P, o, n, k) => {
+    const w = RW[A.road_k[k]] * s; path(P, o, n);
+    g.strokeStyle = pass ? "#FBFAF6" : "#B7B0A1"; g.lineWidth = pass ? w : w + Math.max(1.6, 4 * s); g.stroke();
+  });
+  g.setLineDash([6, 5]); g.strokeStyle = "#7d786d"; g.lineWidth = Math.max(1.2, 3 * s);
+  each("rail", (P, o, n) => { path(P, o, n); g.stroke(); });
+  return cv;
+})();
+const groundTex = new THREE.CanvasTexture(groundCv);
+groundTex.colorSpace = THREE.SRGBColorSpace; groundTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+const terrain = (() => {
+  const s = MOBILE ? 2 : 1;
+  const cols = Math.floor((D.nx - 1) / s) + 1, rows = Math.floor((D.ny - 1) / s) + 1;
+  const pos = new Float32Array(cols * rows * 3), uv = new Float32Array(cols * rows * 2);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const gi = i * s, gj = j * s, k = j * cols + i;
+    pos[k*3] = D.x0 + gi * D.cell; pos[k*3+1] = A.dem[gj * D.nx + gi] / 10; pos[k*3+2] = -(D.y1 - gj * D.cell);
+    uv[k*2] = gi / (D.nx - 1); uv[k*2+1] = 1 - gj / (D.ny - 1);
+  }
+  const idx = new Uint32Array((cols - 1) * (rows - 1) * 6); let q = 0;
+  for (let j = 0; j < rows - 1; j++) for (let i = 0; i < cols - 1; i++) {
+    const a = j * cols + i, b = a + 1, c = a + cols, d = c + 1;
+    idx[q++] = a; idx[q++] = c; idx[q++] = b; idx[q++] = b; idx[q++] = c; idx[q++] = d;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+  geo.setIndex(new THREE.BufferAttribute(idx, 1));
+  geo.computeVertexNormals();
+  geo.computeBoundsTree();
+  const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: groundTex, roughness: 1, metalness: 0, side: THREE.DoubleSide }));
+  m.receiveShadow = true; m.name = "terrain";
+  return m;
+})();
+scene.add(terrain);
+
+// 건물
+await step(55, "9,284동을 세우는 중…");
+const B = { cx: new Float32Array(NB), cy: new Float32Array(NB), top: new Float32Array(NB), h: new Float32Array(NB) };
+const bld = (() => {
+  let nv = 0, ni = 0;
+  for (let b = 0; b < NB; b++) { const c = A.bcnt[b]; nv += c * 5; ni += c * 6 + (c - 2) * 3; }
+  const pos = new Float32Array(nv * 3), nor = new Float32Array(nv * 3), aId = new Float32Array(nv), aWall = new Float32Array(nv), aB = new Float32Array(nv);
+  const idx = new Uint32Array(ni);
+  let v = 0, q = 0, o = 0;
+  const put = (x, y, z, nx, ny, nz, id, wall, base) => {
+    pos[v*3] = x; pos[v*3+1] = y; pos[v*3+2] = z; nor[v*3] = nx; nor[v*3+1] = ny; nor[v*3+2] = nz;
+    aId[v] = id; aWall[v] = wall; aB[v] = base; return v++;
+  };
+  const P = A.bpts;
+  for (let b = 0; b < NB; b++) {
+    const c = A.bcnt[b], base = A.bbase[b] / 10, h = Math.max(A.bh[b] / 10, 3), bot = base - 3, top = base + h;
+    let sx = 0, sy = 0;
+    for (let k = 0; k < c; k++) { sx += P[(o+k)*2]; sy += P[(o+k)*2+1]; }
+    B.cx[b] = sx / c / 10; B.cy[b] = sy / c / 10; B.top[b] = top; B.h[b] = h;
+    for (let k = 0; k < c; k++) {
+      const k2 = (k + 1) % c;
+      const x1 = P[(o+k)*2] / 10, y1 = P[(o+k)*2+1] / 10, x2 = P[(o+k2)*2] / 10, y2 = P[(o+k2)*2+1] / 10;
+      const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, nx = dy / L, nz = dx / L;
+      const a = put(x1, bot, -y1, nx, 0, nz, b, 1, base), bb = put(x2, bot, -y2, nx, 0, nz, b, 1, base);
+      const cc = put(x2, top, -y2, nx, 0, nz, b, 1, base), d = put(x1, top, -y1, nx, 0, nz, b, 1, base);
+      idx[q++] = a; idx[q++] = bb; idx[q++] = cc; idx[q++] = a; idx[q++] = cc; idx[q++] = d;
+    }
+    const pts = [], r0 = v;
+    for (let k = 0; k < c; k++) { const x = P[(o+k)*2] / 10, y = P[(o+k)*2+1] / 10; pts.push(new THREE.Vector2(x, y)); put(x, top, -y, 0, 1, 0, b, 0, base); }
+    for (const t of THREE.ShapeUtils.triangulateShape(pts, [])) {
+      const a = pts[t[0]], b2 = pts[t[1]], c2 = pts[t[2]];
+      const ccw = (b2.x - a.x) * (c2.y - a.y) - (b2.y - a.y) * (c2.x - a.x) > 0;
+      idx[q++] = r0 + t[0]; idx[q++] = r0 + (ccw ? t[1] : t[2]); idx[q++] = r0 + (ccw ? t[2] : t[1]);
+    }
+    o += c;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute("normal", new THREE.BufferAttribute(nor, 3));
+  geo.setAttribute("aId", new THREE.BufferAttribute(aId, 1));
+  geo.setAttribute("aWall", new THREE.BufferAttribute(aWall, 1));
+  geo.setAttribute("aBase", new THREE.BufferAttribute(aB, 1));
+  geo.setIndex(new THREE.BufferAttribute(idx.subarray(0, q), 1));
+  geo.computeBoundsTree();
+  const mat = new THREE.MeshStandardMaterial({ color: 0xF6F4EF, roughness: 0.85, metalness: 0, side: THREE.DoubleSide });
+  mat.onBeforeCompile = sh => {                // 층 줄무늬 — 가까이 스칠 때 속도가 느껴지게
+    sh.vertexShader = sh.vertexShader.replace("#include <common>", `#include <common>
+      attribute float aWall; attribute float aBase; varying float vWall; varying float vH;`)
+      .replace("#include <worldpos_vertex>", `#include <worldpos_vertex>
+      vWall = aWall; vH = (modelMatrix * vec4(transformed,1.0)).y - aBase;`);
+    sh.fragmentShader = sh.fragmentShader.replace("#include <common>", `#include <common>
+      varying float vWall; varying float vH;`)
+      .replace("#include <color_fragment>", `#include <color_fragment>
+      { float w = fwidth(vH), f = abs(fract(vH/3.2+.5)-.5)*3.2;
+        float l = (1.-smoothstep(.12,.12+w*1.2,f)) * (1.-smoothstep(.5,2.5,w)) * step(.5,vWall);
+        diffuseColor.rgb *= 1.-.16*l; }`);
+  };
+  const m = new THREE.Mesh(geo, mat);
+  m.castShadow = true; m.receiveShadow = true; m.name = "bld";
+  return m;
+})();
+scene.add(bld);
+
+// 충돌
+const rc = new THREE.Raycaster(); rc.firstHitOnly = true;
+const SOLID = [bld, terrain];
+function sweep(a, b, extra = 0) {           // three 좌표 두 점 사이 첫 충돌
+  const d = b.clone().sub(a), L = d.length();
+  if (L < 1e-6) return null;
+  rc.set(a, d.divideScalar(L)); rc.near = 0; rc.far = L + extra;
+  return rc.intersectObjects(SOLID, false)[0] || null;
+}
+const bldOf = hit => hit.object === bld ? bld.geometry.attributes.aId.getX(hit.face.a) | 0 : -1;
+
+// ───────── 출발지
+const NAMED = nm => {                       // 이름이 같은 건물 중 가장 높은 것
+  let best = -1, h = -1;
+  for (let b = 0; b < NB; b++) if (M.names[b] === nm && B.h[b] > h) { h = B.h[b]; best = b; }
+  return best;
+};
+const tallest = (() => { let best = 0; for (let b = 1; b < NB; b++) if (B.h[b] > B.h[best]) best = b; return best; })();
+const SPOTS = [
+  { id: "top",  name: "세종에서 제일 높은 건물", b: tallest },
+  { id: "gov",  name: "정부세종청사 중앙동 옥상", b: NAMED("정부세종청사 중앙동") },
+  { id: "lib",  name: "국립세종도서관 옥상", b: NAMED("국립세종도서관") },
+  { id: "city", name: "세종시청 옥상", b: NAMED("세종시청사") },
+].map(s => ({ ...s, x: B.cx[s.b], y: B.cy[s.b], z: B.top[s.b] + 1.5, sub: s.id === "top" ? M.names[s.b] : "", }));
+for (const s of SPOTS) {                    // 처음 보는 방향: 앞이 가장 오래 트인 쪽
+  let bestA = 0, bestD = -1;
+  for (let k = 0; k < 24; k++) {
+    const a = k * 15 * RAD, p = V(s.x, s.y, s.z), q = V(s.x + Math.sin(a) * 800, s.y + Math.cos(a) * 800, s.z - 30);
+    const hit = sweep(p, q), d = hit ? hit.distance : 900;
+    if (d > bestD) { bestD = d; bestA = a; }
+  }
+  s.psi = bestA;
+}
+
+// ───────── 상승 기류: 시내를 1.8km 격자로 나눠 칸마다 하나(모두에게 같은 자리)
+const THERM = (() => {
+  const seen = new Set(), out = []; let r = 20261031;
+  const rnd = () => (r = (r * 1664525 + 1013904223) >>> 0) / 4294967296;
+  const cells = [];
+  for (let b = 0; b < NB; b++) { const k = Math.floor(B.cx[b] / 1800) + "," + Math.floor(B.cy[b] / 1800); if (!seen.has(k)) { seen.add(k); cells.push(k); } }
+  for (const k of cells.sort()) {
+    const [i, j] = k.split(",").map(Number);
+    out.push({ x: (i + .25 + rnd() * .5) * 1800, y: (j + .25 + rnd() * .5) * 1800, r: 120, left: 0 });
+  }
+  return out;
+})();
+const THERM_LIFT = 80;      // 기둥 하나로 오를 수 있는 높이(무한 비행 막기)
+const CEIL = 520;
+const thermGroup = new THREE.Group(); scene.add(thermGroup);
+{
+  const cyl = new THREE.CylinderGeometry(1, 1, 1, 40, 1, true);
+  const ring = new THREE.TorusGeometry(1, .012, 6, 48); ring.rotateX(Math.PI / 2);
+  for (const t of THERM) {
+    const g0 = hAt(t.x, t.y), H = 480;
+    const c = new THREE.Mesh(cyl, new THREE.MeshBasicMaterial({ color: 0x3C53D6, transparent: true, opacity: .06, depthWrite: false, side: THREE.DoubleSide }));
+    c.scale.set(t.r, H, t.r); c.position.set(t.x, g0 + H / 2, -t.y);
+    const rs = [0, 1, 2, 3].map(i => { const m = new THREE.Mesh(ring, new THREE.MeshBasicMaterial({ color: 0x2438B8, transparent: true, opacity: .4 })); m.scale.setScalar(t.r); thermGroup.add(m); return m; });
+    thermGroup.add(c);
+    Object.assign(t, { g0, H, mesh: c, rings: rs });
+  }
+}
+function resetThermals() { for (const t of THERM) { t.left = THERM_LIFT; t.mesh.visible = true; t.mesh.material.opacity = .06; t.rings.forEach(m => m.visible = true); } }
+function animThermals(now) {
+  for (const t of THERM) t.rings.forEach((m, i) => {
+    const f = ((now * .00012 + i / 4) % 1);
+    m.position.set(t.x, t.g0 + f * t.H, -t.y);
+    m.material.opacity = (t.left > 0 ? .4 : 0) * Math.sin(f * Math.PI);
+    m.visible = t.left > 0;
+  });
+}
+
+// ───────── 비행기 세 종류(같은 옥상이면 멀리 가는 정도가 비슷하도록 맞춘 값)
+const TYPES = [
+  { id: "dart",  name: "뾰족이",   desc: "빠르고 곧게 갑니다. 대신 잘 안 돌고 일찍 떨어집니다.", VT: 38, LD: 8,    bank: 40, turn: 1.0, therm: .85, geo: [1.6, .6, .9, .3] },
+  { id: "wide",  name: "넓적이",   desc: "느긋하게 오래 뜹니다. 바람을 잘 타지만 세게 던져도 빠르지 않습니다.", VT: 23, LD: 10.5, bank: 42, turn: 1.0, therm: 1.1, geo: [1.0, 1.4, .85, .2] },
+  { id: "swift", name: "날쌘돌이", desc: "휙휙 잘 돕니다. 건물 사이를 빠져나가기 좋습니다.", VT: 30, LD: 9,    bank: 62, turn: 1.7, therm: 1,  geo: [1.25, .95, .7, .42] },
+];
+const planeGeo = ([L, W, T, K]) => {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute([
+    0, 0, -L,  -W, K * .55, T,   0, 0, T,        // 왼 날개
+    0, 0, -L,   0, 0, T,         W, K * .55, T,  // 오른 날개
+    0, 0, -L,   0, 0, T,         0, -K, T,       // 용골
+  ], 3));
+  g.computeVertexNormals();
+  return g;
+};
+const plane = (() => {
+  const g = planeGeo(TYPES[0].geo);
+  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .55, side: THREE.DoubleSide, flatShading: true, emissive: 0x777777 }));
+  const edge = new THREE.LineSegments(new THREE.EdgesGeometry(g), new THREE.LineBasicMaterial({ color: 0x152484 }));
+  const o = new THREE.Group(); o.add(m, edge); o.rotation.order = "YXZ";
+  o.setType = t => {
+    m.geometry.dispose(); edge.geometry.dispose();
+    m.geometry = planeGeo(t.geo); edge.geometry = new THREE.EdgesGeometry(m.geometry);
+  };
+  return o;
+})();
+scene.add(plane);
+const blob = new THREE.Mesh(new THREE.CircleGeometry(.8, 16).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0x111111, transparent: true, opacity: .28, depthWrite: false }));
+scene.add(blob);
+
+// 지나온 길
+const trailMat = new LineMaterial({ color: 0x152484, linewidth: 3, worldUnits: false, transparent: true, opacity: .9 });
+trailMat.resolution.set(innerWidth, innerHeight);
+let trailObj = null;
+function drawTrail(pts) {
+  if (trailObj) { scene.remove(trailObj); trailObj.geometry.dispose(); trailObj = null; }
+  if (pts.length < 2) return;
+  const g = new LineGeometry(); const a = [];
+  for (const p of pts) a.push(p[0], p[2] + .5, -p[1]);
+  g.setPositions(a);
+  trailObj = new Line2(g, trailMat); trailObj.computeLineDistances(); trailObj.frustumCulled = false; scene.add(trailObj);
+}
+const pole = (() => { const m = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 1, 8), new THREE.MeshBasicMaterial({ color: 0x152484 })); m.visible = false; scene.add(m); return m; })();
+
+// ───────── 비행 물리(양력 ∝ 속력², 활공비 LD)
+const G = 9.81;
+const DT = 1 / 60;
+const S = {
+  mode: "menu", spot: SPOTS[0], type: TYPES[0], x: 0, y: 0, z: 0, psi: 0, gam: 0, bank: 0, pit: 0, v: 0, t: 0,
+  in: { x: 0, y: 0 }, key: { x: 0, y: 0 }, power: 0, charging: false, chargeT: 0,
+  trail: [], x0: 0, y0: 0, dist: 0, res: null, agl: 0, cam: new THREE.Vector3(), camT: 0,
+};
+function placeAt(sp) {
+  Object.assign(S, { x: sp.x, y: sp.y, z: sp.z, psi: sp.psi, gam: 0, bank: 0, pit: 0, v: 0, t: 0, x0: sp.x, y0: sp.y, dist: 0, trail: [], res: null });
+  drawTrail([]); pole.visible = false; resetThermals();
+}
+function launch(power) {
+  S.power = power;
+  S.v = S.type.VT * (.45 + power * 1.05);       // 기준 속력의 0.45~1.5배
+  S.gam = 8 * RAD;
+  S.mode = "fly"; S.t = 0; S.trail = [[S.x, S.y, S.z]];
+  setUI();
+}
+function stepFlight(dt) {
+  const { VT, LD } = S.type, GT = -Math.asin(1 / LD);
+  const ix = clamp(S.in.x + S.key.x, -1, 1), iy = clamp(S.in.y + S.key.y, -1, 1);
+  S.bank += (ix * S.type.bank * RAD - S.bank) * Math.min(1, dt * 3);
+  S.pit += (iy - S.pit) * Math.min(1, dt * 4);
+  const q = (S.v / VT) ** 2;
+  let lift = G * q * (1 + .45 * S.pit);
+  if (S.v < .5 * VT) lift *= .5;                      // 실속
+  const drag = G * q / LD * (1 + .8 * S.pit * S.pit + .6 * Math.sin(S.bank) ** 2);
+  S.v = Math.max(S.v + (-G * Math.sin(S.gam) - drag) * dt, 4);
+  S.gam = clamp(S.gam + ((lift * Math.cos(S.bank) - G * Math.cos(S.gam)) / S.v - .5 * (S.gam - GT)) * dt, -70 * RAD, 50 * RAD);
+  S.psi += clamp(lift * Math.sin(S.bank) / (S.v * Math.cos(S.gam)), -1.2 * S.type.turn, 1.2 * S.type.turn) * dt;
+  const hv = S.v * Math.cos(S.gam);
+  let nx = S.x + Math.sin(S.psi) * hv * dt, ny = S.y + Math.cos(S.psi) * hv * dt, nz = S.z + S.v * Math.sin(S.gam) * dt;
+  for (const t of THERM) {                            // 상승 기류
+    if (t.left <= 0 || nz > CEIL) continue;
+    const d = Math.hypot(nx - t.x, ny - t.y);
+    if (d < t.r) {
+      const w = 11 * S.type.therm * (1 - (d / t.r) ** 2 * .6) * dt;
+      nz += w; t.left -= w;
+      if (t.left <= 0) { t.mesh.material.opacity = .015; }
+    }
+  }
+  const hit = sweep(V(S.x, S.y, S.z), V(nx, ny, nz), .5);
+  S.t += dt;
+  if (hit) {
+    S.x = hit.point.x; S.y = -hit.point.z; S.z = hit.point.y;
+    S.dist = Math.hypot(S.x - S.x0, S.y - S.y0);
+    finish(hit); return;
+  }
+  S.x = nx; S.y = ny; S.z = nz;
+  S.dist = Math.hypot(S.x - S.x0, S.y - S.y0);
+  if (!inMap(S.x, S.y)) { finish(null); return; }
+  if (!S.trail.length || Math.hypot(S.x - S.trail[S.trail.length - 1][0], S.y - S.trail[S.trail.length - 1][1]) > 18) S.trail.push([S.x, S.y, S.z]);
+}
+
+// ───────── 어디에 떨어졌나
+const inPoly = (nm, x, y) => {
+  let found = false;
+  each(nm, (P, o, n) => {
+    if (found) return;
+    let c = false;
+    for (let i = 0, j = n - 1; i < n; j = i++) {
+      const xi = P[o + i*2] / 10, yi = P[o + i*2 + 1] / 10, xj = P[o + j*2] / 10, yj = P[o + j*2 + 1] / 10;
+      if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+    }
+    if (c) found = true;
+  });
+  return found;
+};
+function describe(hit) {
+  if (!hit) return "세종 밖으로 나갔습니다. 지도가 여기까지라 재지 못합니다.";
+  if (hit.object === bld) {
+    const b = bldOf(hit), roof = hit.face.normal.y > .7;
+    if (b === S.spot.b) return S.dist < 40 ? "옥상을 벗어나지 못했습니다. 힘을 조금 더 주세요." : "출발한 건물로 돌아왔습니다. 정이 들었나 봅니다.";
+    const nm = M.names[b], z = M.zones[A.bzone[b]];
+    const place = nm || (z && z !== "-" ? z + " 어느 건물" : "이름 모를 건물");
+    if (/^정부세종청사/.test(nm)) return roof ? "정부세종청사 옥상에 내려앉았습니다. 결재 올라갑니다." : "정부세종청사 창문을 두드렸습니다. 민원 접수됐습니다.";
+    return roof ? `${place} 옥상에 사뿐히 내려앉았습니다.` : `${place} 벽에 콕 박혔습니다.`;
+  }
+  if (inPoly("water", S.x, S.y)) return Math.hypot(S.x + 903, S.y + 568) < 900 ? "세종호수공원에 풍덩. 오리가 쳐다봅니다." : "금강에 풍덩. 종이는 물에 약합니다.";
+  if (inPoly("park", S.x, S.y)) return "공원 잔디밭에 사뿐히 내려앉았습니다.";
+  if (S.z > 70) return "산에 불시착했습니다. 등산객이 주워 갑니다.";
+  return "길바닥에 떨어졌습니다. 아무도 못 봤으니 다시 해 봅시다.";
+}
+function finish(hit) {
+  S.mode = "done"; S.res = { dist: Math.round(S.dist), time: Math.round(S.t * 10) / 10, where: describe(hit), start: S.spot.name + " · " + S.type.name };
+  S.trail.push([S.x, S.y, S.z]);
+  drawTrail(S.trail);
+  // 위에서 내려다보기
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (const p of S.trail) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); }
+  const span = Math.max(x1 - x0, y1 - y0, 350) * 1.15;
+  const pw = span / 260, ph = span * .16;        // 도착 표시는 화면에서 늘 비슷한 크기로
+  pole.scale.set(pw, ph, pw); pole.position.set(S.x, S.z + ph / 2, -S.y); pole.visible = true;
+  const shift = innerWidth > 760 ? span * .28 : 0;
+  S.look = V((x0 + x1) / 2 + shift, (y0 + y1) / 2 - (innerWidth > 760 ? 0 : span * .3), S.spot.z * .4);
+  S.camGoal = S.look.clone().add(new THREE.Vector3(0, span * .95, span * .75));
+  S.camT = 0; S.camFrom = camera.position.clone(); S.lookFrom = S.lookNow ? S.lookNow.clone() : S.look.clone();
+  setTimeout(showResult, 900);
+  setUI();
+}
+
+// ───────── 입력
+const KEYS = { ArrowLeft: ["x", -1], KeyA: ["x", -1], ArrowRight: ["x", 1], KeyD: ["x", 1], ArrowUp: ["y", 1], KeyW: ["y", 1], ArrowDown: ["y", -1], KeyS: ["y", -1] };
+const down = new Set();
+const typing = () => /INPUT|TEXTAREA/.test(document.activeElement?.tagName || "");
+const syncKeys = () => { S.key.x = S.key.y = 0; for (const c of down) { const k = KEYS[c]; if (k) S.key[k[0]] += k[1]; } };
+addEventListener("keydown", e => {
+  if (typing()) return;
+  if (KEYS[e.code]) { down.add(e.code); syncKeys(); e.preventDefault(); }
+  if (e.code === "Space" && !e.repeat && S.mode === "aim") { startCharge(); e.preventDefault(); }
+});
+addEventListener("keyup", e => {
+  if (KEYS[e.code]) { down.delete(e.code); syncKeys(); }
+  if (e.code === "Space" && S.charging) { release(); e.preventDefault(); }
+});
+addEventListener("blur", () => { down.clear(); syncKeys(); });
+// 화면 끌기: 조준 땐 방향 돌리기, 비행 땐 조종간
+let drag = null;
+canvas.addEventListener("pointerdown", e => { drag = { x: e.clientX, y: e.clientY, psi: S.psi }; canvas.setPointerCapture(e.pointerId); canvas.focus({ preventScroll: true }); });
+canvas.addEventListener("pointermove", e => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (S.mode === "aim") S.psi = drag.psi + dx * .006;
+  else if (S.mode === "fly") { S.in.x = clamp(dx / 90, -1, 1); S.in.y = clamp(-dy / 90, -1, 1); }
+});
+const endDrag = () => { drag = null; S.in.x = S.in.y = 0; };
+canvas.addEventListener("pointerup", endDrag); canvas.addEventListener("pointercancel", endDrag);
+canvas.addEventListener("contextmenu", e => e.preventDefault());
+
+function startCharge() { if (S.mode !== "aim" || S.charging) return; S.charging = true; S.chargeT = 0; }
+function release() {
+  if (!S.charging) return;
+  S.charging = false;
+  launch(gaugeVal());
+}
+const gaugeVal = () => { const f = (S.chargeT / 1.3) % 2; return f < 1 ? f : 2 - f; };
+const th = $("#throw");
+th.addEventListener("pointerdown", e => { e.preventDefault(); th.setPointerCapture(e.pointerId); startCharge(); });
+th.addEventListener("pointerup", release);
+th.addEventListener("pointercancel", release);
+th.addEventListener("keydown", e => { if ((e.code === "Enter") && !e.repeat) { startCharge(); e.preventDefault(); } });
+th.addEventListener("keyup", e => { if (e.code === "Enter") release(); });
+
+// ───────── 화면 전환
+const TIP_FLY = MOBILE ? "화면을 끌어 조종합니다. 좌우로 돌고, 위로 끌면 기수를 듭니다." : "← → 돌기 · ↑ 기수 들기 · ↓ 기수 내리기 (마우스로 끌어도 됩니다)";
+function setUI() {
+  const m = S.mode;
+  $("#menu").classList.toggle("hide", m !== "menu");
+  $("#aim").classList.toggle("hide", m !== "aim");
+  $("#hud").classList.toggle("hide", m !== "fly" && m !== "aim");
+  $("#mini").classList.toggle("hide", m !== "fly");
+  $("#tip").classList.toggle("hide", m !== "fly");
+  if (m !== "done") $("#result").classList.add("hide");
+  $("#tip").textContent = TIP_FLY;
+  $("#aimtxt").textContent = MOBILE ? "화면을 끌어 방향을 정하고, 버튼을 꾹 눌렀다 놓으면 날아갑니다." : "← → 또는 끌어서 방향을 정하고, 스페이스나 버튼을 꾹 눌렀다 놓으면 날아갑니다.";
+  plane.visible = blob.visible = m === "aim" || m === "fly";
+  $("#gg").style.width = "0";
+}
+function goAim() { placeAt(S.spot); S.mode = "aim"; S.charging = false; S.camSnap = true; setUI(); aimShadow(V(S.x, S.y, S.z)); }
+function goMenu() { placeAt(S.spot); S.mode = "menu"; setUI(); renderSpots(); aimShadow(V(S.x, S.y, S.z)); loadRank(); }
+function renderSpots() {
+  $("#spots").innerHTML = SPOTS.map((s, i) => `<button class="spot" type="button" data-i="${i}" aria-pressed="${s === S.spot}"><b>${esc(s.name)}</b>${s.sub ? `<small>${esc(s.sub)}</small>` : ""}<span class="m mono">${fmt(B.h[s.b])}m</span></button>`).join("");
+  document.querySelectorAll(".spot").forEach(b => b.onclick = () => { S.spot = SPOTS[+b.dataset.i]; placeAt(S.spot); renderSpots(); aimShadow(V(S.x, S.y, S.z)); });
+}
+function renderTypes() {
+  const icon = ([L, W, T]) => { const k = 15 / Math.max(L + T, W), y = v => (22 + v * k).toFixed(1), x = v => (22 + v * k).toFixed(1);
+    return `<svg viewBox="0 0 44 44" aria-hidden="true"><path d="M22 ${y(-L)}L${x(-W)} ${y(T)}L22 ${y(T * .6)}L${x(W)} ${y(T)}Z M22 ${y(-L)}L22 ${y(T * .6)}"/></svg>`; };
+  $("#types").innerHTML = TYPES.map((t, i) => `<button class="type" type="button" data-i="${i}" aria-pressed="${t === S.type}">${icon(t.geo)}${esc(t.name)}</button>`).join("");
+  $("#tdesc").textContent = S.type.desc;
+  document.querySelectorAll(".type").forEach(b => b.onclick = () => { S.type = TYPES[+b.dataset.i]; plane.setType(S.type); store.set("plane_type", S.type.id); renderTypes(); });
+}
+$("#go").onclick = goAim;
+$("#aimback").onclick = goMenu;
+$("#again").onclick = goAim;
+$("#tomenu").onclick = goMenu;
+
+function showResult() {
+  if (S.mode !== "done" || !S.res) return;
+  const r = S.res, best = +(store.get("plane_best") || 0), isBest = r.dist > best;
+  if (isBest) store.set("plane_best", r.dist);
+  $("#r-from").textContent = r.start;
+  $("#r-d").textContent = fmt(r.dist);
+  $("#r-where").textContent = r.where;
+  $("#r-meta").textContent = `${r.time.toFixed(1)}초 비행 · ${isBest ? "내 최고 기록!" : "내 최고 " + fmt(best) + "m"}`;
+  $("#nick").value = store.get("plane_nick") || "";
+  say("", "");
+  $("#send").disabled = r.dist < 1;
+  $("#f").classList.remove("hide");
+  $("#result").classList.remove("hide");
+  loadRank();
+}
+const say = (t, c) => { const m = $("#msg"); m.textContent = t; m.className = "msg " + c; };
+
+// ───────── 순위표
+let rows = null, myNick = store.get("plane_nick") || "";
+function paintRank() {
+  for (const [ol, note] of [["#rank1", "#rnote1"], ["#rank2", "#rnote2"]]) {
+    const el = $(ol), nt = $(note);
+    if (rows === null) { el.innerHTML = ""; nt.textContent = "순위표를 불러오는 중…"; continue; }
+    if (rows === false) { el.innerHTML = ""; nt.textContent = "지금은 순위표에 연결되지 않습니다. 기록은 이 기기에만 남습니다."; continue; }
+    if (!rows.length) { el.innerHTML = ""; nt.textContent = "아직 아무도 없습니다. 첫 기록의 주인공이 되어 보세요."; continue; }
+    el.innerHTML = rows.slice(0, 10).map((r, i) => `<li class="${r.n === myNick ? "me" : ""}"><span class="no mono">${i + 1}</span><span class="nm">${esc(r.n)}</span><span class="d mono">${fmt(r.d)}m</span><span class="w">${esc(r.s || "")}</span></li>`).join("");
+    nt.textContent = "";
+  }
+}
+async function loadRank() {
+  if (rows === null) paintRank();
+  try {
+    const r = await fetch(ENDPOINT + "?action=plane");
+    const j = await r.json();
+    if (!j.ok) throw 0;
+    rows = j.rows;
+  } catch (_) { rows = false; }
+  paintRank();
+}
+$("#f").addEventListener("submit", async e => {
+  e.preventDefault();
+  const nick = $("#nick").value.trim(), bad = checkNick(nick);
+  if (bad) { say(bad, "bad"); $("#nick").focus(); return; }
+  const r = S.res, btn = $("#send");
+  btn.disabled = true; say("올리는 중…", "");
+  try {
+    const f = new URLSearchParams({ action: "plane", nick, dist: r.dist, time: r.time, start: r.start, website: $("#hp").value });
+    const j = await (await fetch(ENDPOINT, { method: "POST", body: f })).json();
+    if (!j.ok) { say(j.error || "올리지 못했습니다.", "bad"); btn.disabled = false; return; }
+    myNick = nick; store.set("plane_nick", nick);
+    rows = j.rows || rows; paintRank();
+    say(j.updated === false ? `${nick} 님은 이미 더 먼 기록이 있습니다.` : `올렸습니다. 지금 ${j.rank}위입니다.`, "good");
+  } catch (_) {
+    say("순위표에 연결하지 못했습니다. 잠시 뒤 다시 눌러 주세요.", "bad"); btn.disabled = false;
+  }
+});
+
+// ───────── 미니맵
+const mini = $("#mini"), mg = mini.getContext("2d");
+const MV = (() => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (let b = 0; b < NB; b++) { x0 = Math.min(x0, B.cx[b]); x1 = Math.max(x1, B.cx[b]); y0 = Math.min(y0, B.cy[b]); y1 = Math.max(y1, B.cy[b]); }
+  const w = (x1 - x0) * 1.08, h = w * mini.height / mini.width, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2; return { x0: cx - w / 2, y1: cy + h / 2, w, h }; })();
+const mx = x => (x - MV.x0) / MV.w * mini.width, my = y => (MV.y1 - y) / MV.h * mini.height;
+function drawMini() {
+  const sc = groundCv.width / DW;
+  mg.drawImage(groundCv, (MV.x0 - D.x0) * sc, (D.y1 - MV.y1) * sc, MV.w * sc, MV.h * sc, 0, 0, mini.width, mini.height);
+  for (const t of THERM) if (t.left > 0) { mg.fillStyle = "rgba(36,56,184,.32)"; mg.beginPath(); mg.arc(mx(t.x), my(t.y), Math.max(5, t.r / MV.w * mini.width), 0, 7); mg.fill(); }
+  mg.strokeStyle = "#152484"; mg.lineWidth = 3; mg.beginPath();
+  S.trail.forEach((p, i) => i ? mg.lineTo(mx(p[0]), my(p[1])) : mg.moveTo(mx(p[0]), my(p[1]))); mg.stroke();
+  mg.save(); mg.translate(mx(S.x), my(S.y)); mg.rotate(S.psi); mg.fillStyle = "#111"; mg.beginPath(); mg.moveTo(0, -12); mg.lineTo(8, 9); mg.lineTo(0, 5); mg.lineTo(-8, 9); mg.closePath(); mg.fill(); mg.restore();
+}
+
+// ───────── 그리기
+const tmp = new THREE.Vector3();
+function poseCamera(dt) {
+  const p = V(S.x, S.y, S.z);
+  plane.position.copy(p);
+  plane.rotation.set(S.gam, -S.psi, -S.bank);
+  const fw = new THREE.Vector3(Math.sin(S.psi), 0, -Math.cos(S.psi));
+  const back = S.mode === "aim" ? 8 : 9.5, up = S.mode === "aim" ? 2.6 : 3;
+  const goal = p.clone().addScaledVector(fw, -back).add(new THREE.Vector3(0, up - Math.sin(S.gam) * back * .6, 0));
+  const hit = sweep(p, goal);                    // 카메라가 벽 뒤로 가지 않게
+  if (hit) goal.copy(p).lerp(goal, Math.max(hit.distance - 1.2, 1.5) / p.distanceTo(goal));
+  goal.y = Math.max(goal.y, hAt(goal.x, -goal.z) + 1.5);
+  if (S.camSnap) { camera.position.copy(goal); S.camSnap = false; }
+  else camera.position.lerp(goal, 1 - Math.exp(-dt * (S.mode === "aim" ? 16 : 7)));
+  S.lookNow = p.clone().addScaledVector(fw, 14).add(new THREE.Vector3(0, Math.sin(S.gam) * 14 + .4, 0));
+  camera.lookAt(S.lookNow);
+  // 그림자 자리·높이
+  const dn = sweep(p, p.clone().add(tmp.set(0, -1200, 0)));
+  if (dn) { blob.position.copy(dn.point); blob.position.y += .4; S.agl = dn.distance; }
+  aimShadow(p);
+}
+function frame(dt, now) {
+  animThermals(now);
+  if (S.mode === "aim") {
+    S.psi += S.key.x * dt * 1.1;
+    if (S.charging) { S.chargeT += dt; $("#gg").style.width = (gaugeVal() * 100) + "%"; }
+    poseCamera(dt);
+  } else if (S.mode === "fly") {
+    S.acc = (S.acc || 0) + Math.min(dt, .1);
+    while (S.acc >= DT && S.mode === "fly") { stepFlight(DT); S.acc -= DT; }
+    if (S.mode === "fly") poseCamera(dt);
+    $("#h-d").textContent = fmt(S.dist); $("#h-a").textContent = fmt(S.agl); $("#h-v").textContent = fmt(S.v * 3.6);
+    drawMini();
+  } else if (S.mode === "done") {
+    S.camT = Math.min(S.camT + dt / 2.2, 1);
+    const e = S.camT * S.camT * (3 - 2 * S.camT);
+    camera.position.lerpVectors(S.camFrom, S.camGoal, e);
+    S.lookNow = S.lookFrom.clone().lerp(S.look, e);
+    camera.lookAt(S.lookNow);
+    aimShadow(S.look);
+  } else {                                       // 첫 화면: 고른 옥상을 천천히 돈다
+    const a = now * .00008 + 1, c = V(S.x, S.y, S.z), R = 620;
+    const off = innerWidth > 760 ? -170 : 0;
+    camera.position.set(c.x + Math.cos(a) * R, c.y + 240, c.z + Math.sin(a) * R);
+    const lk = c.clone(); lk.y -= innerWidth > 760 ? 40 : 170; lk.x += Math.sin(a) * off; lk.z -= Math.cos(a) * off;
+    camera.lookAt(lk);
+  }
+  renderer.render(scene, camera);
+}
+let last = performance.now();
+renderer.setAnimationLoop(() => {
+  const now = performance.now(), dt = Math.min((now - last) / 1000, .1); last = now;
+  frame(dt, now);
+});
+addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight); trailMat.resolution.set(innerWidth, innerHeight);
+});
+
+await step(95, "접는 중…");
+S.spot = SPOTS[0];
+S.type = TYPES.find(t => t.id === store.get("plane_type")) || TYPES[0];
+plane.setType(S.type); renderTypes();
+goMenu();
+$("#load").classList.add("hide");
+
+window.__plane = { S, SPOTS, TYPES, THERM, stepFlight, launch, goAim, goMenu, checkNick, DT };
+</script>
+</body>
+</html>

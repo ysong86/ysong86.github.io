@@ -95,6 +95,10 @@ button{font:inherit;cursor:pointer;color:inherit}
 .btn.pri{background:var(--ink);color:var(--inv)}
 .btn.pri:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 
+.fly{display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;margin-top:40px;padding:22px 0;border-top:1px dashed var(--ink3);border-bottom:1px dashed var(--ink3);text-decoration:none}
+.fly .t{font-size:clamp(17px,1.9vw,22px);font-weight:500;letter-spacing:-.02em;line-height:1.4}
+.fly .go{font-size:14px;font-weight:600;color:var(--accent);white-space:nowrap}
+.fly:hover .go{text-decoration:underline}
 /* 다음 이슈 제안 */
 .next{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;padding:48px 0 40px;border-top:1px solid var(--ink);margin-top:48px}
 .next .lead{grid-column:1 / span 5}
@@ -203,6 +207,8 @@ body.viewing #home{display:none}
       <div class="acts" id="f-acts"></div>
     </figure>
   </section>
+
+  <a class="fly" href="plane/"><span class="t">만들다 보니 너무 진지해지는데, 됐고 우리 모두 종이비행기나 날리자?</span><span class="go">✈ 날리러 가기 →</span></a>
 
   <section class="next" id="next" aria-labelledby="next-h">
     <div class="lead">
