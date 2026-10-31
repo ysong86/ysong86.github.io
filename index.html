@@ -184,6 +184,41 @@ body.viewing #home{display:none}
   .mast .meta,.mast .brand span{display:none}
   .bar .ext span{display:none}
 }
+
+/* 읽기 목록 — 4개씩 한 줄, 미리보기 + 짧은 설명, 쪽 넘김 */
+.ibar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;padding:20px 0 12px;border-bottom:1px solid var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:0 16px;font-size:13.5px}
+.chips button{padding:3px 0;background:none;border:0;border-bottom:2px solid transparent;color:var(--ink3);font:inherit;cursor:pointer}
+.chips button:hover{color:var(--ink)}
+.chips button[aria-pressed="true"]{color:var(--ink);font-weight:600;border-bottom-color:var(--accent)}
+.chips small{font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace;font-size:11px;margin-left:3px;color:var(--ink3);font-weight:400}
+.tally{font-size:11.5px;color:var(--ink3);letter-spacing:.12em}
+.grid4{list-style:none;margin:0;padding:22px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 22px}
+.card{display:flex;flex-direction:column;gap:7px;height:100%;color:inherit;text-decoration:none}
+.card .th{display:block;position:relative;aspect-ratio:16/9;background:var(--rule2);overflow:hidden;border:1px solid var(--rule)}
+.card .th img,.card .th video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+.card .th video{z-index:1}
+.card .play{position:absolute;right:7px;bottom:7px;z-index:2;padding:1px 7px;background:rgba(17,17,16,.74);color:#fff;font-size:10.5px;letter-spacing:.04em;cursor:pointer}
+.card .cm{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:11.5px;color:var(--ink3);margin-top:3px}
+.card .acc{font-size:11px;letter-spacing:.06em;white-space:nowrap}
+.card .acc.lock{color:var(--lock)} .card .acc.open{color:var(--open)}
+.card h3{margin:0;font-size:18.5px;font-weight:600;letter-spacing:-.025em;line-height:1.28}
+.card:hover h3{color:var(--accent)}
+.card h3 .em{font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;margin-right:.3em;font-size:.9em;color:initial}
+.card .q{margin:0;font-size:13.5px;font-weight:500;line-height:1.45}
+.card .d{margin:0;font-size:12.5px;color:var(--ink2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .who{font-size:11.5px;color:var(--ink3)}
+.card .collab{display:inline-flex;align-items:center;gap:5px;width:max-content;max-width:100%;padding:1px 8px 1px 7px;border:1px solid var(--accent);border-radius:99px;font-style:normal;font-size:11px;font-weight:500;color:var(--accent);white-space:nowrap}
+.card .collab::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:currentColor;animation:collab 1.8s ease-in-out infinite}
+.pager{display:flex;align-items:center;justify-content:center;gap:4px;padding:26px 0 0;font-family:"IBM Plex Mono","IBM Plex Sans KR",monospace;font-size:13.5px}
+.pager:empty{display:none}
+.pager button{min-width:36px;height:36px;background:none;border:0;border-bottom:2px solid transparent;color:var(--ink2);font:inherit;cursor:pointer}
+.pager button:hover:not(:disabled){color:var(--ink)}
+.pager button[aria-current="page"]{color:var(--ink);font-weight:500;border-bottom-color:var(--accent)}
+.pager button:disabled{opacity:.3;cursor:default}
+@media (prefers-reduced-motion: reduce){.card .collab::before{animation:none}}
+@media (max-width:1180px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.grid4{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -203,14 +238,10 @@ body.viewing #home{display:none}
     </div>
   </div></section>
 
-  <section class="index" aria-label="읽기 목록">
-    <div class="lh mono" aria-hidden="true"><span>NO.</span><span>READING</span><span>FIELD</span><span>ACCESS</span><span></span></div>
-    <ol class="list" id="list"></ol>
-    <figure class="fig" id="fig" aria-live="polite">
-      <div class="shot" id="shot"></div>
-      <figcaption class="cap"><span class="no mono" id="f-no"></span><h2 id="f-title"></h2><p id="f-desc"></p><span class="who" id="f-who"></span></figcaption>
-      <div class="acts" id="f-acts"></div>
-    </figure>
+  <section class="readings" aria-label="읽기 목록">
+    <div class="ibar"><div class="chips" id="chips" role="group" aria-label="분야"></div><span class="tally mono" id="tally"></span></div>
+    <ol class="grid4" id="grid"></ol>
+    <nav class="pager" id="pager" aria-label="쪽 넘기기"></nav>
   </section>
 
   <a class="fly" href="plane/"><span class="t">고민은 잠시 접어 두고, 종이비행기 날리시죠!</span><span class="go">✈ 날리러 가기 →</span></a>
@@ -301,33 +332,51 @@ const cnt = n => String(n).padStart(2, "0");
 $("#meta").textContent = `INDEX — ${cnt(D.length)} READINGS`;
 $("#count").innerHTML = `<span><b>${cnt(D.length)}</b>읽기</span><span><b>${cnt(D.length - nLock)}</b>공개</span><span><b>${cnt(nLock)}</b>비밀번호</span>`;
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
-$("#list").innerHTML = D.map((d, i) => `<li><a class="row" href="#/${d.id}" data-id="${d.id}">
-    <span class="no mono">${num(i)}</span>
-    <span class="tt"><b><span class="em" aria-hidden="true">${d.em || ""}</span>${esc(d.title.replace(/^세종(시)? (행복도시 )?/, ""))}${d.collab ? `<i class="collab">${esc(d.collab)}</i>` : ""}</b><span data-meta="${esc(d.cat)} · ${d.lock ? "비밀번호" : "공개"}">${esc(d.q)}</span></span>
-    <span class="cat">${esc(d.cat)}<small>${esc(d.cycle)}</small></span>
-    <span class="acc mono ${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>
-    <span class="ar" aria-hidden="true">→</span>
-    <img class="mthumb" src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy"></a></li>`).join("") +
-  `<li><a class="row next-row" href="#next" data-next="1"><span class="no mono">${num(D.length)}</span>
-    <span class="tt"><b><span class="em" aria-hidden="true">💡</span>다음 이슈 — 준비 중</b><span data-meta="제안 받기">보고 싶은 세종의 현안을 알려 주세요</span></span>
-    <span class="cat">제안 받기<small>누구나</small></span><span class="acc mono">CALL</span><span class="ar" aria-hidden="true">↓</span></a></li>`;
-// 미리보기 그림은 미리 다 깔아 두고 겹쳐서 바꾼다(빠르게 넘어가게)
-$("#shot").innerHTML = D.map(d => `<img src="assets/thumbs/${d.id}.jpg" alt="${esc(d.title)} 화면" data-id="${d.id}">`).join("");
-let cur = null;
-function pick(id){
-  const i = D.findIndex(x => x.id === id); if (i < 0 || cur === id) return; cur = id; const d = D[i];
-  document.querySelectorAll("#shot img").forEach(im => im.classList.toggle("on", im.dataset.id === id));
-  document.querySelectorAll(".row[data-id]").forEach(r => r.classList.toggle("on", r.dataset.id === id));
-  $("#f-no").textContent = num(i); $("#f-title").textContent = d.title; $("#f-desc").textContent = d.desc; $("#f-who").textContent = "제작: " + d.who;
-  $("#f-acts").innerHTML = `<button class="btn pri" type="button" data-open="${d.id}">열기 →</button>` +
-    (d.preview ? `<button class="btn" type="button" data-pv="${d.id}">▶ ${d.pvLen || "30초"} 미리보기</button>` : "") +
-    `<a class="btn" href="${d.path}" target="_blank" rel="noopener">새 창 ↗</a>`;
+const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경"};
+const PER = 8;
+const ls = {f: "전체", p: 1};
+const fieldOf = d => FIELD[d.id] || "기타";
+const shortT = t => t.replace(/^세종(시)? (행복도시 )?/, "");
+function drawGrid(){
+  const a = D.filter(d => ls.f === "전체" || fieldOf(d) === ls.f), pages = Math.max(1, Math.ceil(a.length / PER));
+  ls.p = Math.min(ls.p, pages);
+  const fs = ["전체", ...new Set(D.map(fieldOf))];
+  $("#chips").innerHTML = fs.map(f => `<button type="button" data-f="${f}" aria-pressed="${f === ls.f}">${f}<small>${f === "전체" ? D.length : D.filter(d => fieldOf(d) === f).length}</small></button>`).join("");
+  const from = (ls.p - 1) * PER;
+  $("#tally").textContent = `${a.length ? from + 1 : 0}–${Math.min(from + PER, a.length)} / ${a.length}`;
+  $("#grid").innerHTML = a.slice(from, from + PER).map(d => `<li><a class="card" href="#/${d.id}">
+    <span class="th"${d.preview ? ` data-vid="${d.path}preview.mp4"` : ""}><img src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy">${d.preview ? `<span class="play" data-pv="${d.id}">▶ ${d.pvLen || "30초"}</span>` : ""}</span>
+    <span class="cm"><span>${num(D.indexOf(d))} · ${esc(d.cat)}</span><span class="acc mono ${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span></span>
+    <h3><span class="em" aria-hidden="true">${d.em || ""}</span>${esc(shortT(d.title))}</h3>
+    <p class="q">${esc(d.q)}</p><p class="d">${esc(d.desc)}</p>
+    ${d.collab ? `<i class="collab">${esc(d.collab)}</i>` : ""}<span class="who">제작: ${esc(d.who)}</span></a></li>`).join("");
+  let h = "";
+  if (pages > 1) {
+    h = `<button type="button" data-pg="${ls.p - 1}" ${ls.p === 1 ? "disabled" : ""} aria-label="앞 쪽">←</button>`;
+    for (let i = 1; i <= pages; i++) h += `<button type="button" data-pg="${i}" ${i === ls.p ? 'aria-current="page"' : ""}>${i}</button>`;
+    h += `<button type="button" data-pg="${ls.p + 1}" ${ls.p === pages ? "disabled" : ""} aria-label="다음 쪽">→</button>`;
+  }
+  $("#pager").innerHTML = h;
 }
-document.querySelectorAll(".row[data-id]").forEach(r => {
-  r.addEventListener("mouseenter", () => pick(r.dataset.id));
-  r.addEventListener("focus", () => pick(r.dataset.id));
+$("#chips").addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (b) { ls.f = b.dataset.f; ls.p = 1; drawGrid(); } });
+$("#pager").addEventListener("click", e => { const b = e.target.closest("[data-pg]"); if (b && !b.disabled) { ls.p = +b.dataset.pg; drawGrid(); document.querySelector(".readings").scrollIntoView({behavior: "smooth"}); } });
+drawGrid();
+// 마우스를 올린 동안만 영상을 받아 돌린다(그 전에는 그림만 — 대문이 무거워지지 않게)
+const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.addEventListener("mouseover", e => {
+  const th = e.target.closest && e.target.closest(".th[data-vid]");
+  if (!th || calm || th.querySelector("video")) return;
+  const v = document.createElement("video");
+  v.src = th.dataset.vid; v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("aria-hidden", "true");
+  th.appendChild(v); v.play().catch(() => {});
 });
-pick(D[0].id);
+document.addEventListener("mouseout", e => {
+  const th = e.target.closest && e.target.closest(".th[data-vid]");
+  if (!th || (e.relatedTarget && th.contains(e.relatedTarget))) return;
+  const v = th.querySelector("video");
+  if (v) { v.pause(); v.removeAttribute("src"); v.load(); v.remove(); }
+});
+
 
 $("#tabs").innerHTML = D.map(d => `<button class="tab" type="button" role="tab" data-tab="${d.id}" aria-selected="false">${esc(d.title.replace("세종시 ", "").replace("세종 행복도시 ", "").replace("세종 ", ""))}${d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : ""}</button>`).join("");
 
@@ -353,7 +402,7 @@ const go = id => { location.hash = id ? "#/" + id : ""; };
 document.addEventListener("click", e => {
   const o = e.target.closest("[data-open]"); if (o) { go(o.dataset.open); return; }
   const t = e.target.closest("[data-tab]"); if (t) { go(t.dataset.tab); return; }
-  const p = e.target.closest("[data-pv]"); if (p) openPv(p.dataset.pv);
+  const p = e.target.closest("[data-pv]"); if (p) { e.preventDefault(); openPv(p.dataset.pv); }
 });
 $("#back").onclick = () => go("");
 window.addEventListener("hashchange", route);
