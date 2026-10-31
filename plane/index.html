@@ -7,9 +7,9 @@
 <meta name="description" content="고민은 잠시 접어 두고, 종이비행기 날리시죠! 세종 건물 옥상에서 날려 보는 거리 겨루기.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-:root{--paper:#F3F2EE;--panel:rgba(251,250,247,.95);--ink:#111110;--ink2:#4A4A47;--ink3:#7E7D78;--rule:#11111026;--accent:#152484;--warn:#8A5A12;--inv:#F3F2EE}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--panel:rgba(22,22,21,.95);--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#8C8B85;--rule:#EDECE82B;--accent:#8EA0F2;--warn:#E9B865;--inv:#0F0F0E;color-scheme:dark}}
-:root[data-theme="dark"]{--panel:rgba(22,22,21,.95);--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#8C8B85;--rule:#EDECE82B;--accent:#8EA0F2;--warn:#E9B865;--inv:#0F0F0E;color-scheme:dark}
+:root{--paper:#F3F2EE;--panel:rgba(251,250,247,.95);--ink:#111110;--ink2:#4A4A47;--ink3:#7E7D78;--rule:#11111026;--accent:#152484;--warn:#8A5A12;--inv:#F3F2EE;--glass:rgba(251,250,247,.66)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--glass:rgba(22,22,21,.74);--panel:rgba(22,22,21,.95);--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#8C8B85;--rule:#EDECE82B;--accent:#8EA0F2;--warn:#E9B865;--inv:#0F0F0E;color-scheme:dark}}
+:root[data-theme="dark"]{--glass:rgba(22,22,21,.74);--panel:rgba(22,22,21,.95);--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#8C8B85;--rule:#EDECE82B;--accent:#8EA0F2;--warn:#E9B865;--inv:#0F0F0E;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overflow:hidden;background:#E4E5E3;color:var(--ink);font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;word-break:keep-all;-webkit-font-smoothing:antialiased}
 button,input{font:inherit;color:inherit}
@@ -59,12 +59,22 @@ h1 em{font-style:normal;color:var(--accent)}
 .rank .no{color:var(--ink3);font-size:12px;align-self:center}
 .rank .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rank .d{font-variant-numeric:tabular-nums;font-weight:600}
-.rank .w{grid-column:2 / span 2;font-size:11.5px;color:var(--ink3)}
+.rank .w{grid-column:2;font-size:11.5px;color:var(--ink3);line-height:1.35}
+.rank .dt{grid-column:3;font-size:11px;color:var(--ink3);text-align:right;align-self:start;white-space:nowrap}
 .rank li.me{background:var(--rule)}
 .rank-note{font-size:12px;color:var(--ink3);margin:6px 0 0}
 .foot{margin-top:auto;padding-top:10px;font-size:11.5px;line-height:1.6;color:var(--ink3)}
 .link{color:inherit}
 .visitors{display:flex;align-items:center;gap:8px;margin-top:8px}
+
+/* 첫 화면 오른쪽 순위판 */
+#board{position:fixed;right:24px;top:24px;width:340px;max-height:calc(100% - 48px);overflow:auto;background:var(--glass);border:1px solid var(--rule);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:14px 16px 12px}
+#board .h2{font-size:13px;color:var(--ink);margin-bottom:8px}
+#board .rank li{padding:4px 2px}
+#board .rank .w,#board .rank .dt{color:var(--ink2)}
+#board .rank li.empty{color:var(--ink3)}
+#board .rank li.empty .nm{font-weight:400}
+.m-rank{display:none}
 
 /* 비행 화면 */
 .hud{position:fixed;left:50%;top:14px;transform:translateX(-50%);display:flex;gap:1px;background:var(--ink);border:1px solid var(--ink);pointer-events:none}
@@ -101,6 +111,8 @@ h1 em{font-style:normal;color:var(--accent)}
 #load .bar i{display:block;height:100%;width:0;background:#152484;transition:width .2s}
 
 @media (max-width:760px){
+  #board{display:none}
+  .m-rank{display:block}
   #menu{left:0;right:0;top:auto;bottom:0;width:auto;max-height:68%;border-width:1px 0 0;padding:16px 16px 12px;gap:12px}
   #result{left:0;right:0;top:auto;bottom:0;width:auto;max-height:78%;border-width:1px 0 0;padding:16px 16px 12px}
   .hud div{padding:4px 9px;min-width:68px}.hud b{font-size:17px}
@@ -129,7 +141,7 @@ h1 em{font-style:normal;color:var(--accent)}
     <p class="tdesc" id="tdesc"></p>
   </div>
   <button class="btn pri" id="go" type="button">옥상으로 올라가기</button>
-  <div>
+  <div class="m-rank">
     <p class="h2">가장 멀리 날린 사람들</p>
     <ol class="rank" id="rank1"></ol>
     <p class="rank-note" id="rnote1"></p>
@@ -138,6 +150,12 @@ h1 em{font-style:normal;color:var(--accent)}
     <a class="link" href="https://ysong86.github.io/">← 세종 읽기로 돌아가기</a> · 문의 <a class="link" href="mailto:ysong@sri.re.kr">ysong@sri.re.kr</a>
     <div class="visitors"><img src="https://hits.sh/ysong86.github.io/plane_sejong.svg?view=today-total&amp;style=flat-square&amp;label=%EC%A1%B0%ED%9A%8C%EC%88%98&amp;color=1d5c7c&amp;labelColor=64748b" alt="조회수 오늘/전체" height="20" decoding="async"><span>오늘 / 전체</span></div></div>
 </section>
+
+<aside id="board" class="hide" aria-label="순위표">
+  <p class="h2">가장 멀리 날린 사람들</p>
+  <ol class="rank" id="rank3"></ol>
+  <p class="rank-note" id="rnote3"></p>
+</aside>
 
 <div class="hud hide" id="hud">
   <div><b id="h-d">0</b><span>날아간 거리 m</span></div>
@@ -650,6 +668,7 @@ const TIP_FLY = MOBILE ? "화면을 끌어 조종합니다. 좌우로 돌고, �
 function setUI() {
   const m = S.mode;
   $("#menu").classList.toggle("hide", m !== "menu");
+  $("#board").classList.toggle("hide", m !== "menu");
   $("#aim").classList.toggle("hide", m !== "aim");
   $("#hud").classList.toggle("hide", m !== "fly" && m !== "aim");
   $("#mini").classList.toggle("hide", m !== "fly");
@@ -698,13 +717,17 @@ const say = (t, c) => { const m = $("#msg"); m.textContent = t; m.className = "m
 // ───────── 순위표
 let rows = null, myNick = store.get("plane_nick") || "";
 function paintRank() {
-  for (const [ol, note] of [["#rank1", "#rnote1"], ["#rank2", "#rnote2"]]) {
+  const row = (r, i) => `<li class="${r.n === myNick ? "me" : ""}"><span class="no mono">${i + 1}</span><span class="nm">${esc(r.n)}</span><span class="d mono">${fmt(r.d)}m</span><span class="w">${esc(r.s || "")}</span><span class="dt mono">${esc(r.t || "")}</span></li>`;
+  const empty = i => `<li class="empty"><span class="no mono">${i + 1}</span><span class="nm">비어 있음</span></li>`;
+  for (const [ol, note, full] of [["#rank1", "#rnote1", false], ["#rank2", "#rnote2", false], ["#rank3", "#rnote3", true]]) {
     const el = $(ol), nt = $(note);
     if (rows === null) { el.innerHTML = ""; nt.textContent = "순위표를 불러오는 중…"; continue; }
     if (rows === false) { el.innerHTML = ""; nt.textContent = "지금은 순위표에 연결되지 않습니다. 기록은 이 기기에만 남습니다."; continue; }
-    if (!rows.length) { el.innerHTML = ""; nt.textContent = "아직 아무도 없습니다. 첫 기록의 주인공이 되어 보세요."; continue; }
-    el.innerHTML = rows.slice(0, 10).map((r, i) => `<li class="${r.n === myNick ? "me" : ""}"><span class="no mono">${i + 1}</span><span class="nm">${esc(r.n)}</span><span class="d mono">${fmt(r.d)}m</span><span class="w">${esc(r.s || "")}</span></li>`).join("");
-    nt.textContent = "";
+    const top = rows.slice(0, 10);
+    let html = top.map(row).join("");
+    if (full) for (let i = top.length; i < 10; i++) html += empty(i);
+    el.innerHTML = html;
+    nt.textContent = rows.length || full ? "" : "아직 아무도 없습니다. 첫 기록의 주인공이 되어 보세요.";
   }
 }
 async function loadRank() {

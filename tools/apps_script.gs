@@ -94,14 +94,18 @@ function planeSheet() {
 function planeRows(sh) {
   const n = sh.getLastRow();
   if (n < 2) return [];
-  return sh.getRange(2, 1, n - 1, 3).getValues()
-    .map(function (r, i) { return { n: String(r[0]), d: Number(r[1]) || 0, s: String(r[2]), row: i + 2 }; })
+  return sh.getRange(2, 1, n - 1, 5).getValues()
+    .map(function (r, i) { return { n: String(r[0]), d: Number(r[1]) || 0, s: String(r[2]), t: planeDate(r[4]), row: i + 2 }; })
     .filter(function (r) { return r.n; })
     .sort(function (a, b) { return b.d - a.d; });
 }
 
+function planeDate(v) {
+  return Object.prototype.toString.call(v) === '[object Date]' ? Utilities.formatDate(v, 'Asia/Seoul', 'yyyy.MM.dd') : '';
+}
+
 function planePublic(list) {
-  return list.slice(0, PLANE_TOP).map(function (r) { return { n: r.n, d: r.d, s: r.s }; });
+  return list.slice(0, PLANE_TOP).map(function (r) { return { n: r.n, d: r.d, s: r.s, t: r.t }; });
 }
 
 function planeTop() {
@@ -134,13 +138,14 @@ function planePost(p) {
     const key = nick.toLowerCase();
     const mine = list.filter(function (r) { return r.n.toLowerCase() === key; })[0];
     let updated = true;
-    const row = [safe(nick), dist, safe(clip(p.start, 30)), time, new Date()];
+    const now = new Date();
+    const row = [safe(nick), dist, safe(clip(p.start, 30)), time, now];
     if (!mine) {
       sh.appendRow(row);
-      list.push({ n: nick, d: dist, s: clip(p.start, 30) });
+      list.push({ n: nick, d: dist, s: clip(p.start, 30), t: planeDate(now) });
     } else if (dist > mine.d) {
       sh.getRange(mine.row, 1, 1, 5).setValues([row]);
-      mine.d = dist; mine.s = clip(p.start, 30); mine.n = nick;
+      mine.d = dist; mine.s = clip(p.start, 30); mine.n = nick; mine.t = planeDate(now);
     } else {
       updated = false;
     }
