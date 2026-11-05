@@ -219,6 +219,25 @@ body.viewing #home{display:none}
 @media (prefers-reduced-motion: reduce){.card .collab::before{animation:none}}
 @media (max-width:1180px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.grid4{grid-template-columns:1fr}}
+
+/* 조례 찾기 (히어로 오른쪽) */
+.hero{display:flex;align-items:center;justify-content:space-between;gap:40px}
+.ordin{flex:0 0 340px;border:1px solid var(--ink);background:var(--panel);padding:18px 20px 16px;align-self:center}
+.ordin .eb{font-size:11px;letter-spacing:.16em;color:var(--accent);margin-bottom:8px;display:flex;justify-content:space-between}
+.ordin .eb i{font-style:normal;color:var(--ink3)}
+.ordin h2{margin:0 0 4px;font-size:21px;font-weight:700;letter-spacing:-.02em}
+.ordin p{margin:0 0 14px;font-size:13px;color:var(--ink2);line-height:1.55}
+.ordin .in{display:flex;border-bottom:1.5px solid var(--ink)}
+.ordin input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:15px "IBM Plex Sans KR",sans-serif;padding:8px 2px;outline:0}
+.ordin input::placeholder{color:var(--ink3)}
+.ordin button{border:0;background:var(--ink);color:var(--paper);font:600 13px "IBM Plex Sans KR",sans-serif;padding:0 14px;cursor:pointer}
+.ordin button:hover{background:var(--accent);color:#fff}
+.ordin .kw{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:10px;font-size:12px}
+.ordin .kw a{color:var(--ink2);text-decoration:none;border-bottom:1px solid var(--rule)}
+.ordin .kw a:hover{color:var(--accent);border-color:var(--accent)}
+.ordin .miss{display:block;margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink);text-decoration:none}
+.ordin .miss b{color:var(--accent)}
+@media (max-width:1180px){.hero{flex-direction:column;align-items:stretch}.ordin{flex:none;align-self:stretch}}
 </style>
 </head>
 <body>
@@ -236,7 +255,16 @@ body.viewing #home{display:none}
       <p class="note lede-note">연구원의 공식 업무가 아닌, 참여 연구자들의 호기심과 재미에서 시작한 작업입니다. 결과물은 참고용으로 봐 주세요.</p>
       <div class="count" id="count"></div>
     </div>
-  </div></section>
+  </div>
+  <form class="ordin" action="ordin/" method="get" role="search" aria-label="세종 조례 찾기">
+    <div class="eb mono">ORDINANCE<i>NEW</i></div>
+    <h2>세종 조례 찾기</h2>
+    <p>세종 조례 847건을 다른 15개 광역시도의 같은 조례와 나란히 비교합니다.</p>
+    <div class="in"><input name="q" type="search" placeholder="키워드 (예: 폭염, 청년, 주차)" aria-label="조례 키워드"><button type="submit">찾기 →</button></div>
+    <div class="kw"><a href="ordin/?q=폭염">폭염</a><a href="ordin/?q=청년">청년</a><a href="ordin/?q=주차">주차</a><a href="ordin/?q=돌봄">돌봄</a><a href="ordin/?q=공유재산">공유재산</a></div>
+    <a class="miss" href="ordin/#missing">다른 시도엔 있고 세종엔 없는 조례 <b>419</b> →</a>
+  </form>
+</section>
 
   <section class="readings" aria-label="읽기 목록">
     <div class="ibar"><div class="chips" id="chips" role="group" aria-label="분야"></div><span class="tally mono" id="tally"></span></div>
