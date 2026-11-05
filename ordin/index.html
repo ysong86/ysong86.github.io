@@ -124,7 +124,9 @@ mark{background:#ffe48a;color:#111;padding:0 1px}
 body.missing-mode main>section:not(#missing){display:none}
 body.missing-mode #missing{display:block}
 
-footer{border-top:1px solid var(--line);padding:8px 20px;font-size:11px;color:var(--sub);display:flex;gap:16px;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:8px 20px;font-size:11px;color:var(--sub);display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.visitors{display:flex;align-items:center;gap:8px;margin-left:auto}
+.visitors img{display:block;height:20px}
 
 @media (max-width:1100px){
   main{grid-template-columns:300px 1fr}
@@ -181,10 +183,13 @@ footer{border-top:1px solid var(--line);padding:8px 20px;font-size:11px;color:va
   <span>자료: 국가법령정보센터 자치법규 Open API · 광역 본청 조례만 비교(시·군·구 제외)</span>
   <span id="asof"></span>
   <span>'비슷한 조례'는 제목 유사도로 찾은 것이라 이름이 다른 같은 성격 조례는 놓칠 수 있습니다.</span>
+  <span class="visitors"><img class="hitsbadge" src="https://hits.sh/ysong86.github.io/sejong_ordin.svg?view=today-total&amp;style=flat-square&amp;label=%EC%A1%B0%ED%9A%8C%EC%88%98&amp;color=1d5c7c&amp;labelColor=64748b" alt="조회수 오늘/전체" height="20" decoding="async"><span>오늘 / 전체</span></span>
 </footer>
 
 <script>
 const $ = s => document.querySelector(s);
+/* 조회수 배지 — 집계 서버가 막히면 깨진 그림 대신 접는다 */
+$(".hitsbadge").addEventListener("error", e => { e.target.parentElement.style.display = "none"; });
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmtD = d => d ? `${d.slice(0,4)}.${d.slice(4,6)}.${d.slice(6,8)}` : "";
 const lawUrl = mst => `https://www.law.go.kr/ordinInfoP.do?ordinSeq=${mst}`;
