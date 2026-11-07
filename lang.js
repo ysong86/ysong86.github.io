@@ -12,7 +12,7 @@
       "This is not official work of the Institute. It grew out of the curiosity and enjoyment of the researchers involved, so please treat the results as reference only.",
     "읽기": "Readings", "공개": "Open", "비밀번호": "Password",
     // 조례 찾기
-    "세종 조례 찾기": "Sejong Ordinance Finder",
+    "세종 조례 찾기": "Sejong Ordinance Finder", "세종 조례 비교": "Sejong Ordinance Comparison",
     "세종 조례 847건을 다른 15개 광역시도의 같은 조례와 나란히 비교합니다.": "Compares Sejong's 847 ordinances side by side with the matching ordinances of the other 15 metropolitan cities and provinces.",
     "찾기 →": "Search →", "교통": "Transport", "주민자치": "Self-governance", "건축": "Building", "주차": "Parking", "하천": "Rivers",
     "다른 시도엔 있고 세종엔 없는 조례": "Ordinances other regions have but Sejong does not",
@@ -91,6 +91,7 @@
     [/^제작: (.+)$/, function (m) { return "By " + (EN[m[1]] || m[1]); }],
     [/^▶ (\d+)초$/, function (m) { return "▶ " + m[1] + "s"; }],
     [/^(.+) · 미리보기\(수치는 흐리게 처리\)$/, function (m) { return (EN[m[1]] || m[1]) + " · Preview (figures blurred)"; }],
+    [/^(.+) · 미리보기$/, function (m) { return (EN[m[1]] || m[1]) + " · Preview"; }],
     [/^(.+) · 세종 읽기$/, function (m) { return (EN[m[1]] || m[1]) + " · Reading Sejong"; }],
     [/^대표 문의: (.+)$/, function (m) { return "Contact: " + m[1]; }],
     [/^복사했습니다\. (\S+) 로 붙여 넣어 보내 주세요\.$/, function (m) { return "Copied. Paste it into an email to " + m[1] + "."; }],
