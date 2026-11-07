@@ -100,63 +100,71 @@ const CURSOR = `<svg viewBox="0 0 26 30" xmlns="http://www.w3.org/2000/svg"><pat
       el.scrollTop = y0 + (y1 - y0) * e; t < 1 ? requestAnimationFrame(f) : res(); };
     requestAnimationFrame(f); }), [sel, text, ms]);
 
-  // ── 0s 첫 화면
+  // 오른쪽 칸 안에서 글(제목·문단)이 위에 오도록 부드럽게 내린다
+  const scrollToEl = (box, sel, text, ms, off = 16) => p.evaluate(([box, sel, text, ms, off]) => new Promise(res => {
+    const el = document.querySelector(box), h = [...el.querySelectorAll(sel)].find(x => x.textContent.includes(text));
+    if (!h) return res(false);
+    const y0 = el.scrollTop, y1 = h.getBoundingClientRect().top - el.getBoundingClientRect().top + el.scrollTop - off, t0 = performance.now();
+    const f = now => { const t = Math.min(1, (now - t0) / ms), e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      el.scrollTop = y0 + (y1 - y0) * e; t < 1 ? requestAnimationFrame(f) : res(true); };
+    requestAnimationFrame(f); }), [box, sel, text, ms, off]);
+  const mark = (sel, text) => p.evaluate(([sel, text]) => { const h = [...document.querySelectorAll(sel)].find(x => x.textContent.includes(text));
+    if (h) { h.style.transition = "background .5s"; h.style.background = "#fff3b0"; h.style.boxShadow = "-6px 0 0 #fff3b0, 6px 0 0 #fff3b0"; } }, [sel, text]);
+  const boxOf = async (sel, text) => p.locator(sel, { hasText: text }).first().boundingBox();
+
+  // ── 0s 첫 화면 — 세 가지 기능 예고
   await p.mouse.move(mx, my);
-  await cap("보고서 마무리 전에", "세종 조례를 다른 광역 15곳 조례와 나란히 검토합니다");
-  await wait(2600);
+  await cap("세종 조례, 다른 시도와 나란히", "① 조례 검색 · ② 다른 시도와 비교 · ③ 세종에만 없는 조례");
+  await wait(2200);
 
-  // ── 3s 키워드로 찾기
-  await cap("조례 찾기", "세종 조례 847건 — 키워드로 바로 찾기");
+  // ── 3s ① 중요한 조례 하나 검색
+  await cap("① 조례 검색", "세종 조례 847건에서 키워드로 — 예: 재난");
   await clickOn("#q", 800);
-  await p.keyboard.type("이동장치", { delay: 170 });
-  await wait(600);
-
-  // ── 6s 조례 열기
-  await clickOn("#list .item", 700);
+  await p.keyboard.type("재난", { delay: 200 });
+  await wait(700);
+  await move(160, 560, 600);
+  await scrollToEl("#list", ".item", "재난관리기금", 900, 140);   // 목록 아래쪽에 있으면 끌어올린다
+  await wait(300);
+  { const r = await boxOf("#list .item", "재난관리기금"); await move(r.x + 160, r.y + r.height / 2, 900); await wait(200); await p.mouse.down(); await p.mouse.up(); }
   await p.waitForSelector("#right .grid16");
   await wait(300);
-  await cap("광역 15곳 보유 현황", "같음 · 비슷 · 관련 · 없음을 한눈에");
-  await move(1220, 210, 900);
-  await move(1380, 190, 700);   // 대전 '관련'
-  await wait(500);
-  await move(1140, 285, 600);   // 전남광주 '없음'
-  await wait(900);
 
-  // ── 11s 차이점 요약
-  await cap("다른 점을 요약", "세종만의 조항 · 다른 시도와 다른 점 · 검토해 볼 점");
-  await move(1210, 520, 600);
-  await scrollToText("#right", "세종 조례의 특징", 1100);
+  // ── 8s ② 다른 시도 대비 특징
+  await cap("② 다른 시도와 비교", "광역 15곳이 같은·비슷한 조례를 두었는지 한눈에");
+  await move(1180, 200, 800);
+  await move(1140, 285, 700);   // 전남광주 '없음'
+  await wait(800);
+  await cap("② 특징이 바로 보입니다", "세종만의 조항 · 다른 시도와 다른 점 · 검토해 볼 점");
+  await move(1230, 560, 600);
+  await scrollToEl("#right", ".ai p", "한 줄 핵심", 1000);
   await wait(1300);
-  await p.evaluate(() => new Promise(res => { const el = document.querySelector("#right");
-    const h = [...el.querySelectorAll(".ai p.h")].find(x => x.textContent.includes("다른 시도와"));
-    const y0 = el.scrollTop, y1 = h.getBoundingClientRect().top - el.getBoundingClientRect().top + el.scrollTop - 20, t0 = performance.now();
-    const f = now => { const t = Math.min(1, (now - t0) / 1600), e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      el.scrollTop = y0 + (y1 - y0) * e; t < 1 ? requestAnimationFrame(f) : res(); }; requestAnimationFrame(f); }));
-  await wait(1500);
+  await scrollToEl("#right", ".ai p.h", "다른 시도와 다른 점", 1300);
+  await wait(300);
+  await mark("#right .ai li", "이주 실비");
+  { const r = await boxOf("#right .ai li", "이주 실비"); if (r) await move(r.x + r.width - 30, r.y + r.height - 6, 700); }
+  await wait(2000);
+  if (await scrollToEl("#right", "h3", "다른 시도 다수가 두는데", 1100)) {
+    await cap("빠진 조항까지", "다른 시도 다수가 두는데 세종 조례엔 없는 조항");
+    await move(1300, 260, 600);
+    await wait(1700);
+  }
 
-  // ── 16s 다른 시도 본문 열기
-  await cap("다른 시도 본문 바로 열기", "조문을 나란히 대조 · 원문은 국가법령정보센터로");
-  await scrollTo("#right", 0, 800);
-  await clickOn('#right .cell[data-r="대구"]', 700);
-  await wait(500);
-  await move(640, 420, 700);
-  await scrollTo("#mid", 900, 1400);
-  await wait(900);
-
-  // ── 21s 세종에 없는 조례
-  await cap("세종에 없는 조례 419건", "다른 시도 4곳 이상이 두는데 세종엔 없는 조례");
+  // ── 22s ③ 우리 시에만 없는 조례
+  await cap("③ 세종에만 없는 조례", "다른 시도 4곳 이상이 두는데 세종엔 없는 조례 419건");
   await clickOn('.tabs button[data-tab="missing"]', 900);
-  await wait(900);
-  await clickOn('#missing .chips button[data-f="교통·도로"]', 900);
+  await wait(800);
+  await clickOn('#missing .chips button[data-f="안전·재난"]', 800);
   await wait(500);
-  const row = p.locator("#missing .mrow", { hasText: "주차공유" });
-  { const r = await row.boundingBox(); await move(r.x + 300, r.y + r.height / 2, 800); await wait(150); await p.mouse.down(); await p.mouse.up(); }
-  await wait(2200);
+  await move(700, 560, 500);
+  await scrollToEl("#missing", ".mrow", "중대재해", 900, 140);   // 펼친 내용이 화면 안에 들어오게 먼저 끌어올린다
+  await mark("#missing .mrow", "중대재해");
+  { const r = await boxOf("#missing .mrow", "중대재해"); await move(r.x + 320, r.y + r.height / 2, 600); await wait(150); await p.mouse.down(); await p.mouse.up(); }
+  await wait(2000);
 
-  // ── 27s 맺음
-  await cap("정책 제언의 근거로", "세종연구원 연구모임 · ysong86.github.io/ordin");
+  // ── 맺음
+  await cap("보고서 · 정책 제언의 근거로", "세종연구원 연구모임 · ysong86.github.io/ordin");
   await move(1000, 300, 900);
-  await wait(2200);
+  await wait(1900);
 
   await cdp.send("Page.stopScreencast");
   await wait(200);
