@@ -364,7 +364,7 @@ $("#meta").textContent = `INDEX — ${cnt(D.length)} READINGS`;
 $("#count").innerHTML = `<span><b>${cnt(D.length)}</b>읽기</span><span><b>${cnt(D.length - nLock)}</b>공개</span><span><b>${cnt(nLock)}</b>비밀번호</span>`;
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
 const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", emptyhouse: "도시·공간", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경"};
-const PER = Infinity;  // 쪽 나누지 않고 한 화면에 모두(사용자 요청 2026-11-10)
+const PER = 999;  // 쪽 나누지 않고 한 화면에 모두(사용자 요청 2026-11-10)
 const ls = {f: "전체", p: 1};
 const fieldOf = d => FIELD[d.id] || "기타";
 const shortT = t => t.replace(/^세종(시)? (행복도시 )?/, "");
