@@ -53,6 +53,8 @@
     "생활권은 계획대로 작동하고 있나": "Are the living zones working as planned?",
     "읍면과 신도심의 격차는 좁혀지고 있나": "Is the gap between the rural towns and the new city closing?",
     "행복도시 상가는 왜 비어 있나": "Why are the new city's shops empty?",
+    "세종의 빈집은 어디에 있고, 왜 생기나": "Where are Sejong's empty houses, and why do they appear?",
+    "주거 · 빈집": "Housing · Empty houses", "작업 중": "Work in progress", "시 제공 자료": "City-provided data",
     "소방차와 구급차는 제때 닿는가, 겨울 골목은 안전한가": "Do fire engines and ambulances arrive in time? Are winter alleys safe?",
     "세종의 시간은 어디에 남아 있나": "Where does Sejong's past remain?",
     "강과 물은 지금 어떤가": "How are the rivers and water right now?",
@@ -63,6 +65,8 @@
       "Checks whether the new city's six living zones actually perform the functions planned for them, and how they connect with each other and the wider region, using 25 public-data indicators and neighborhood maps.",
     "1읍 9면과 신도심의 인구·일자리·생활·건물을 나란히 놓고, 조치원·북부권과 햇빛소득 가능성을 살피며, 시정의 약속과 관련해 함께 고민할 거리를 찾아봅니다.":
       "Sets the one town and nine townships beside the new city on population, jobs, daily life and buildings, looks at Jochiwon, the northern area and solar-income potential, and gathers questions to consider alongside the city's policy commitments.",
+    "세종시가 모은 빈집 자료로, 빈집이 어느 읍면동에 얼마나 모여 있는지, 오래된 집·인구 변화와는 어떻게 이어지는지, 정비·활용은 어디까지 왔는지를 살펴봅니다. 지금은 자료를 정리하는 중입니다.":
+      "Uses the city's empty-house records to see how many empty houses sit in each town and neighborhood, how they relate to aging buildings and population change, and how far clean-up and reuse have come. The data is still being prepared.",
     "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.":
       "Shop vacancy by living zone, neighborhood and building from a full survey of 287 commercial buildings, with 2D/3D maps and regression, machine-learning and multilevel models to separate the causes.",
     "지역안전지수 분야별로 읽습니다. 화재안전 탭은 소방차 도달시간과 건물 화재위험을, 겨울 결빙 탭은 골목 낙상 위험과 제설함 후보를(연구진 추정), 구급·응급 탭은 2025년 실제 출동 기록으로 도착·이송 시간과 구급차 부하를 봅니다.":
@@ -77,9 +81,9 @@
     "세종연구원 도시안전연구센터": "Sejong Research Institute · Urban Safety Research Center", "세종연구원 세종지역학센터": "Sejong Research Institute · Sejong Regional Studies Center"
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
-  var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", fire: "Local Safety",
+  var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", emptyhouse: "Empty Houses", fire: "Local Safety",
                 heritage: "Heritage", water: "Water", traffic: "Road Safety"};
-  var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기",
+  var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", emptyhouse: "세종 빈집 읽기",
                    fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기"};
   Object.keys(KO_TITLES).forEach(function (k) {
     var t = KO_TITLES[k], e = k === "lab" ? TITLES[k] : "Reading " + TITLES[k];
