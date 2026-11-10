@@ -350,6 +350,9 @@ const D = [
   {id: "water", em: "💧", cat: "물 · 환경", q: "강과 물은 지금 어떤가", path: "water_sejong/", title: "세종시 물환경 읽기", lock: false, cycle: "10분마다 갱신",
    desc: "금강·미호강 수위와 강수, 하천 수질, 지하수, 기상을 실시간으로 모으고 관측 지점을 지도로 보여 줍니다.",
    who: "세종연구원 송양호"},
+  {id: "eia", em: "🏗️", cat: "개발 · 환경", q: "지금 세종에서는 무엇이 지어지고 있나", path: "eia_sejong/", title: "세종 개발과 환경 읽기", lock: true, cycle: "환경영향평가 협의", collab: "작업 중",
+   desc: "환경영향평가를 받는 사업의 구역과 협의 단계를 지도에 올려, 세종에서 무엇이 어디에 들어서는지 봅니다. 초안 공람 중인 사업과 거기 올라온 주민 의견, 그 사업들이 다 지어지면 빗물이 스며들지 못하는 땅이 얼마나 늘어나는지도 함께 살핍니다. 지금은 자료를 받아오는 중입니다.",
+   who: "세종연구원 송양호"},
   {id: "traffic", em: "🚦", cat: "교통 · 안전", q: "도로는 지금 안전한가", path: "traffic_sejong/", title: "세종시 교통안전 읽기", lock: false, cycle: "10분마다 갱신",
    desc: "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.",
    who: "세종연구원 도시안전연구센터"},
@@ -363,7 +366,7 @@ const cnt = n => String(n).padStart(2, "0");
 $("#meta").textContent = `INDEX — ${cnt(D.length)} READINGS`;
 $("#count").innerHTML = `<span><b>${cnt(D.length)}</b>읽기</span><span><b>${cnt(D.length - nLock)}</b>공개</span><span><b>${cnt(nLock)}</b>비밀번호</span>`;
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
-const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", emptyhouse: "도시·공간", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경"};
+const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", emptyhouse: "도시·공간", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경", eia: "문화·환경"};
 const PER = 999;  // 쪽 나누지 않고 한 화면에 모두(사용자 요청 2026-11-10)
 const ls = {f: "전체", p: 1};
 const fieldOf = d => FIELD[d.id] || "기타";
