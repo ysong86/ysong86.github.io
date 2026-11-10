@@ -77,7 +77,7 @@
       "Gathers Geum and Miho river levels, rainfall, river water quality, groundwater and weather in real time, and maps the observation points.",
     "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.":
       "Shows real-time traffic and road-surface risk, yearly traffic crashes and road facilities as three layers on neighborhood and road maps.",
-    "세종연구원 송양호": "Sejong Research Institute · 송양호", "세종연구원 연구모임": "Sejong Research Institute study group",
+    "세종연구원 송양호": "Sejong Research Institute · 송양호", "세종연구원 이자은": "Sejong Research Institute · 이자은", "세종연구원 연구모임": "Sejong Research Institute study group",
     "세종연구원 도시안전연구센터": "Sejong Research Institute · Urban Safety Research Center", "세종연구원 세종지역학센터": "Sejong Research Institute · Sejong Regional Studies Center"
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
