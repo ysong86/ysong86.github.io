@@ -54,7 +54,8 @@
     "읍면과 신도심의 격차는 좁혀지고 있나": "Is the gap between the rural towns and the new city closing?",
     "행복도시 상가는 왜 비어 있나": "Why are the new city's shops empty?",
     "세종의 빈집은 어디에 있고, 왜 생기나": "Where are Sejong's empty houses, and why do they appear?",
-    "주거 · 빈집": "Housing · Empty houses", "작업 중": "Work in progress", "연구 자료": "Research data",
+    "주거 · 빈집": "Housing · Empty houses", "교육 · 평생학습": "Education · Lifelong learning", "교육·사람": "Education & People", "국가통계 2023~2025": "National statistics 2023–2025",
+    "세종 사람들은 배우고 있나, 그 배움은 도움이 되나": "Are people in Sejong learning, and is it helping them?", "작업 중": "Work in progress", "연구 자료": "Research data",
     "소방차와 구급차는 제때 닿는가, 겨울 골목은 안전한가": "Do fire engines and ambulances arrive in time? Are winter alleys safe?",
     "세종의 시간은 어디에 남아 있나": "Where does Sejong's past remain?",
     "강과 물은 지금 어떤가": "How are the rivers and water right now?",
@@ -77,13 +78,16 @@
       "Gathers Geum and Miho river levels, rainfall, river water quality, groundwater and weather in real time, and maps the observation points.",
     "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.":
       "Shows real-time traffic and road-surface risk, yearly traffic crashes and road facilities as three layers on neighborhood and road maps.",
+    "평생학습 충족 지수(참여율 × 성과 체감)를 목적함수로 두고, 국가통계로 세종을 17개 시도와 견줍니다. 정보가 닿지 않는 문제, 배움이 일·삶으로 이어지지 않는 문제를 짚고, 국가 평생교육 정책·타 시도 사례와 이어 개선방안을 제안합니다.":
+      "Sets a lifelong-learning fulfilment index (participation × perceived benefit) as the objective and compares Sejong with the other 16 regions using national statistics. It points out where information fails to reach people and where learning does not carry over into work and life, and links improvement ideas to national lifelong-education policy and other regions' practice.",
+    "세종연구원 인재평생교육실": "Sejong Research Institute · Talent & Lifelong Education Office",
     "세종연구원 송양호": "Sejong Research Institute · 송양호", "세종연구원 이자은": "Sejong Research Institute · 이자은", "세종연구원 연구모임": "Sejong Research Institute study group",
     "세종연구원 도시안전연구센터": "Sejong Research Institute · Urban Safety Research Center", "세종연구원 세종지역학센터": "Sejong Research Institute · Sejong Regional Studies Center"
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
-  var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", emptyhouse: "Empty Houses", fire: "Local Safety",
+  var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", emptyhouse: "Empty Houses", lifelong: "Lifelong Learning", fire: "Local Safety",
                 heritage: "Heritage", water: "Water", traffic: "Road Safety"};
-  var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", emptyhouse: "세종 빈집 읽기",
+  var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", emptyhouse: "세종 빈집 읽기", lifelong: "세종 평생학습 읽기",
                    fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기"};
   Object.keys(KO_TITLES).forEach(function (k) {
     var t = KO_TITLES[k], e = k === "lab" ? TITLES[k] : "Reading " + TITLES[k];

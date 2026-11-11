@@ -341,6 +341,9 @@ const D = [
   {id: "emptyhouse", em: "🏚️", cat: "주거 · 빈집", q: "세종의 빈집은 어디에 있고, 왜 생기나", path: "emptyhouse_sejong/", title: "세종 빈집 읽기", lock: true, cycle: "연구 자료", collab: "작업 중",
    desc: "세종연구원 이자은 책임연구위원이 연구해 온 빈집 자료 등으로, 빈집이 어느 읍면동에 얼마나 모여 있는지, 오래된 집·인구 변화와는 어떻게 이어지는지, 정비·활용은 어디까지 왔는지를 살펴봅니다. 지금은 자료를 정리하는 중입니다.",
    who: "세종연구원 이자은"},
+  {id: "lifelong", em: "📚", cat: "교육 · 평생학습", q: "세종 사람들은 배우고 있나, 그 배움은 도움이 되나", path: "lifelong_sejong/", title: "세종 평생학습 읽기", lock: false, cycle: "국가통계 2023~2025",
+   desc: "평생학습 충족 지수(참여율 × 성과 체감)를 목적함수로 두고, 국가통계로 세종을 17개 시도와 견줍니다. 정보가 닿지 않는 문제, 배움이 일·삶으로 이어지지 않는 문제를 짚고, 국가 평생교육 정책·타 시도 사례와 이어 개선방안을 제안합니다.",
+   who: "세종연구원 인재평생교육실"},
   {id: "fire", em: "🚒", cat: "재난 · 지역안전", q: "소방차와 구급차는 제때 닿는가, 겨울 골목은 안전한가", path: "fire_sejong/", title: "세종 지역안전 읽기", lock: true, cycle: "화재안전 · 겨울 결빙 · 구급응급",
    desc: "지역안전지수 분야별로 읽습니다. 화재안전 탭은 소방차 도달시간과 건물 화재위험을, 겨울 결빙 탭은 골목 낙상 위험과 제설함 후보를(연구진 추정), 구급·응급 탭은 2025년 실제 출동 기록으로 도착·이송 시간과 구급차 부하를 봅니다.",
    who: "세종연구원 도시안전연구센터", preview: true, pvLen: "45초"},
@@ -366,7 +369,7 @@ const cnt = n => String(n).padStart(2, "0");
 $("#meta").textContent = `INDEX — ${cnt(D.length)} READINGS`;
 $("#count").innerHTML = `<span><b>${cnt(D.length)}</b>읽기</span><span><b>${cnt(D.length - nLock)}</b>공개</span><span><b>${cnt(nLock)}</b>비밀번호</span>`;
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
-const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", emptyhouse: "도시·공간", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경", eia: "문화·환경"};
+const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", emptyhouse: "도시·공간", lifelong: "교육·사람", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경", eia: "문화·환경"};
 const PER = 999;  // 쪽 나누지 않고 한 화면에 모두(사용자 요청 2026-11-10)
 const ls = {f: "전체", p: 1};
 const fieldOf = d => FIELD[d.id] || "기타";
