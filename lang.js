@@ -4,6 +4,38 @@
 (function () {
   "use strict";
   var EN = {
+    // 숫자 타일·분야 탭(2026-11 개편)
+    "세종연구원 연구모임이 세종의 현안을 질문으로 세우고, 공공데이터와 연구 자료로 풀어 갑니다.": "A Sejong Research Institute study group turns Sejong's issues into questions and works through them with public data and research.",
+    "사고다발지 3곳에서 난 교통사고(2025)": "Traffic crashes at the 3 crash hotspots (2025)",
+    "공실을 하나하나 조사한 행복도시 집합상가": "Commercial buildings in the new city surveyed one by one for vacancy",
+    "3D 모형에 올려 그림자·수위를 시험하는 건물": "Buildings in the 3D model for testing shadows and water levels",
+    "시가 지정·등록한 국가유산": "Heritage sites designated or registered by the city",
+    "신도심과 나란히 놓고 보는 읍면(1읍 9면)": "Rural towns compared side by side with the new city (1 eup, 9 myeon)",
+    "조례 찾기": "Ordinance Finder", "제도·조례": "Rules & Ordinances",
+    "두 개의 세종은 함께 자라고 있는가": "Are the two Sejongs growing together?",
+    "행복도시 생활권은 계획대로 제 기능을 하는지, 읍면은 신도심과의 격차를 좁히고 있는지, 빈집은 어디에 생기는지. 도시의 모양을 데이터로 점검하고, 3D 모형에서 직접 시험해 봅니다.":
+      "Whether the new city's living zones work as planned, whether the rural towns are closing the gap with the new city, and where empty houses appear. We check the shape of the city with data and test it in a 3D model.",
+    "소방차와 구급차는 제때 닿는가": "Do fire engines and ambulances arrive in time?",
+    "실제 도로 속도로 계산한 소방차 도달시간, 2025년 구급 출동 기록, 겨울 골목의 낙상 위험, 실시간 도로 소통까지. 시민 안전의 빈틈을 지도 위에서 찾습니다.":
+      "Fire-engine travel times from real road speeds, 2025 ambulance dispatch records, winter alley fall risk and live traffic. We look for gaps in public safety on the map.",
+    "집합상가를 전수조사해 생활권·동·건물 단위로 공실을 보고, 통계·머신러닝 모형으로 공실의 원인을 나눠 처방의 순서를 찾습니다.":
+      "A full survey of commercial buildings shows vacancy by living zone, neighborhood and building, and statistical and machine-learning models separate the causes to set priorities.",
+    "세종의 땅과 물, 시간은 어떻게 변하고 있나": "How are Sejong's land, water and history changing?",
+    "국가유산의 자리, 금강·미호강의 수위와 수질, 환경영향평가를 거친 개발 사업까지. 개발과 보전 사이의 균형을 한 화면에서 봅니다.":
+      "Heritage sites, Geum and Miho river levels and water quality, and development projects that went through environmental assessment: the balance between development and conservation on one screen.",
+    "세종 사람들은 배우고 있나": "Are people in Sejong learning?",
+    "평생학습 참여와 배움의 성과 체감을 17개 시도와 견주어, 세종 시민의 배움이 일과 삶으로 이어지는지 살핍니다.":
+      "Compares lifelong-learning participation and perceived benefit with 17 regions to see whether learning carries over into work and life.",
+    "다른 시도엔 있고 세종엔 없는 조례": "Ordinances other regions have but Sejong does not",
+    "세종 조례를 15개 광역시도의 같은 조례와 나란히 놓고, 세종에 아직 없는 조례를 찾아 줍니다. 입법 과제를 고를 때 바로 쓸 수 있습니다.":
+      "Sets Sejong's ordinances beside the matching ones in 15 metropolitan cities and provinces and finds those Sejong does not yet have, ready to use when choosing legislative tasks.",
+    "세종 조례 847건을 15개 광역시도와 나란히 비교합니다.": "Compares Sejong's 847 ordinances with 15 metropolitan cities and provinces.",
+    "지금 세종에서는 무엇이 지어지고 있나": "What is being built in Sejong right now?", "개발과 환경 읽기": "Reading Development & Environment",
+    "행복도시 생활권": "Living zones in the new city", "공공데이터 지표": "Public-data indicators", "3D로 올린 건물": "Buildings in 3D",
+    "실제 구급 출동 기록": "Real ambulance dispatch records", "도로 소통 갱신": "Traffic update interval", "집합상가 전수조사": "Commercial buildings surveyed",
+    "지정·등록 국가유산": "Designated heritage sites", "환경영향평가 사업": "Projects with environmental assessment",
+    "견주어 본 시도": "Regions compared", "세종 조례": "Sejong ordinances", "세종에 없는 조례": "Ordinances Sejong lacks",
+    "건": "", "개": "", "곳": "", "동": " bldgs", "년": "", "분": " min", "개 시점": " surveys", "공동작업": "Joint work",
     // 머리·소개
     "세종 읽기": "Reading Sejong",
     "세종연구원 연구자들의 작은 연구모임에서 던진 질문들을, 공공데이터와 쌓아 온 연구 자료로 하나씩 풀어 가는 세종 읽기입니다. 함께 던진 질문에서 출발해 조금씩 답을 찾아가는 중입니다. 목록을 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 다른 읽기를 오갈 수 있습니다.":
@@ -95,6 +127,9 @@
     EN[t] = (k === "lab" ? "Sejong " : "Reading Sejong: ") + TITLES[k];
   });
   var RULES = [
+    [/^FIELD (\d\d) · (.+)$/, function (m) { return "FIELD " + m[1] + " · " + (EN[m[2]] || m[2]); }],
+    [/^● (.+)$/, function (m) { return "● " + (EN[m[1]] || m[1]); }],
+    [/^(.+) →$/, function (m) { return (EN[m[1]] || m[1]) + " →"; }],
     [/^(\d\d) · (.+)$/, function (m) { return m[1] + " · " + (EN[m[2]] || m[2]); }],          // 카드 머리 '02 · 분야'
     [/^제작: (.+)$/, function (m) { return "By " + (EN[m[1]] || m[1]); }],
     [/^▶ (\d+)초$/, function (m) { return "▶ " + m[1] + "s"; }],
@@ -112,7 +147,7 @@
   function tr(s) {
     var k = s.trim();
     if (!k || !/[가-힣]/.test(k)) return null;
-    if (EN[k]) return s.replace(k, EN[k]);
+    if (k in EN) return s.replace(k, EN[k]);
     for (var i = 0; i < RULES.length; i++) { var m = k.match(RULES[i][0]); if (m) return s.replace(k, RULES[i][1](m)); }
     return null;
   }
@@ -135,7 +170,7 @@
   function text(n) { if (skip(n.parentElement)) return; var t = tr(n.nodeValue); if (t == null) return; if (!origText.has(n)) origText.set(n, n.nodeValue); n.nodeValue = t; }
 
   // 큰 제목은 낱말 순서가 달라 통째로 바꾼다
-  var SPECIAL = {".hero h1": 'Reading <em>Sejong</em> through questions.'};
+  var SPECIAL = {".hero h1": 'Reading <em>Sejong</em> through questions.', ".b-lead h1": 'Reading <em>Sejong</em> through questions.'};
   var note;
   function apply() {
     Object.keys(SPECIAL).forEach(function (s) { var el = document.querySelector(s); if (el && !origHTML.has(el)) { origHTML.set(el, el.innerHTML); el.innerHTML = SPECIAL[s]; } });
