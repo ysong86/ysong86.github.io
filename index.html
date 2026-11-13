@@ -448,7 +448,7 @@ function drawFields(){
   $("#b-tabs").innerHTML = BF.map((f, i) => `<button class="b-tab" type="button" role="tab" data-bi="${i}" aria-selected="${i === bcur}">${f.k}<small>${f.ordin ? 1 : f.ids.filter(id => D.some(d => d.id === id)).length}</small></button>`).join("");
   const f = BF[bcur], rs = f.ids.map(id => D.find(d => d.id === id)).filter(Boolean);
   const card = rs.map(d => `<a class="b-card" href="#/${d.id}"><span class="th"${d.preview ? ` data-vid="${d.path}preview.mp4"` : ""}><img src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy">${d.preview ? `<span class="play" data-pv="${d.id}">▶ ${d.pvLen || "30초"}</span>` : ""}</span><span>
-      <span class="cm mono"><span class="${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>${d.collab ? (/공동작업/.test(d.collab) ? `<span class="wip req">● 관계기관 공동작업</span>` : `<span class="wip">● ${esc(d.collab)}</span>`) : ""}</span>
+      <span class="cm mono"><span class="${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>${d.collab ? (/공동작업/.test(d.collab) ? `<span class="wip req">● 기관 요청 대응 중</span>` : `<span class="wip">● ${esc(d.collab)}</span>`) : ""}</span>
       <h3>${esc(shortT(d.title))}</h3><p>${esc(d.q)}</p><small class="who">제작: ${esc(d.who)}</small></span></a>`).join("")
     + (f.ordin ? `<a class="b-card" href="ordin/"><span class="th"><img src="assets/thumbs/ordin.jpg" alt="" loading="lazy"></span><span><span class="cm mono"><span class="open">OPEN</span></span><h3>세종 조례 찾기</h3><p>세종 조례 847건을 15개 광역시도와 나란히 비교합니다.</p></span></a>` : "");
   const n = rs.length + (f.ordin ? 1 : 0);
