@@ -80,6 +80,14 @@
     "세종연구원": "Sejong Research Institute",
     // 카드: 분야, 질문, 설명, 제작
     "도시 · 3D 실험실": "City · 3D lab", "도시계획 · 생활권": "Urban planning · Living zones", "균형성장 · 읍면": "Balanced growth · Rural towns",
+    "산업 · 일자리": "Industry · Jobs", "국민연금 사업장 2016~2026": "Pension-registered workplaces 2016–2026",
+    "산업단지는 채워졌나, 일자리는 어디서 늘고 있나": "Are the industrial complexes filled, and where are jobs growing?",
+    "산업단지 19곳의 분양·입주와 등록공장 923곳을 지도에 올리고, 국민연금 사업장 10년 기록으로 공무원을 뺀 일자리가 어느 동네·업종에서 늘었는지 봅니다. 회사마다 인원 추이도 찾아볼 수 있습니다.":
+      "Maps the sales and occupancy of 19 industrial complexes and 923 registered factories, and uses ten years of National Pension workplace records to see in which neighborhoods and industries non-civil-service jobs have grown. You can also look up each company's headcount over time.",
+    "세종은 무엇으로 먹고 사나": "What does Sejong live on?",
+    "행복도시 상가는 왜 비어 있는지 전수조사로 원인을 나눠 보고, 산업단지는 채워졌는지, 공무원 말고 일자리는 어디서 늘고 있는지 국민연금 사업장 10년 기록으로 봅니다.":
+      "A full survey separates the causes of empty shops in the new city, and ten years of National Pension workplace records show whether the industrial complexes are filled and where jobs other than civil-service posts are growing.",
+    "세종의 산업단지": "industrial complexes in Sejong", "등록공장": "registered factories",
     "상권 · 경제": "Commerce · Economy", "재난 · 지역안전": "Disaster · Local safety", "문화 · 국가유산": "Culture · Heritage", "물 · 환경": "Water · Environment", "교통 · 안전": "Transport · Safety",
     "도시를 움직여 보면 무엇이 달라지나": "What changes when you move the city?",
     "생활권은 계획대로 작동하고 있나": "Are the living zones working as planned?",
@@ -117,9 +125,9 @@
     "세종연구원 도시안전연구센터": "Sejong Research Institute · Urban Safety Research Center", "세종연구원 세종지역학센터": "Sejong Research Institute · Sejong Regional Studies Center"
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
-  var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", emptyhouse: "Empty Houses", lifelong: "Lifelong Learning", fire: "Local Safety",
+  var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", industry: "Industry & Jobs", emptyhouse: "Empty Houses", lifelong: "Lifelong Learning", fire: "Local Safety",
                 heritage: "Heritage", water: "Water", traffic: "Road Safety"};
-  var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", emptyhouse: "세종 빈집 읽기", lifelong: "세종 평생학습 읽기",
+  var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", industry: "세종 산업과 일자리 읽기", emptyhouse: "세종 빈집 읽기", lifelong: "세종 평생학습 읽기",
                    fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기"};
   Object.keys(KO_TITLES).forEach(function (k) {
     var t = KO_TITLES[k], e = k === "lab" ? TITLES[k] : "Reading " + TITLES[k];

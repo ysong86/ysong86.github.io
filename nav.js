@@ -51,6 +51,7 @@
     {id: "zone", title: "생활권 읽기", lock: true},
     {id: "balance", title: "읍면 균형성장 읽기", lock: true},
     {id: "vacant", title: "상가공실 읽기", lock: true},
+    {id: "industry", title: "산업과 일자리 읽기", lock: true},
     {id: "emptyhouse", title: "빈집 읽기", lock: true},
     {id: "lifelong", title: "평생학습 읽기"},
     {id: "fire", title: "지역안전 읽기", lock: true},
