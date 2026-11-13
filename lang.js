@@ -88,6 +88,7 @@
     "행복도시 상가는 왜 비어 있는지 전수조사로 원인을 나눠 보고, 산업단지는 채워졌는지, 공무원 말고 일자리는 어디서 늘고 있는지 국민연금 사업장 10년 기록으로 봅니다.":
       "A full survey separates the causes of empty shops in the new city, and ten years of National Pension workplace records show whether the industrial complexes are filled and where jobs other than civil-service posts are growing.",
     "세종의 산업단지": "industrial complexes in Sejong", "등록공장": "registered factories",
+    "● 시정 작업 요청 중": "● Requested by the city", "시정 작업 요청 중": "Requested by the city",
     "상권 · 경제": "Commerce · Economy", "재난 · 지역안전": "Disaster · Local safety", "문화 · 국가유산": "Culture · Heritage", "물 · 환경": "Water · Environment", "교통 · 안전": "Transport · Safety",
     "도시를 움직여 보면 무엇이 달라지나": "What changes when you move the city?",
     "생활권은 계획대로 작동하고 있나": "Are the living zones working as planned?",

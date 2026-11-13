@@ -9,11 +9,11 @@
 <style>
 /* 건축사무소 포트폴리오처럼 — 흑백·큰 글자·얇은 선·번호 목록, 색은 한 가지만 아껴 쓴다 */
 :root{--paper:#F3F2EE;--panel:#FBFAF7;--ink:#111110;--ink2:#4A4A47;--ink3:#8B8A85;--rule:#11111022;--rule2:#1111110F;--accent:#152484;
-  --lock:#8A5A12;--open:#2E6B45;--bar:rgba(243,242,238,.94);--inv:#F3F2EE}
+  --lock:#8A5A12;--open:#2E6B45;--req:#B0306A;--bar:rgba(243,242,238,.94);--inv:#F3F2EE}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0F0F0E;--panel:#161615;--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#76756F;--rule:#EDECE826;--rule2:#EDECE812;
-  --accent:#8EA0F2;--lock:#E9B865;--open:#7FCB98;--bar:rgba(15,15,14,.94);--inv:#0F0F0E;color-scheme:dark}}
+  --accent:#8EA0F2;--lock:#E9B865;--open:#7FCB98;--req:#F28AB8;--bar:rgba(15,15,14,.94);--inv:#0F0F0E;color-scheme:dark}}
 :root[data-theme="dark"]{--paper:#0F0F0E;--panel:#161615;--ink:#EDECE8;--ink2:#B2B1AC;--ink3:#76756F;--rule:#EDECE826;--rule2:#EDECE812;
-  --accent:#8EA0F2;--lock:#E9B865;--open:#7FCB98;--bar:rgba(15,15,14,.94);--inv:#0F0F0E;color-scheme:dark}
+  --accent:#8EA0F2;--lock:#E9B865;--open:#7FCB98;--req:#F28AB8;--bar:rgba(15,15,14,.94);--inv:#0F0F0E;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;line-height:1.5;word-break:keep-all;
@@ -277,6 +277,7 @@ body.viewing #home{display:none}
 .b-card .play{position:absolute;right:5px;bottom:5px;z-index:2;padding:0 6px;background:rgba(17,17,16,.74);color:#fff;font-size:10px;cursor:pointer}
 .b-card .cm{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;letter-spacing:.06em}
 .b-card .cm .lock{color:var(--lock)} .b-card .cm .open{color:var(--open)} .b-card .cm .wip{color:var(--accent)}
+.b-card .cm .wip.req{color:var(--req);font-weight:600}
 .b-card h3{margin:4px 0 3px;font-size:16.5px;font-weight:600;letter-spacing:-.02em;line-height:1.3}
 .b-card p{margin:0;font-size:13px;color:var(--ink2);line-height:1.5}
 .b-card .who{display:block;margin-top:4px;font-size:11.5px;color:var(--ink3)}
@@ -447,9 +448,9 @@ function drawFields(){
   $("#b-tabs").innerHTML = BF.map((f, i) => `<button class="b-tab" type="button" role="tab" data-bi="${i}" aria-selected="${i === bcur}">${f.k}<small>${f.ordin ? 1 : f.ids.filter(id => D.some(d => d.id === id)).length}</small></button>`).join("");
   const f = BF[bcur], rs = f.ids.map(id => D.find(d => d.id === id)).filter(Boolean);
   const card = rs.map(d => `<a class="b-card" href="#/${d.id}"><span class="th"${d.preview ? ` data-vid="${d.path}preview.mp4"` : ""}><img src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy">${d.preview ? `<span class="play" data-pv="${d.id}">▶ ${d.pvLen || "30초"}</span>` : ""}</span><span>
-      <span class="cm mono"><span class="${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>${d.collab ? `<span class="wip">● ${esc(/공동작업/.test(d.collab) ? "공동작업" : d.collab)}</span>` : ""}</span>
+      <span class="cm mono"><span class="${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>${d.collab ? (/공동작업/.test(d.collab) ? `<span class="wip req">● 시정 작업 요청 중</span>` : `<span class="wip">● ${esc(d.collab)}</span>`) : ""}</span>
       <h3>${esc(shortT(d.title))}</h3><p>${esc(d.q)}</p><small class="who">제작: ${esc(d.who)}</small></span></a>`).join("")
-    + (f.ordin ? `<a class="b-card" href="ordin/"><span class="th b-ph" aria-hidden="true">⚖️</span><span><span class="cm mono"><span class="open">OPEN</span></span><h3>세종 조례 찾기</h3><p>세종 조례 847건을 15개 광역시도와 나란히 비교합니다.</p></span></a>` : "");
+    + (f.ordin ? `<a class="b-card" href="ordin/"><span class="th"><img src="assets/thumbs/ordin.jpg" alt="" loading="lazy"></span><span><span class="cm mono"><span class="open">OPEN</span></span><h3>세종 조례 찾기</h3><p>세종 조례 847건을 15개 광역시도와 나란히 비교합니다.</p></span></a>` : "");
   const n = rs.length + (f.ordin ? 1 : 0);
   $("#b-panel").innerHTML = `<div><div class="eb mono">FIELD ${String(bcur + 1).padStart(2, "0")} · ${f.k}</div><h2>${esc(f.t)}</h2><p class="why">${esc(f.why)}</p>
     <div class="b-figs">${f.figs.map(x => `<div><b>${x[0]}<small>${x[1]}</small></b><span>${x[2]}</span></div>`).join("")}</div></div>
