@@ -56,7 +56,7 @@
     {id: "fire", title: "지역안전 읽기", lock: true},
     {id: "heritage", title: "국가유산 읽기"},
     {id: "water", title: "물환경 읽기"},
-    {id: "eia", title: "개발과 환경 읽기", lock: true},
+    {id: "eia", title: "개발과 환경 읽기"},
     {id: "traffic", title: "교통안전 읽기"}
   ];
   var css =
