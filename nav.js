@@ -40,6 +40,17 @@
   document.addEventListener("DOMContentLoaded", link);
 })();
 
+/* 읽기마다 다른 탭 줄(.tabs·.ptabs·.sf-tabs·.sw-tabs·.sh-tabs)을 같은 모양으로 강조한다 — 음영 띠 + 고른 탭 채움.
+   iframe 안(대문 한 화면 보기)에서도 적용해야 해서 맨 앞 블록과 같이 창 위치를 가리지 않는다. */
+(function () {
+  "use strict";
+  if (document.getElementById("sjtab-css")) return;
+  var st = document.createElement("style");
+  st.id = "sjtab-css";
+  st.textContent = ":root{--sjtab-band:#E9EDF1;--sjtab-chip:#ffffffcc;--sjtab-line:#CDD5DC;--sjtab-ink:#2A3640;--sjtab-on:#1B3F7A;--sjtab-onink:#fff}@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--sjtab-band:#1A2328;--sjtab-chip:#ffffff10;--sjtab-line:#33424A;--sjtab-ink:#C9D4D8;--sjtab-on:#8EA9F0;--sjtab-onink:#0E1619}}:root[data-theme=dark]{--sjtab-band:#1A2328;--sjtab-chip:#ffffff10;--sjtab-line:#33424A;--sjtab-ink:#C9D4D8;--sjtab-on:#8EA9F0;--sjtab-onink:#0E1619}:is(nav.tabs,.ptabs,.sf-tabs,.sw-tabs,.sh-tabs,div.tabs[role=tablist]){background:var(--sjtab-band)!important;border:1px solid var(--sjtab-line)!important;border-radius:12px!important;padding:6px!important;gap:6px!important;box-shadow:inset 0 1px 2px #0000000d!important}:is(nav.tabs>.tab,.ptabs>.ptab,.sf-tabs>*,.sw-tabs>*,.sh-tabs>*,div.tabs[role=tablist]>*){background:var(--sjtab-chip)!important;border:1px solid var(--sjtab-line)!important;border-radius:9px!important;color:var(--sjtab-ink)!important;margin:0!important;transition:background .15s,box-shadow .15s!important}:is(nav.tabs>.tab,.ptabs>.ptab,.sf-tabs>*,.sw-tabs>*,.sh-tabs>*,div.tabs[role=tablist]>*):hover{box-shadow:0 1px 4px #0000001f!important}:is(nav.tabs>.tab,.ptabs>.ptab,.sf-tabs>*,.sw-tabs>*,.sh-tabs>*,div.tabs[role=tablist]>*):is(.on,.active,[aria-selected=true]){background:var(--sjtab-on)!important;border-color:var(--sjtab-on)!important;color:var(--sjtab-onink)!important;box-shadow:0 2px 6px #1b3f7a40!important}:is(nav.tabs>.tab,.ptabs>.ptab,.sf-tabs>*,.sw-tabs>*,.sh-tabs>*,div.tabs[role=tablist]>*):is(.on,.active,[aria-selected=true]) *{color:inherit!important;opacity:.92}";
+  (document.head || document.documentElement).appendChild(st);
+})();
+
 (function () {
   "use strict";
   var me = document.currentScript;
