@@ -91,8 +91,8 @@
     "● 관계기관 요청 대응 중": "● Responding to agency requests", "관계기관 요청 대응 중": "Responding to agency requests",
     "상권 · 경제": "Commerce · Economy", "재난 · 지역안전": "Disaster · Local safety", "문화 · 국가유산": "Culture · Heritage", "물 · 환경": "Water · Environment", "에너지 · 환경": "Energy · Environment", "국가통계 2014~2025": "National statistics 2014–2025",
     "세종은 에너지를 얼마나, 어디에 쓰고, 어디서 얻나": "How much energy does Sejong use, on what, and where does it come from?",
-    "세종이 쓰는 전기와 건물 에너지, 신재생 발전 설비, 지역난방을 KOSIS 통계로 17개 시도와 견줍니다. 전기차 충전소와 태양광 발전소 지도는 자료를 연결하는 중입니다.":
-      "Compares Sejong's electricity and building energy use, renewable generation capacity and district heating with 17 regions using KOSIS statistics. Maps of EV chargers and solar plants are being connected.", "교통 · 안전": "Transport · Safety",
+    "세종이 쓰는 전기와 건물 에너지, 신재생 발전 설비, 지역난방을 국가통계로 17개 시도와 견주고, 전기차 충전소 1,039곳과 읍면동별 태양광을 지도에 올렸습니다.":
+      "Compares Sejong's electricity and building energy use, renewable generation capacity and district heating with 17 regions using national statistics, and maps 1,039 EV charging stations and solar capacity by neighborhood.", "교통 · 안전": "Transport · Safety",
     "도시를 움직여 보면 무엇이 달라지나": "What changes when you move the city?",
     "생활권은 계획대로 작동하고 있나": "Are the living zones working as planned?",
     "읍면과 신도심의 격차는 좁혀지고 있나": "Is the gap between the rural towns and the new city closing?",
