@@ -51,9 +51,69 @@
   (document.head || document.documentElement).appendChild(st);
 })();
 
+/* 화면 밝기 — 모든 읽기 공통. 고른 값은 localStorage 'sejong_theme'(light|dark, 없으면 기기 설정)에 두고
+   대문·읽기·iframe 이 같은 출처라 함께 따라간다(storage 이벤트).
+   읽기마다 CSS 가 달라서(@media prefers-color-scheme 만 쓰는 곳, data-theme 를 쓰는 곳) 둘 다 맞춘다:
+   html 에 data-theme 를 달고, 문서의 '(prefers-color-scheme: dark|light)' 미디어 규칙을 고른 쪽으로 켜고 끈다.
+   다크 규칙이 하나도 없는 페이지(디지털트윈 실험실)는 버튼을 숨긴다. */
+(function () {
+  "use strict";
+  var KEY = "sejong_theme", mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+  var DARK = "(prefers-color-scheme: dark)", LIGHT = "(prefers-color-scheme: light)", ON = "(min-width: 0px)", OFF = "(max-width: 0px)";
+  var found = false, hadAttr = document.documentElement.getAttribute("data-theme");
+  // 잠금이 풀리며 문서를 새로 쓰면 다시 불린다 — 그때마다 지금 문서를 기준으로 한다
+  function pref() { try { var v = localStorage.getItem(KEY); return v === "light" || v === "dark" ? v : null; } catch (e) { return null; } }
+  function isDark() { var p = pref(); if (p) return p === "dark"; var a = document.documentElement.getAttribute("data-theme"); if (a === "dark" || a === "light") return a === "dark"; return !!(mq && mq.matches); }
+  function walk(rules, p, own) {
+    for (var i = 0; rules && i < rules.length; i++) {
+      var r = rules[i];
+      if (r.media && r.cssRules) {
+        if (r.__sjo == null) {
+          var t = r.media.mediaText.replace(/\s+/g, " ");
+          if (t.indexOf("prefers-color-scheme") < 0) { walk(r.cssRules, p, own); continue; }
+          r.__sjo = r.media.mediaText;
+        }
+        if (!own) found = true;
+        var o = r.__sjo.replace(/\(\s*prefers-color-scheme\s*:\s*(dark|light)\s*\)/g, function (_, k) { return "(prefers-color-scheme: " + k + ")"; });
+        var n = !p ? o : o.split(DARK).join(p === "dark" ? ON : OFF).split(LIGHT).join(p === "light" ? ON : OFF);
+        if (r.media.mediaText !== n) r.media.mediaText = n;
+        walk(r.cssRules, p, own);
+      }
+    }
+  }
+  function apply() {
+    var p = pref();
+    if (p) document.documentElement.setAttribute("data-theme", p);
+    else if (hadAttr) document.documentElement.setAttribute("data-theme", hadAttr); else document.documentElement.removeAttribute("data-theme");
+    for (var i = 0; i < document.styleSheets.length; i++) {
+      var s = document.styleSheets[i], own = !!(s.ownerNode && /^sj(tab|nav)-css$/.test(s.ownerNode.id || ""));
+      try { walk(s.cssRules, p, own); } catch (e) { /* 다른 출처(글꼴) 시트는 건너뛴다 */ }
+    }
+    if (/\[data-theme/.test(Array.prototype.map.call(document.querySelectorAll("style"), function (x) { return x.id === "sjtab-css" || x.id === "sjnav-css" ? "" : x.textContent; }).join(""))) found = true;
+    var b = document.querySelectorAll(".sjtheme");
+    for (var j = 0; j < b.length; j++) {
+      b[j].style.display = found ? "" : "none";
+      b[j].textContent = isDark() ? "☀ 밝게" : "☾ 어둡게";
+      b[j].title = isDark() ? "밝은 화면으로 보기" : "어두운 화면으로 보기";
+    }
+  }
+  function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} apply(); }
+  var tmr = null;
+  function later() { clearTimeout(tmr); tmr = setTimeout(apply, 30); }
+  window.__sjTheme = { refresh: apply, toggle: function () { set(isDark() ? "light" : "dark"); }, isDark: isDark };
+  apply();
+  document.addEventListener("DOMContentLoaded", apply);
+  addEventListener("load", apply);
+  addEventListener("storage", function (e) { if (e.key === KEY) apply(); });
+  if (mq && mq.addEventListener) mq.addEventListener("change", apply);
+  // 잠금이 풀리거나 화면이 새 <style> 을 붙이면 다시 맞춘다
+  try { new MutationObserver(function (ms) { for (var i = 0; i < ms.length; i++) for (var k = 0; k < ms[i].addedNodes.length; k++) { var n = ms[i].addedNodes[k]; if (n.nodeName === "STYLE" || n.nodeName === "LINK" || (n.querySelector && n.querySelector("style,link"))) { later(); return; } } }).observe(document.documentElement, { childList: true, subtree: true }); } catch (e) {}
+})();
+
 (function () {
   "use strict";
   var me = document.currentScript;
+  if (me && me.hasAttribute("data-theme-only")) return;   // 대문: 밝기만 쓰고 탭 줄은 달지 않는다
   try { if (window.top !== window.self) return; } catch (e) { return; }
   var SITE = (me && me.getAttribute("data-site")) || "";
   var HOME = "https://ysong86.github.io/";
@@ -85,6 +145,9 @@
     ".sjnav .sjt a{color:var(--sjnav-ink2)}" +
     ".sjnav .sjt a.on{background:var(--sjnav-on);border-color:var(--sjnav-line);color:var(--sjnav-ink)}" +
     ".sjnav .lk{font-size:11px;margin-left:3px;opacity:.75}" +
+    ".sjnav .sjtheme{all:unset;flex:none;cursor:pointer;white-space:nowrap;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;" +
+    "border:1px solid var(--sjnav-line);color:var(--sjnav-ink);background:var(--sjnav-on)}" +
+    ".sjnav .sjtheme:hover{background:var(--sjnav-hover)}.sjnav .sjtheme:focus-visible{outline:2px solid #1B3F7A;outline-offset:2px}" +
     ":root{--sjnav-bg:#ffffffef;--sjnav-line:#D6DDD9;--sjnav-ink:#15232A;--sjnav-ink2:#4B5B62;--sjnav-hover:#EEF1EF;--sjnav-on:#fff}" +
     "@media (prefers-color-scheme: dark){:root:not([data-theme=light]){--sjnav-bg:#152125ef;--sjnav-line:#2B3B40;--sjnav-ink:#E3ECEA;--sjnav-ink2:#A4B4B4;--sjnav-hover:#1F2D31;--sjnav-on:#0E1619}}" +
     ":root[data-theme=dark]{--sjnav-bg:#152125ef;--sjnav-line:#2B3B40;--sjnav-ink:#E3ECEA;--sjnav-ink2:#A4B4B4;--sjnav-hover:#1F2D31;--sjnav-on:#0E1619}" +
@@ -92,6 +155,7 @@
   function mount() {
     if (document.querySelector(".sjnav")) return;
     var st = document.createElement("style");
+    st.id = "sjnav-css";
     st.textContent = css;
     document.head.appendChild(st);
     var nav = document.createElement("nav");
@@ -103,8 +167,10 @@
       h += '<a href="' + HOME + '#/' + d.id + '"' + (d.id === SITE ? ' class="on" aria-current="page"' : "") + ">" +
            d.title + (d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : "") + "</a>";
     });
-    nav.innerHTML = h + "</div>";
+    nav.innerHTML = h + '</div><button type="button" class="sjtheme"></button>';
     document.body.insertBefore(nav, document.body.firstChild);
+    nav.querySelector(".sjtheme").addEventListener("click", function () { window.__sjTheme && window.__sjTheme.toggle(); });
+    if (window.__sjTheme) window.__sjTheme.refresh();
     // 로그인 문처럼 body 가 flex(가운데 정렬)인 페이지에서는 탭 줄이 가로 배치의 한 칸이 되어
     // 가운데에 뜨고 상자를 옆으로 민다 → 맨 위에 고정하고 그 높이만큼 본문을 내린다.
     var bd = getComputedStyle(document.body).display;

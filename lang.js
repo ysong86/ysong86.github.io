@@ -38,6 +38,7 @@
     "건": "", "개": "", "곳": "", "동": " bldgs", "년": "", "분": " min", "개 시점": " surveys", "공동작업": "Joint work",
     // 머리·소개
     "세종 읽기": "Reading Sejong",
+    "☀ 밝게": "☀ Light", "☾ 어둡게": "☾ Dark",
     "세종연구원 연구자들의 작은 연구모임에서 던진 질문들을, 공공데이터와 쌓아 온 연구 자료로 하나씩 풀어 가는 세종 읽기입니다. 함께 던진 질문에서 출발해 조금씩 답을 찾아가는 중입니다. 목록을 누르면 이 화면 안에서 바로 열리고, 위쪽 탭으로 다른 읽기를 오갈 수 있습니다.":
       "Reading Sejong takes questions raised in a small study group of Sejong Research Institute researchers and works through them one by one with public data and our own research. We start from shared questions and are still finding the answers. Click a card to open it right here, and use the tabs at the top to move between readings.",
     "연구원의 공식 업무가 아닌, 참여 연구자들의 호기심과 재미에서 시작한 작업입니다. 결과물은 참고용으로 봐 주세요.":

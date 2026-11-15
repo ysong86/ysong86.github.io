@@ -586,5 +586,18 @@ const hb = $(".hitsbadge"); hb.addEventListener("error", () => { hb.parentElemen
 })();
 </script>
 <script src="lang.js"></script>
+<script src="nav.js" data-theme-only></script>
+<script>
+/* 화면 밝기 단추 — nav.js 의 공통 밝기(sejong_theme)를 쓴다. 안쪽 읽기(iframe)도 storage 이벤트로 함께 바뀐다. */
+(function () {
+  var w = document.querySelector(".mast .langwrap") || document.querySelector(".mast");
+  if (!w || !window.__sjTheme) return;
+  var b = document.createElement("button");
+  b.type = "button"; b.className = "langbtn sjtheme";
+  b.addEventListener("click", function () { window.__sjTheme.toggle(); });
+  w.insertBefore(b, w.firstChild);
+  window.__sjTheme.refresh();
+})();
+</script>
 </body>
 </html>
