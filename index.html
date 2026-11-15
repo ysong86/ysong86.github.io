@@ -150,6 +150,7 @@ body.viewing #home{display:none}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
 .tab .lk{font-size:11px;margin-left:3px;opacity:.7}
 .bar .ext{white-space:nowrap;padding:6px 10px}
+.bar .vtheme{white-space:nowrap;padding:6px 10px;cursor:pointer;font:inherit;font-size:12.5px}
 .frames{position:relative;flex:1}
 .frames iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--paper);display:none}
 .frames iframe.on{display:block}
@@ -349,6 +350,7 @@ body.viewing #home{display:none}
   <nav class="bar" aria-label="읽기 전환">
     <button class="home" type="button" id="back">← 모아보기</button>
     <div class="tabs" role="tablist" id="tabs"></div>
+    <button class="btn sjtheme vtheme" type="button"></button>
     <a class="btn ext" id="ext" href="#" target="_blank" rel="noopener">↗<span> 새 창으로</span></a>
   </nav>
   <div class="frames" id="frames"></div>
@@ -588,14 +590,17 @@ const hb = $(".hitsbadge"); hb.addEventListener("error", () => { hb.parentElemen
 <script src="lang.js"></script>
 <script src="nav.js" data-theme-only></script>
 <script>
-/* 화면 밝기 단추 — nav.js 의 공통 밝기(sejong_theme)를 쓴다. 안쪽 읽기(iframe)도 storage 이벤트로 함께 바뀐다. */
+/* 화면 밝기 단추(머리줄 + 한 화면 보기 위쪽 줄) — nav.js 의 공통 밝기(sejong_theme)를 쓴다. 안쪽 읽기(iframe)도 storage 이벤트로 함께 바뀐다. */
 (function () {
   var w = document.querySelector(".mast .langwrap") || document.querySelector(".mast");
   if (!w || !window.__sjTheme) return;
   var b = document.createElement("button");
   b.type = "button"; b.className = "langbtn sjtheme";
-  b.addEventListener("click", function () { window.__sjTheme.toggle(); });
   w.insertBefore(b, w.firstChild);
+  // 한 화면 보기(대문 안에서 읽기를 연 때)에는 머리줄이 숨으므로 위쪽 줄(.bar)에도 같은 단추가 있다
+  Array.prototype.forEach.call(document.querySelectorAll(".sjtheme"), function (x) {
+    x.addEventListener("click", function () { window.__sjTheme.toggle(); });
+  });
   window.__sjTheme.refresh();
 })();
 </script>
