@@ -123,7 +123,7 @@
     {id: "balance", title: "읍면 균형성장 읽기", lock: true},
     {id: "vacant", title: "상가공실 읽기", lock: true},
     {id: "industry", title: "산업과 일자리 읽기", lock: true},
-    {id: "emptyhouse", title: "빈집 읽기", lock: true},
+    {id: "emptyhouse", title: "빈집 읽기", lock: true, path: "emptyhouse_sejong/"},  // path 가 있으면 대문 한 화면 보기 대신 제 주소로 바로 연다
     {id: "lifelong", title: "평생학습 읽기"},
     {id: "fire", title: "지역안전 읽기", lock: true},
     {id: "heritage", title: "국가유산 읽기"},
@@ -164,7 +164,7 @@
     var h = '<a class="sjh" href="' + HOME + '">← 세종 읽기</a><div class="sjt">';
     D.forEach(function (d) {
       // 다른 읽기는 대문의 한 화면 보기(#/id)로 연다 — 탭을 오가도 로그인이 유지된다
-      h += '<a href="' + HOME + '#/' + d.id + '"' + (d.id === SITE ? ' class="on" aria-current="page"' : "") + ">" +
+      h += '<a href="' + HOME + (d.path ? d.path : '#/' + d.id) + '"' + (d.id === SITE ? ' class="on" aria-current="page"' : "") + ">" +
            d.title + (d.lock ? '<span class="lk" title="비밀번호">🔒</span>' : "") + "</a>";
     });
     nav.innerHTML = h + '</div><button type="button" class="sjtheme"></button>';

@@ -379,8 +379,8 @@ const D = [
   {id: "industry", em: "🏭", cat: "산업 · 일자리", q: "산업단지는 채워졌나, 일자리는 어디서 늘고 있나", path: "industry_sejong/", title: "세종 산업과 일자리 읽기", lock: true, cycle: "국민연금 사업장 2016~2026",
    desc: "산업단지 19곳의 분양·입주와 등록공장 923곳을 지도에 올리고, 국민연금 사업장 10년 기록으로 공무원을 뺀 일자리가 어느 동네·업종에서 늘었는지 봅니다. 회사마다 인원 추이도 찾아볼 수 있습니다.",
    who: "세종연구원 송양호"},
-  {id: "emptyhouse", em: "🏚️", cat: "주거 · 빈집", q: "세종의 빈집은 어디에 있고, 왜 생기나", path: "emptyhouse_sejong/", title: "세종 빈집 읽기", lock: true, cycle: "연구 자료", collab: "작업 중",
-   desc: "세종연구원 이자은 책임연구위원이 연구해 온 빈집 자료 등으로, 빈집이 어느 읍면동에 얼마나 모여 있는지, 오래된 집·인구 변화와는 어떻게 이어지는지, 정비·활용은 어디까지 왔는지를 살펴봅니다. 지금은 자료를 정리하는 중입니다.",
+  {id: "emptyhouse", em: "🏚️", cat: "주거 · 빈집", q: "세종의 빈집은 어디에 있고, 왜 생기나", path: "emptyhouse_sejong/", title: "세종 빈집 읽기", lock: true, cycle: "연구 자료", collab: "작업 중", direct: true,
+   desc: "세종연구원 이자은 책임연구위원의 빈집 현황판과 행정안전부 빈집 정비·활용 가이드라인을 바탕으로, 빈집 738채마다 철거·활용 여부와 지역 수요, 반경 500m 생활시설을 자동으로 진단하고 활용 시설 후보를 제안합니다.",
    who: "세종연구원 이자은"},
   {id: "lifelong", em: "📚", cat: "교육 · 평생학습", q: "세종 사람들은 배우고 있나, 그 배움은 도움이 되나", path: "lifelong_sejong/", title: "세종 평생학습 읽기", lock: false, cycle: "국가통계 2023~2025",
    desc: "평생학습 충족 지수(참여율 × 성과 체감)를 목적함수로 두고, 국가통계로 세종을 17개 시도와 견줍니다. 정보가 닿지 않는 문제, 배움이 일·삶으로 이어지지 않는 문제를 짚고, 국가 평생교육 정책·타 시도 사례와 이어 개선방안을 제안합니다.",
@@ -452,7 +452,7 @@ let bcur = 0;
 function drawFields(){
   $("#b-tabs").innerHTML = BF.map((f, i) => `<button class="b-tab" type="button" role="tab" data-bi="${i}" aria-selected="${i === bcur}">${f.k}<small>${f.ordin ? 1 : f.ids.filter(id => D.some(d => d.id === id)).length}</small></button>`).join("");
   const f = BF[bcur], rs = f.ids.map(id => D.find(d => d.id === id)).filter(Boolean);
-  const card = rs.map(d => `<a class="b-card" href="#/${d.id}"><span class="th"${d.preview ? ` data-vid="${d.path}preview.mp4"` : ""}><img src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy">${d.preview ? `<span class="play" data-pv="${d.id}">▶ ${d.pvLen || "30초"}</span>` : ""}</span><span>
+  const card = rs.map(d => `<a class="b-card" href="${d.direct ? d.path : "#/" + d.id}"><span class="th"${d.preview ? ` data-vid="${d.path}preview.mp4"` : ""}><img src="assets/thumbs/${d.id}.jpg" alt="" loading="lazy">${d.preview ? `<span class="play" data-pv="${d.id}">▶ ${d.pvLen || "30초"}</span>` : ""}</span><span>
       <span class="cm mono"><span class="${d.lock ? "lock" : "open"}">${d.lock ? "LOCKED" : "OPEN"}</span>${d.collab ? (/공동작업/.test(d.collab) ? `<span class="wip req">● 관계기관 요청 대응 중</span>` : `<span class="wip">● ${esc(d.collab)}</span>`) : ""}</span>
       <h3>${esc(shortT(d.title))}</h3><p>${esc(d.q)}</p><small class="who">제작: ${esc(d.who)}</small></span></a>`).join("")
     + (f.ordin ? `<a class="b-card" href="ordin/"><span class="th"><img src="assets/thumbs/ordin.jpg" alt="" loading="lazy"></span><span><span class="cm mono"><span class="open">OPEN</span></span><h3>세종 조례 찾기</h3><p>세종 조례 847건을 15개 광역시도와 나란히 비교합니다.</p></span></a>` : "");
@@ -491,6 +491,8 @@ const frames = {};
 function show(id){
   const d = D.find(x => x.id === id);
   if (!d) { document.body.classList.remove("viewing"); document.title = "세종 읽기"; return; }
+  // direct 읽기는 한 화면 보기(iframe) 대신 제 주소로 — replace 라서 뒤로 가기는 대문으로 돌아온다
+  if (d.direct) { location.replace(d.path); return; }
   if (!frames[id]) {
     const f = document.createElement("iframe");
     // 10분 단위 꼬리표 — 읽기를 다시 배포했는데 iframe 이 브라우저 캐시의 예전 판을 보여 주는 일을 막는다

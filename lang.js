@@ -111,8 +111,8 @@
       "Checks whether the new city's six living zones actually perform the functions planned for them, and how they connect with each other and the wider region, using 25 public-data indicators and neighborhood maps.",
     "1읍 9면과 신도심의 인구·일자리·생활·건물을 나란히 놓고, 조치원·북부권과 햇빛소득 가능성을 살피며, 시정의 약속과 관련해 함께 고민할 거리를 찾아봅니다.":
       "Sets the one town and nine townships beside the new city on population, jobs, daily life and buildings, looks at Jochiwon, the northern area and solar-income potential, and gathers questions to consider alongside the city's policy commitments.",
-    "세종연구원 이자은 책임연구위원이 연구해 온 빈집 자료 등으로, 빈집이 어느 읍면동에 얼마나 모여 있는지, 오래된 집·인구 변화와는 어떻게 이어지는지, 정비·활용은 어디까지 왔는지를 살펴봅니다. 지금은 자료를 정리하는 중입니다.":
-      "Draws on empty-house research by 이자은, senior research fellow at the Sejong Research Institute, among other sources, to see how many empty houses sit in each town and neighborhood, how they relate to aging buildings and population change, and how far clean-up and reuse have come. The data is still being prepared.",
+    "세종연구원 이자은 책임연구위원의 빈집 현황판과 행정안전부 빈집 정비·활용 가이드라인을 바탕으로, 빈집 738채마다 철거·활용 여부와 지역 수요, 반경 500m 생활시설을 자동으로 진단하고 활용 시설 후보를 제안합니다.":
+      "Builds on the empty-house dashboard by 이자은, senior research fellow at the Sejong Research Institute, and the Ministry of the Interior and Safety's guideline on clearing and reusing empty houses: for each of 738 empty houses it automatically checks demolition or reuse, local demand and everyday facilities within 500 m, and suggests possible new uses.",
     "집합상가 287동 전수조사로 본 생활권·동·건물별 상가 공실. 2D·3D 지도와 회귀·머신러닝·멀티레벨로 공실의 원인을 나눠 봅니다.":
       "Shop vacancy by living zone, neighborhood and building from a full survey of 287 commercial buildings, with 2D/3D maps and regression, machine-learning and multilevel models to separate the causes.",
     "지역안전지수 분야별로 읽습니다. 화재안전 탭은 소방차 도달시간과 건물 화재위험을, 겨울 결빙 탭은 골목 낙상 위험과 제설함 후보를(연구진 추정), 구급·응급 탭은 2025년 실제 출동 기록으로 도착·이송 시간과 구급차 부하를 봅니다.":
