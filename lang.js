@@ -129,7 +129,7 @@
     "시의 여러 실국이 각자 쥐고 있는 조각을 한 판에 올려, 함께 맞추면 커지는 일과 아직 비어 있는 칸을 찾아봅니다. 관계자 열람용으로 잠가 두었습니다.":
       "Lays the pieces each city bureau holds on one board, to find work that grows when they fit together and the squares still left empty. Locked for the people involved.",
     "세종연구원 인재평생교육실": "Sejong Research Institute · Talent & Lifelong Education Office",
-    "세종연구원 송양호": "Sejong Research Institute · 송양호", "세종연구원 이자은": "Sejong Research Institute · 이자은", "세종연구원 연구모임": "Sejong Research Institute study group",
+    "세종연구원 송양호": "Sejong Research Institute · 송양호", "세종연구원 안용준·송양호": "Sejong Research Institute · 안용준·송양호", "세종연구원 이자은": "Sejong Research Institute · 이자은", "세종연구원 연구모임": "Sejong Research Institute study group",
     "세종연구원 도시안전연구센터": "Sejong Research Institute · Urban Safety Research Center", "세종연구원 세종지역학센터": "Sejong Research Institute · Sejong Regional Studies Center"
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
