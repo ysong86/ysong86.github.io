@@ -125,15 +125,18 @@
       "Shows real-time traffic and road-surface risk, yearly traffic crashes and road facilities as three layers on neighborhood and road maps.",
     "평생학습 충족 지수(참여율 × 성과 체감)를 목적함수로 두고, 국가통계로 세종을 17개 시도와 견줍니다. 정보가 닿지 않는 문제, 배움이 일·삶으로 이어지지 않는 문제를 짚고, 국가 평생교육 정책·타 시도 사례와 이어 개선방안을 제안합니다.":
       "Sets a lifelong-learning fulfilment index (participation × perceived benefit) as the objective and compares Sejong with the other 16 regions using national statistics. It points out where information fails to reach people and where learning does not carry over into work and life, and links improvement ideas to national lifelong-education policy and other regions' practice.",
+    "세종이 아직 꺼내 들지 않은 카드는 무엇인가": "Which cards has Sejong not played yet?", "협업 · 연결": "Collaboration · Links", "수시 갱신": "Updated as needed",
+    "시의 여러 실국이 각자 쥐고 있는 조각을 한 판에 올려, 함께 맞추면 커지는 일과 아직 비어 있는 칸을 찾아봅니다. 관계자 열람용으로 잠가 두었습니다.":
+      "Lays the pieces each city bureau holds on one board, to find work that grows when they fit together and the squares still left empty. Locked for the people involved.",
     "세종연구원 인재평생교육실": "Sejong Research Institute · Talent & Lifelong Education Office",
     "세종연구원 송양호": "Sejong Research Institute · 송양호", "세종연구원 이자은": "Sejong Research Institute · 이자은", "세종연구원 연구모임": "Sejong Research Institute study group",
     "세종연구원 도시안전연구센터": "Sejong Research Institute · Urban Safety Research Center", "세종연구원 세종지역학센터": "Sejong Research Institute · Sejong Regional Studies Center"
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
   var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", industry: "Industry & Jobs", emptyhouse: "Empty Houses", lifelong: "Lifelong Learning", fire: "Local Safety",
-                heritage: "Heritage", water: "Water", traffic: "Road Safety", energy: "Energy"};
+                heritage: "Heritage", water: "Water", traffic: "Road Safety", energy: "Energy", desk: "Links"};
   var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", industry: "세종 산업과 일자리 읽기", emptyhouse: "세종 빈집 읽기", lifelong: "세종 평생학습 읽기",
-                   fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기", energy: "세종 에너지 읽기"};
+                   fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기", energy: "세종 에너지 읽기", desk: "세종 연결고리 읽기"};
   Object.keys(KO_TITLES).forEach(function (k) {
     var t = KO_TITLES[k], e = k === "lab" ? TITLES[k] : "Reading " + TITLES[k];
     [t, t.replace(/^세종(시)? (행복도시 )?/, ""), t.replace("세종시 ", "").replace("세종 행복도시 ", "").replace("세종 ", "")].forEach(function (v) { EN[v] = e; });

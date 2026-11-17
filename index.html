@@ -382,6 +382,9 @@ const D = [
   {id: "emptyhouse", em: "🏚️", cat: "주거 · 빈집", q: "세종의 빈집은 어디에 있고, 왜 생기나", path: "emptyhouse_sejong/", title: "세종 빈집 읽기", lock: true, cycle: "연구 자료", collab: "시정 활용·제안", direct: true,
    desc: "세종연구원 이자은 책임연구위원의 빈집 현황판과 행정안전부 빈집 정비·활용 가이드라인을 바탕으로, 빈집 738채마다 철거·활용 여부와 지역 수요, 반경 500m 생활시설을 자동으로 진단하고 활용 시설 후보를 제안합니다.",
    who: "세종연구원 이자은"},
+  {id: "desk", em: "🧩", cat: "협업 · 연결", q: "세종이 아직 꺼내 들지 않은 카드는 무엇인가", path: "desk_sejong/", title: "세종 연결고리 읽기", lock: true, cycle: "수시 갱신", collab: "시정 활용·제안", direct: true,
+   desc: "시의 여러 실국이 각자 쥐고 있는 조각을 한 판에 올려, 함께 맞추면 커지는 일과 아직 비어 있는 칸을 찾아봅니다. 관계자 열람용으로 잠가 두었습니다.",
+   who: "세종연구원 송양호"},
   {id: "lifelong", em: "📚", cat: "교육 · 평생학습", q: "세종 사람들은 배우고 있나, 그 배움은 도움이 되나", path: "lifelong_sejong/", title: "세종 평생학습 읽기", lock: false, cycle: "국가통계 2023~2025",
    desc: "평생학습 충족 지수(참여율 × 성과 체감)를 목적함수로 두고, 국가통계로 세종을 17개 시도와 견줍니다. 정보가 닿지 않는 문제, 배움이 일·삶으로 이어지지 않는 문제를 짚고, 국가 평생교육 정책·타 시도 사례와 이어 개선방안을 제안합니다.",
    who: "세종연구원 인재평생교육실"},
@@ -412,7 +415,7 @@ const nLock = D.filter(d => d.lock).length;
 const cnt = n => String(n).padStart(2, "0");
 $("#meta").textContent = `INDEX — ${cnt(D.length)} READINGS`;
 $("#next-no").textContent = `${num(D.length)} — NEXT`;
-const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", industry: "경제·생활", emptyhouse: "도시·공간", lifelong: "교육·사람", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경", eia: "문화·환경", energy: "문화·환경"};
+const FIELD = {lab: "도시·공간", zone: "도시·공간", balance: "도시·공간", vacant: "경제·생활", industry: "경제·생활", emptyhouse: "도시·공간", lifelong: "교육·사람", fire: "안전", traffic: "안전", heritage: "문화·환경", water: "문화·환경", eia: "문화·환경", energy: "문화·환경", desk: "제도·조례"};
 // 핵심 숫자 — 공개된 값만(비공개 읽기 안쪽 결과는 쓰지 않는다)
 const shortT = t => t.replace(/^세종(시)? (행복도시 )?/, "");
 const TILES = [
