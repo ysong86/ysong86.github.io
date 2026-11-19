@@ -99,7 +99,7 @@
     "읍면과 신도심의 격차는 좁혀지고 있나": "Is the gap between the rural towns and the new city closing?",
     "행복도시 상가는 왜 비어 있나": "Why are the new city's shops empty?",
     "세종의 빈집은 어디에 있고, 왜 생기나": "Where are Sejong's empty houses, and why do they appear?",
-    "주거 · 빈집": "Housing · Empty houses", "교육 · 평생학습": "Education · Lifelong learning", "교육·사람": "Education & People", "국가통계 2023~2025": "National statistics 2023–2025",
+    "주거 · 빈집": "Housing · Empty houses", "교육 · 평생학습": "Education · Lifelong learning", "교육·사람": "Education & People", "국가통계 · 2026 실태조사": "National statistics · 2026 Sejong survey",
     "세종 사람들은 배우고 있나, 그 배움은 도움이 되나": "Are people in Sejong learning, and is it helping them?", "작업 중": "Work in progress", "연구 자료": "Research data",
     "소방차와 구급차는 제때 닿는가, 겨울 골목은 안전한가": "Do fire engines and ambulances arrive in time? Are winter alleys safe?",
     "세종의 시간은 어디에 남아 있나": "Where does Sejong's past remain?",
@@ -123,8 +123,8 @@
       "Gathers Geum and Miho river levels, rainfall, river water quality, groundwater and weather in real time, and maps the observation points.",
     "실시간 소통·노면 위험, 연 단위 교통사고, 시설 현황을 세 층으로 나눠 읍면동·도로 지도에서 봅니다.":
       "Shows real-time traffic and road-surface risk, yearly traffic crashes and road facilities as three layers on neighborhood and road maps.",
-    "평생학습 충족 지수(참여율 × 성과 체감)를 목적함수로 두고, 국가통계로 세종을 17개 시도와 견줍니다. 정보가 닿지 않는 문제, 배움이 일·삶으로 이어지지 않는 문제를 짚고, 국가 평생교육 정책·타 시도 사례와 이어 개선방안을 제안합니다.":
-      "Sets a lifelong-learning fulfilment index (participation × perceived benefit) as the objective and compares Sejong with the other 16 regions using national statistics. It points out where information fails to reach people and where learning does not carry over into work and life, and links improvement ideas to national lifelong-education policy and other regions' practice.",
+    "평생학습 충족 지수(참여율 × 성과 체감)로 세종을 17개 시도와 견주고, 2026 세종 평생교육 실태조사(시민 747명·기관 317곳)로 세종 안쪽을 펼칩니다. 시민의 참여와 막힘, 기관의 공급, 읍면동 기관 지도와 문해 취약(추정), 배우고 싶은 것과 열려 있는 것의 엇갈림을 잇고 개선방안을 제안합니다.":
+      "Compares Sejong with the other 16 regions on a lifelong-learning fulfilment index (participation × perceived benefit), then opens up the city with the 2026 Sejong lifelong education survey (747 residents, 317 providers): who takes part and what holds them back, what providers offer, a neighbourhood map of providers and estimated literacy gaps, and where demand and supply diverge, with ideas for improvement.",
     "세종이 아직 꺼내 들지 않은 카드는 무엇인가": "Which cards has Sejong not played yet?", "협업 · 연결": "Collaboration · Links", "수시 갱신": "Updated as needed",
     "시의 여러 실국이 각자 쥐고 있는 조각을 한 판에 올려, 함께 맞추면 커지는 일과 아직 비어 있는 칸을 찾아봅니다. 관계자 열람용으로 잠가 두었습니다.":
       "Lays the pieces each city bureau holds on one board, to find work that grows when they fit together and the squares still left empty. Locked for the people involved.",
