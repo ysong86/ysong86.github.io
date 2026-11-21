@@ -21,8 +21,8 @@
     "집합상가를 전수조사해 생활권·동·건물 단위로 공실을 보고, 통계·머신러닝 모형으로 공실의 원인을 나눠 처방의 순서를 찾습니다.":
       "A full survey of commercial buildings shows vacancy by living zone, neighborhood and building, and statistical and machine-learning models separate the causes to set priorities.",
     "세종의 땅과 물, 시간은 어떻게 변하고 있나": "How are Sejong's land, water and history changing?",
-    "국가유산의 자리, 금강·미호강의 수위와 수질, 환경영향평가를 거친 개발 사업, 그리고 세종이 쓰고 만드는 에너지까지. 개발과 보전 사이의 균형을 한 화면에서 봅니다.":
-      "Heritage sites, Geum and Miho river levels and water quality, development projects that went through environmental assessment, and the energy Sejong uses and produces: the balance between development and conservation on one screen.",
+    "국가유산의 자리, 금강·미호강의 수위와 수질, 숲과 물길에 사는 생물, 환경영향평가를 거친 개발 사업, 그리고 세종이 쓰고 만드는 에너지까지. 개발과 보전 사이의 균형을 한 화면에서 봅니다.":
+      "Heritage sites, Geum and Miho river levels and water quality, the wildlife of forests and waterways, development projects that went through environmental assessment, and the energy Sejong uses and produces: the balance between development and conservation on one screen.",
     "세종 사람들은 배우고 있나": "Are people in Sejong learning?",
     "평생학습 참여와 배움의 성과 체감을 17개 시도와 견주어, 세종 시민의 배움이 일과 삶으로 이어지는지 살핍니다.":
       "Compares lifelong-learning participation and perceived benefit with 17 regions to see whether learning carries over into work and life.",
@@ -90,7 +90,10 @@
       "A full survey separates the causes of empty shops in the new city, and ten years of National Pension workplace records show whether the industrial complexes are filled and where jobs other than civil-service posts are growing.",
     "세종의 산업단지": "industrial complexes in Sejong", "등록공장": "registered factories",
     "● 관계기관 요청 대응 중": "● Responding to agency requests", "관계기관 요청 대응 중": "Responding to agency requests",
-    "상권 · 경제": "Commerce · Economy", "재난 · 지역안전": "Disaster · Local safety", "문화 · 국가유산": "Culture · Heritage", "물 · 환경": "Water · Environment", "에너지 · 환경": "Energy · Environment", "국가통계 2014~2025": "National statistics 2014–2025",
+    "상권 · 경제": "Commerce · Economy", "재난 · 지역안전": "Disaster · Local safety", "문화 · 국가유산": "Culture · Heritage", "물 · 환경": "Water · Environment", "에너지 · 환경": "Energy · Environment", "생태 · 환경": "Ecology · Environment", "생물 기록 2026.11": "Wildlife records Nov 2026",
+    "세종의 숲과 물길에는 누가 사나": "Who lives in Sejong's forests and waterways?",
+    "시민 관찰 기록과 국가 자연환경조사로 모은 세종의 생물을 지도와 1km 칸으로 보고, 숲·물길과 2014년부터의 위성사진을 겹쳐 봅니다. 장남뜰 에코뮤지엄 연구 탭을 함께 두었습니다.":
+      "Maps Sejong's wildlife from citizen observations and the national natural environment survey, as points and 1 km cells, layered with forests, waterways and satellite imagery since 2014. Includes a research tab for the Jangnam-tteul ecomuseum.", "국가통계 2014~2025": "National statistics 2014–2025",
     "세종은 에너지를 얼마나, 어디에 쓰고, 어디서 얻나": "How much energy does Sejong use, on what, and where does it come from?",
     "세종이 쓰는 전기와 건물 에너지, 신재생 발전 설비, 지역난방을 국가통계로 17개 시도와 견주고, 전기차 충전소 1,039곳과 읍면동별 태양광을 지도에 올렸습니다.":
       "Compares Sejong's electricity and building energy use, renewable generation capacity and district heating with 17 regions using national statistics, and maps 1,039 EV charging stations and solar capacity by neighborhood.", "교통 · 안전": "Transport · Safety",
@@ -137,9 +140,9 @@
   };
   // 읽기 이름은 대문·탭에서 머리말을 떼고 쓰므로 여러 꼴을 함께 넣는다
   var TITLES = {lab: "Digital Twin Lab", zone: "Living Zones", balance: "Balanced Growth", vacant: "Vacant Shops", industry: "Industry & Jobs", emptyhouse: "Empty Houses", lifelong: "Lifelong Learning", fire: "Local Safety",
-                heritage: "Heritage", water: "Water", traffic: "Road Safety", energy: "Energy", desk: "Links", frame: "Frame"};
+                heritage: "Heritage", water: "Water", traffic: "Road Safety", energy: "Energy", nature: "Nature", desk: "Links", frame: "Frame"};
   var KO_TITLES = {lab: "세종 디지털트윈 실험실", zone: "세종 생활권 읽기", balance: "세종 읍면 균형성장 읽기", vacant: "세종 행복도시 상가공실 읽기", industry: "세종 산업과 일자리 읽기", emptyhouse: "세종 빈집 읽기", lifelong: "세종 평생학습 읽기",
-                   fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기", energy: "세종 에너지 읽기", desk: "세종 연결고리 읽기", frame: "세종 얼개 읽기"};
+                   fire: "세종 지역안전 읽기", heritage: "세종 국가유산 읽기", water: "세종시 물환경 읽기", traffic: "세종시 교통안전 읽기", energy: "세종 에너지 읽기", nature: "세종 자연생태 읽기", desk: "세종 연결고리 읽기", frame: "세종 얼개 읽기"};
   Object.keys(KO_TITLES).forEach(function (k) {
     var t = KO_TITLES[k], e = k === "lab" ? TITLES[k] : "Reading " + TITLES[k];
     [t, t.replace(/^세종(시)? (행복도시 )?/, ""), t.replace("세종시 ", "").replace("세종 행복도시 ", "").replace("세종 ", "")].forEach(function (v) { EN[v] = e; });

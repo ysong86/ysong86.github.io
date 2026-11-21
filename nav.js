@@ -130,6 +130,7 @@
     {id: "water", title: "물환경 읽기"},
     {id: "eia", title: "개발과 환경 읽기"},
     {id: "energy", title: "에너지 읽기", lock: true},
+    {id: "nature", title: "자연생태 읽기", lock: true},
     {id: "traffic", title: "교통안전 읽기"}
   ];
   var css =
