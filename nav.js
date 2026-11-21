@@ -40,15 +40,15 @@
   document.addEventListener("DOMContentLoaded", link);
 })();
 
-/* 연구모임 이름 풀이 — 하단 제작 표기의 '세종연구원 연구모임' 바로 뒤에 (City Open Research Ensemble)을 달고,
+/* 연구모임 이름 풀이 — 하단 제작 표기의 '세종연구원 연구모임' 바로 뒤에 (Collaborative Open Research Exchange)을 달고,
    누르면 CORE 네 글자 풀이 카드가 뜬다. 대문 iframe 안에서도, 잠금이 풀려 문서를 새로 쓸 때도 다시 붙는다. */
 (function () {
   "use strict";
-  var KEY = "세종연구원 연구모임", EN = "City Open Research Ensemble";
-  var ROWS = [["C", "City", "도시. 여기서는 세종"],
+  var KEY = "세종연구원 연구모임", EN = "Collaborative Open Research Exchange";
+  var ROWS = [["C", "Collaborative", "함께하는. 분야가 다른 연구자들이 힘을 모은다는 뜻"],
               ["O", "Open", "열린. 공공데이터를 쓰고, 결과도 누구나 볼 수 있게 공개한다는 뜻"],
               ["R", "Research", "연구"],
-              ["E", "Ensemble", "여럿이 모여 함께 내는 합주, 앙상블"]];
+              ["E", "Exchange", "교류. 질문과 자료, 결과를 서로 나눈다는 뜻"]];
   function css() {
     if (document.getElementById("sjcore-css")) return;
     var st = document.createElement("style");
@@ -59,7 +59,7 @@
       "box-shadow:0 18px 44px #0b1a3333;padding:18px 20px 14px;font:14px/1.5 Pretendard,'Malgun Gothic',system-ui,sans-serif;text-align:left}" +
       ".sjcore-p h4{margin:0 0 2px;font-size:20px;letter-spacing:.06em;color:#1B3F7A}.sjcore-p .s{margin:0 0 12px;color:#5b6672;font-size:13px}" +
       ".sjcore-p table{border-collapse:collapse!important;width:100%!important;table-layout:fixed!important;margin:0!important;background:none!important}.sjcore-p td{padding:7px 6px!important;border:0!important;border-top:1px solid #e6eaee!important;vertical-align:top!important;text-align:left!important;width:auto!important;font:inherit!important;color:inherit!important;background:none!important;white-space:normal!important;word-break:keep-all}" +
-      ".sjcore-p td:first-child{font-weight:800!important;color:#1B3F7A!important;width:24px!important;font-size:16px!important}.sjcore-p td:nth-child(2){font-weight:600!important;width:88px!important;white-space:nowrap!important}" +
+      ".sjcore-p td:first-child{font-weight:800!important;color:#1B3F7A!important;width:24px!important;font-size:16px!important}.sjcore-p td:nth-child(2){font-weight:600!important;width:112px!important;white-space:nowrap!important}" +
       ".sjcore-p .x{all:unset;position:absolute;top:8px;right:10px;cursor:pointer;font-size:18px;color:#8a949e;padding:4px 8px}" +
       ".sjcore-p .m{margin:10px 0 0;color:#5b6672;font-size:12.5px}" +
       "@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .sjcore-p{background:#1c252b;color:#dbe3e7;border-color:#33424a}:root:not([data-theme=light]) .sjcore-p h4,:root:not([data-theme=light]) .sjcore-p td:first-child{color:#8EA9F0!important}:root:not([data-theme=light]) .sjcore-p td{border-color:#2d3a41!important}:root:not([data-theme=light]) .sjcore-p .s,:root:not([data-theme=light]) .sjcore-p .m{color:#9aa7ae}}" +
@@ -72,7 +72,7 @@
     close();
     pop = document.createElement("div");
     pop.className = "sjcore-p"; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "CORE 이름 풀이");
-    var h = '<button class="x" aria-label="닫기">×</button><h4>CORE</h4><p class="s">' + EN + ' · 열린 자료로 도시를 함께 연구하는 모임</p><table>';
+    var h = '<button class="x" aria-label="닫기">×</button><h4>CORE</h4><p class="s">' + EN + ' · 열린 자료로 함께 연구하고 나누는 모임</p><table>';
     ROWS.forEach(function (r) { h += "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td></tr>"; });
     pop.innerHTML = h + '</table>';
     document.body.appendChild(pop);
@@ -96,7 +96,7 @@
         var nx = t.nextSibling;                              // 이미 붙였으면(글자 마디가 이름으로 끝나고 바로 뒤가 버튼) 건너뛴다
         if (i + KEY.length === t.nodeValue.length && nx && nx.className === "sjcore-b") return;
         var rest = t.splitText(i + KEY.length);            // 앞 글자 마디는 그대로 두어 영어 바꾸기(lang.js)가 그대로 맞는다
-        if (/^\s*\(?\s*City Open/.test(rest.nodeValue)) return;
+        if (/^\s*\(?\s*Collaborative Open/.test(rest.nodeValue)) return;
         var b = document.createElement("button");
         b.type = "button"; b.className = "sjcore-b"; b.textContent = "(" + EN + ")";
         b.setAttribute("aria-haspopup", "dialog"); b.setAttribute("aria-expanded", "false"); b.title = "CORE 이름 풀이 보기";
